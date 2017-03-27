@@ -58,12 +58,12 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =sct
 ```{r}
-undef_msg <- function(item) {return paste("Please make sure that you already create variable `", 
-	deparse(substitute(item)), "`", sep="")}
-incor_msg <- function(item) {return paste("Please make sure that you import the correct data into variable `", 
-	deparse(substitute(item)), "`. Use function `read.delim()` to import dataset to the variable", sep="")} 
+undef_msg <- function(x) {return paste("Please make sure that you already create variable `", 
+	deparse(substitute(x)), "`", sep="")}
+incor_msg <- function(x) {return paste("Please make sure that you import the correct data into variable `", 
+	deparse(substitute(x)), "`. Use function `read.delim()` to import dataset to the variable", sep="")} 
 iteration_list <- c(w_user, w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
-for (item in iteration_list) {
-	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))}
+for (x in iteration_list) {
+	test_object(x, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))}
 success_msg("Good job!")
 ```
