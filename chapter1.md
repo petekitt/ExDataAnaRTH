@@ -1,116 +1,71 @@
----
-title       : Insert the chapter title here
-description : Insert the chapter description here
-attachments :
-  slides_link : https://s3.amazonaws.com/assets.datacamp.com/course/teach/slides_example.pdf
+--- 
+title_meta  : บทที่ 1 
+title       : การจัดการกับข้อมูลด้วย package Dplyr
+description : "ในบทเรียนนี้คุณจะได้เรียนรู้เกี่ยวกับการใช้ package Dplyr บนโปรแกรม R ซึ่ง package ดังกล่าวจะช่วยให้การจัดการกับข้อมูลเป็นเรื่องง่ายจนคุณจะต้องตกใจ!"
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:9618ce5451
-## A really bad movie
+--- type:NormalExercise xp:100 skills:1 key:15d729634a
+## การนำข้อมูลเข้าสู่โปรแกรม R
 
-Have a look at the plot that showed up in the viewer to the right. Which type of movie has the worst rating assigned to it?
+ก่อนที่เราจะเริ่มลองใช้ package Dplyr ในการจัดการกับฐานข้อมูล เราจะมาเริ่มต้นด้วยการทบทวนเกี่ยวกับการทำความเข้าใจข้อมูลเบื้องต้นโดยการใช้ function R ตามปกติกันก่อน
 
 *** =instructions
-- Adventure
-- Action
-- Animation
-- Comedy
+ให้คุณนำข้อมูลต่างๆเหล่านี้เข้ามาใน R workspace โดยใช้คำสั่ง read.delim() กับไฟล์ tsv ดังต่อไปนี้
+- w_user.tsv
+- w_restaurant.tsv
+- w_chain.tsv
+- w_rating.tsv
+- w_category.tsv
+- w_restaurant_category.tsv
+- w_chain_category.tsv
+- w_restaurant_checkin_user.tsv
+เก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ w_user.tsv ก็ให้เก็บค่าไว้ในตัวแปรชื่อ w_user
+เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล w_user และ w_restaurant ไว้ให้คุณใน editor ทางขวามือแล้ว
+สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลื่นๆที่เหลือเข้ามาใน R workspace!
 
 *** =hint
-Have a look at the plot. Which color does the point with the lowest rating have?
 
 *** =pre_exercise_code
 ```{r}
-# The pre exercise code runs code to initialize the user's workspace.
-# You can use it to load packages, initialize datasets and draw a plot in the viewer
-
-movies <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/movies.csv")
-
-library(ggplot2)
-
-ggplot(movies, aes(x = runtime, y = rating, col = genre)) + geom_point()
-```
-
-*** =sct
-```{r}
-# SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
-
-msg_bad <- "That is not correct!"
-msg_success <- "Exactly! There seems to be a very bad action movie in the dataset."
-test_mc(correct = 2, feedback_msgs = c(msg_bad, msg_success, msg_bad, msg_bad))
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:60373f9953
-## More movies
-
-In the previous exercise, you saw a dataset about movies. In this exercise, we'll have a look at yet another dataset about movies!
-
-A dataset with a selection of movies, `movie_selection`, is available in the workspace.
-
-*** =instructions
-- Check out the structure of `movie_selection`.
-- Select movies with a rating of 5 or higher. Assign the result to `good_movies`.
-- Use `plot()` to  plot `good_movies$Run` on the x-axis, `good_movies$Rating` on the y-axis and set `col` to `good_movies$Genre`.
-
-*** =hint
-- Use `str()` for the first instruction.
-- For the second instruction, you should use `...[movie_selection$Rating >= 5, ]`.
-- For the plot, use `plot(x = ..., y = ..., col = ...)`.
-
-*** =pre_exercise_code
-```{r}
-# You can also prepare your dataset in a specific way in the pre exercise code
-
-library(MindOnStats)
-data(Movies)
-movie_selection <- Movies[Movies$Genre %in% c("action", "animated", "comedy"),c("Genre", "Rating", "Run")]
-
-# Clean up the environment
-rm(Movies)
+# change directory to the path containing datasets
+setwd('datasets')
 ```
 
 *** =sample_code
 ```{r}
-# movie_selection is available in your workspace
+# Import w_user and w_restaurant data to R workspace
+w_user <- read.delim('w_user.tsv')
+w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
 
-# Check out the structure of movie_selection
-
-
-# Select movies that have a rating of 5 or higher: good_movies
-
-
-# Plot Run (i.e. run time) on the x axis, Rating on the y axis, and set the color using Genre
+# Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
 
 ```
 
 *** =solution
 ```{r}
-# movie_selection is available in your workspace
+# Import w_user and w_restaurant data to R workspace
+w_user <- read.delim('w_user.tsv')
+w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
+		
+# Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
+w_chain <- read.delim('w_chain.tsv')
+w_rating <- read.delim('w_rating.tsv')
+w_category <- read.delim('w_category.tsv')
+w_restaurant_category <- read.delim('w_restaurant_category.tsv')
+w_chain_category <- read.delim('w_chain_category.tsv')
+w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
 
-# Check out the structure of movie_selection
-str(movie_selection)
-
-# Select movies that have a rating of 5 or higher: good_movies
-good_movies <- movie_selection[movie_selection$Rating >= 5, ]
-
-# Plot Run (i.e. run time) on the x axis, Rating on the y axis, and set the color using Genre
-plot(good_movies$Run, good_movies$Rating, col = good_movies$Genre)
 ```
 
 *** =sct
 ```{r}
-# SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
 
-test_function("str", args = "object",
-              not_called_msg = "You didn't call `str()`!",
-              incorrect_msg = "You didn't call `str(object = ...)` with the correct argument, `object`.")
-
-test_object("good_movies")
-
-test_function("plot", args = "x")
-test_function("plot", args = "y")
-test_function("plot", args = "col")
-
-test_error()
-
-success_msg("Good work!")
+undef_msg <- fucntion(item) {return paste("โปรดตรวจสอบให้แน่ใจว่าคุณได้ทำการนำข้อมูล `", deparse(substitute(item)), "` เรียบร้อย", sep="")}
+incor_msg <- function(item) {return paste("โปรดตรวจสอบให้แน่ใจว่าคุณได้นำข้อมูล `", deparse(substitute(item)), 
+  "` เข้ามาใน R workspace อย่างถูกต้องโดยการใช้ function `read.delim()` โปรดจำไว้ว่าคุณต้องตั้งชื่อตัวแปรให้เหมือนกับชื่อไฟล์ข้อมูล", sep="")} 
+iteration_list <- c(w_user, w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
+for (item in iteration_list) {
+	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))
+}
+success_msg("เยี่ยมมาก! ในตอนนี้เราก็มีข้อมูลเพื่อใช้ในการวิเคราะห์ครบแล้ว ไปแบบฝึกหัดต่อไปได้เลย")
 ```
+
