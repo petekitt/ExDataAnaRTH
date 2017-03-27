@@ -33,8 +33,8 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 *** =sample_code
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-w_user <- read.delim('w_user.tsv')
-w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
+#w_user <- read.delim('w_user.tsv')
+#w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
 
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
 
@@ -43,16 +43,16 @@ w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
 *** =solution
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-w_user <- read.delim('w_user.tsv')
-w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
+#w_user <- read.delim('w_user.tsv')
+#w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
 		
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
-w_chain <- read.delim('w_chain.tsv')
-w_rating <- read.delim('w_rating.tsv')
-w_category <- read.delim('w_category.tsv')
-w_restaurant_category <- read.delim('w_restaurant_category.tsv')
-w_chain_category <- read.delim('w_chain_category.tsv')
-w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
+#w_chain <- read.delim('w_chain.tsv')
+#w_rating <- read.delim('w_rating.tsv')
+#w_category <- read.delim('w_category.tsv')
+#w_restaurant_category <- read.delim('w_restaurant_category.tsv')
+#w_chain_category <- read.delim('w_chain_category.tsv')
+#w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
 
 ```
 
