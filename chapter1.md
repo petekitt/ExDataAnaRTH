@@ -56,13 +56,12 @@ w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
 
 *** =sct
 ```{r}
-
-undef_msg <- fucntion(item) {return paste("โปรดตรวจสอบให้แน่ใจว่าคุณได้ทำการนำข้อมูล `", deparse(substitute(item)), "` เรียบร้อย", sep="")}
-incor_msg <- function(item) {return paste("โปรดตรวจสอบให้แน่ใจว่าคุณได้นำข้อมูล `", deparse(substitute(item)), 
-  "` เข้ามาใน R workspace อย่างถูกต้องโดยการใช้ function `read.delim()` โปรดจำไว้ว่าคุณต้องตั้งชื่อตัวแปรให้เหมือนกับชื่อไฟล์ข้อมูล", sep="")} 
+undef_msg <- fucntion(item) {return paste('Please make sure that you already create variable \'', 
+	deparse(substitute(item)), '\'', sep="")}
+incor_msg <- function(item) {return paste('Please make sure that you import the correct data into variable \'', 
+	deparse(substitute(item)), '\'. Use function \'read.delim()\' to import dataset to the variable', sep="")} 
 iteration_list <- c(w_user, w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
 for (item in iteration_list) {
-	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))
-}
-success_msg("เยี่ยมมาก! ในตอนนี้เราก็มีข้อมูลเพื่อใช้ในการวิเคราะห์ครบแล้ว ไปแบบฝึกหัดต่อไปได้เลย")
+	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))}
+success_msg("Good job!")
 ```
