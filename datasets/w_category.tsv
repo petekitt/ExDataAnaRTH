@@ -1,0 +1,130 @@
+"id"	"name"	"parent_id"	"leaf"	"domain_id"	"number_of_categories"
+2	"Japanese"	0	1	1	0
+3	"Thai"	0	1	1	0
+4	"Chinese"	0	1	1	0
+5	"Italian"	0	1	1	0
+6	"Korean"	0	1	1	0
+7	"Vietnam"	0	1	1	0
+8	"American"	0	1	1	0
+9	"French"	0	1	1	0
+10	"Indian"	0	1	1	0
+11	"Buffet/All you can eat"	0	1	1	0
+12	"Street Food/Food Stands"	0	1	1	0
+13	"Fusion Food"	0	1	1	0
+14	"Café/Coffee Shop"	0	1	1	0
+15	"Bars"	0	1	1	0
+16	"Pubs/Dance Clubs/Disco Tecs"	0	1	1	0
+17	"Music Venues"	0	1	1	0
+18	"Karaoke"	0	1	1	0
+19	"Breakfast/Brunch"	0	1	1	0
+20	"Sukiyaki/Shabu"	0	1	1	0
+21	"Juice/Coffee/Tea/Soft drinks"	0	1	1	0
+22	"Wine Bar"	0	1	1	0
+23	"Dessert"	0	1	1	0
+24	"Bakery/Cake"	0	1	1	0
+25	"Ice Cream"	0	1	1	0
+26	"Hotel Restaurant/Lounge"	0	1	1	0
+27	"Vegeterian"	0	1	1	0
+28	"Fastfood"	0	1	1	0
+29	"Seafood"	0	1	1	0
+30	"Noodles"	0	1	1	0
+31	"Delivery"	0	1	1	0
+32	"Waterside"	0	1	1	0
+33	"International"	0	1	1	0
+34	"North East"	0	1	1	0
+35	"Steak House/Barbeque"	0	1	1	0
+36	"Quick Meal"	0	1	1	0
+37	"Other"	0	1	1	0
+38	"Chain/Franchise"	0	1	1	0
+39	"Healthy Food"	0	1	1	0
+40	"Muslim"	0	1	1	0
+41	"Mexican"	0	1	1	0
+42	"Pizza"	0	1	1	0
+43	"Barbeque/Grill"	0	1	1	0
+44	"Northern Food"	0	1	1	0
+45	"Sushi"	0	1	1	0
+49	"Southern Food"	0	1	1	0
+50	"Ramen"	0	1	1	0
+51	"Moo Kata"	0	1	1	0
+52	"Delivery Only"	0	1	1	0
+53	"Rooftop"	0	1	1	0
+54	"Food Truck"	0	1	1	0
+100	"Facial"	0	0	2	10
+101	"Acne Clinic"	100	1	2	0
+102	"Masking"	100	1	2	0
+103	"Laser"	100	1	2	0
+104	"Bags Under Eyes"	100	1	2	0
+105	"Treatment"	100	1	2	0
+106	"Meso"	100	1	2	0
+107	"Thread Lifting"	100	1	2	0
+108	"Botox"	100	1	2	0
+109	"Filler"	100	1	2	0
+110	"Meso Fat"	100	1	2	0
+200	"Hair Salon"	0	0	2	8
+201	"Perm"	200	1	2	0
+202	"Digital Perm"	200	1	2	0
+203	"Coloring"	200	1	2	0
+204	"Hair Extension"	200	1	2	0
+205	"Hair Straightening"	200	1	2	0
+206	"Man Hair Cut"	200	1	2	0
+207	"Haircut"	200	1	2	0
+208	"Hair Wash"	200	1	2	0
+300	"Spa & Massage"	0	0	2	8
+301	"Oil Massage"	300	1	2	0
+302	"Thai Massage"	300	1	2	0
+303	"Facial Massage"	300	1	2	0
+304	"Aroma Massage"	300	1	2	0
+305	"Foot Massage"	300	1	2	0
+306	"Sauna"	300	1	2	0
+308	"Acupuncture"	300	1	2	0
+400	"Eyebrows"	0	0	2	6
+401	"Eyebrow Trimming"	400	1	2	0
+403	"Eyebrow Tinting"	400	1	2	0
+404	"Eyebrow Waxing"	400	1	2	0
+405	"Eyebrow Coloring"	400	1	2	0
+406	"3D Eyebrow Tatoo"	400	1	2	0
+500	"Dental"	0	0	2	5
+501	"Orthodontic"	500	1	2	0
+502	"Wisdom Tooth"	500	1	2	0
+503	"Root Canal Treatment"	500	1	2	0
+504	"Teeth Whitening"	500	1	2	0
+505	"Tooth Extraction"	500	1	2	0
+600	"Surgery"	0	0	2	15
+601	"Nose Surgery"	600	1	2	0
+602	"Enlargement"	600	1	2	0
+603	"Chin Augmentation"	600	1	2	0
+604	"Blepharoplasty"	600	1	2	0
+605	"Cosmetic Eyeliner Tattoo"	600	1	2	0
+606	"Oral Surgery"	600	1	2	0
+607	"Cosmetic Lip Tattoo"	600	1	2	0
+608	"Jaw Surgery"	600	1	2	0
+609	"Cheekbones Surgery"	600	1	2	0
+610	"Dimples Surgery"	600	1	2	0
+611	"Face Lift"	600	1	2	0
+615	"Tattoo Removal"	600	1	2	0
+700	"Slimming"	0	0	2	4
+701	"Lose Weight"	700	1	2	0
+702	"Liposuction"	700	1	2	0
+703	"Vaser"	700	1	2	0
+704	"Slimming Massage"	700	1	2	0
+800	"Hair Removal"	0	0	2	2
+801	"Hair Wax"	800	1	2	0
+802	"Laser Hair Removal"	800	1	2	0
+900	"Nails"	0	0	2	3
+901	"Nail Painting"	900	1	2	0
+902	"Nail Extension"	900	1	2	0
+903	"Nail Coloring"	900	1	2	0
+1000	"Fitness & Aerobic"	0	0	2	7
+1001	"Yoga"	1000	1	2	0
+1002	"Hot Yoga"	1000	1	2	0
+1003	"Yoga Fly"	1000	1	2	0
+1004	"Aerobic"	1000	1	2	0
+1005	"Fitness Center"	1000	1	2	0
+1006	"Pilates"	1000	1	2	0
+1007	"Boxing"	1000	1	2	0
+1100	"Detox"	0	0	2	2
+1200	"Whitening"	0	0	2	2
+1201	"Whitening Injection"	1200	1	2	0
+1202	"Scrubbing"	1200	1	2	0
+1300	"Make Up"	0	1	2	0
+1500	"Eyelashes"	0	1	2	0
