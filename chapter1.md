@@ -64,6 +64,6 @@ incor_msg <- function(x) {return paste("Please make sure that you import the cor
 	deparse(substitute(x)), "`. Use function `read.delim()` to import dataset to the variable", sep="")} 
 iteration_list <- c(w_user, w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
 for (x in iteration_list) {
-	test_object(x, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))}
+	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))}
 success_msg("Good job!")
 ```
