@@ -58,7 +58,7 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =sct
 ```{r}
-undef_msg <- fucntion(item) {return paste("Please make sure that you already create variable `", 
+undef_msg <- function(item) {return paste("Please make sure that you already create variable `", 
 	deparse(substitute(item)), "`", sep="")}
 incor_msg <- function(item) {return paste("Please make sure that you import the correct data into variable `", 
 	deparse(substitute(item)), "`. Use function `read.delim()` to import dataset to the variable", sep="")} 
