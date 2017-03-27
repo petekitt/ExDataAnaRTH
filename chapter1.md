@@ -26,8 +26,6 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =pre_exercise_code
 ```{r}
-# change directory to the path containing datasets
-setwd('datasets')
 ```
 
 *** =sample_code
