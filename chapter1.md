@@ -10,6 +10,7 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =instructions
 ให้คุณนำข้อมูลต่างๆเหล่านี้เข้ามาใน R workspace โดยใช้คำสั่ง read.delim() กับไฟล์ tsv ดังต่อไปนี้
+
 - w_user.tsv
 - w_restaurant.tsv
 - w_chain.tsv
@@ -18,6 +19,7 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 - w_restaurant_category.tsv
 - w_chain_category.tsv
 - w_restaurant_checkin_user.tsv
+
 เก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ w_user.tsv ก็ให้เก็บค่าไว้ในตัวแปรชื่อ w_user
 เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล w_user และ w_restaurant ไว้ให้คุณใน editor ทางขวามือแล้ว
 สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลื่นๆที่เหลือเข้ามาใน R workspace!
@@ -56,10 +58,10 @@ w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
 
 *** =sct
 ```{r}
-undef_msg <- fucntion(item) {return paste('Please make sure that you already create variable \'', 
-	deparse(substitute(item)), '\'', sep="")}
-incor_msg <- function(item) {return paste('Please make sure that you import the correct data into variable \'', 
-	deparse(substitute(item)), '\'. Use function \'read.delim()\' to import dataset to the variable', sep="")} 
+undef_msg <- fucntion(item) {return paste("Please make sure that you already create variable `", 
+	deparse(substitute(item)), "`", sep="")}
+incor_msg <- function(item) {return paste("Please make sure that you import the correct data into variable `", 
+	deparse(substitute(item)), "`. Use function `read.delim()` to import dataset to the variable", sep="")} 
 iteration_list <- c(w_user, w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
 for (item in iteration_list) {
 	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))}
