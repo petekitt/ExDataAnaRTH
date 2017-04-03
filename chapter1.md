@@ -28,13 +28,13 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv"))
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv"))
 ```
 
 *** =sample_code
@@ -65,13 +65,13 @@ w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
 
 *** =sct
 ```{r}
-undef_msg <- function(x) {
-	paste("Please make sure that you already create variable `", deparse(substitute(x)), "`", sep="")}
-incor_msg <- function(x) {
-	paste("Please make sure that you import the correct data into variable `", deparse(substitute(x)), "`. Use function 		`read.delim()` to import dataset to the variable", sep="")} 
-iteration_list <- c(w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
-for (x in iteration_list) {
-	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))}
+#undef_msg <- function(x) {
+#	paste("Please make sure that you already create variable `", deparse(substitute(x)), "`", sep="")}
+#incor_msg <- function(x) {
+#	paste("Please make sure that you import the correct data into variable `", deparse(substitute(x)), "`. Use function 		`read.delim()` to import dataset to the variable", sep="")} 
+#iteration_list <- c(w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
+#for (x in iteration_list) {
+#	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))}
 success_msg("Good job!")
 ```
 
