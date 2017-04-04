@@ -20,7 +20,7 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 - w\_chain\_category.tsv
 - w\_restaurant\_checkin_user.tsv
 
-เก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ w_user.tsv ก็ให้เก็บค่าไว้ในตัวแปรชื่อ w_user
+จากนั้นเก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ w_user.tsv ก็ให้เก็บค่าไว้ในตัวแปรชื่อ w_user
 เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล w_user และ w_restaurant ไว้ให้คุณใน editor ทางขวามือแล้ว
 สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลื่นๆที่เหลือเข้ามาใน R workspace!
 
@@ -28,7 +28,6 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =pre_exercise_code
 ```{r}
-setwd("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets")
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv"))
@@ -42,7 +41,7 @@ setwd("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datase
 ```{r}
 # Import w_user and w_restaurant data to R workspace
 # w_user <- read.delim('w_user.tsv')
-w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
 
@@ -52,15 +51,15 @@ w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
 ```{r}
 # Import w_user and w_restaurant data to R workspace
 # w_user <- read.delim('w_user.tsv')
-w_restaurant <- read.delim('w_restaurant.tsv', encoding='UTF-8')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 		
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
-w_chain <- read.delim('w_chain.tsv')
-w_rating <- read.delim('w_rating.tsv')
-w_category <- read.delim('w_category.tsv')
-w_restaurant_category <- read.delim('w_restaurant_category.tsv')
-w_chain_category <- read.delim('w_chain_category.tsv')
-w_restaurant_checkin_user <- read.delim('w_restaurant_checkin_user.tsv')
+w_chain <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv')
+w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
+w_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv')
+w_restaurant_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv')
+w_chain_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv')
+w_restaurant_checkin_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv')
 
 ```
 
