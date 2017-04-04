@@ -70,7 +70,7 @@ success_msg("Good job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:999aa2fe6e
-## เรามาลองสำรวจข้อมูลร้านอาหารกัน!
+## เรามาลองสำรวจตัวอย่างข้อมูลร้านอาหารกัน!
 
 
 *** =instructions
@@ -98,7 +98,7 @@ success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:628f701efd
-## <<<New Exercise>>>
+## การดึงข้อมูลโดยใช้ Dplyr
 
 
 *** =instructions
@@ -126,7 +126,7 @@ success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
-## <<<New Exercise>>>
+## การเปลี่ยนชื่อคอลัมน์และการดึงข้อมูลแบบไม่ซ้ำค่าด้วย Dplyr
 
 
 *** =instructions
@@ -154,7 +154,7 @@ success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
-## <<<New Exercise>>>
+## aaaa
 
 
 *** =instructions
