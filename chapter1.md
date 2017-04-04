@@ -28,11 +28,12 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =pre_exercise_code
 ```{r}
+setwd("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets")
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv"))
+#load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv"))
 #load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv"))
 ```
