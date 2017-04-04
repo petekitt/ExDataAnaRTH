@@ -71,71 +71,103 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:999aa2fe6e
 ## เรามาลองสำรวจตัวอย่างข้อมูลร้านอาหารกัน!
 
+ก่อนที่จะเริ่มทำการวิเคราะห์ข้อมูลร้านอาหาร เราจะลองมาสำรวจลักษณะของข้อมูลร้านอาหารคร่าวๆดูก่อน โดยการใช้ function R ที่เราคุ้นเคย ได้แก่ `head()` `tail()` และ `str()`
 
 *** =instructions
-
+เราได้ import ข้อมูลร้านอาหารไว้ในตัวแปร `w_restaurant` ให้คุณแล้ว
+ให้คุณลองใช้ function `head()` และ `tail()` เพื่อตรวจสอบว่าข้อมูล 10 แถวแรกและ 10 แถวสุดท้ายจากตัวแปร `w_restaurant` นั้นเป็นอย่างไร
+จากนั้นให้ใช้ function `str()` เพื่อตรวจสอบโครงสร้างของข้อมูลชุดนี้ด้วย
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 ```
 
 *** =sample_code
 ```{r}
+# display the first 10 rows from dataset `w_restaurant`
+head(w_restaurant, n=10)
+
+# display the last 10 rows from dataset `w_restaurant`
+
+
+# display structure from the dataset `w_restaurant`
 
 ```
 
 *** =solution
 ```{r}
+# display the first 10 rows from dataset `w_restaurant`
+head(w_restaurant, n=10)
 
+# display the last 10 rows from dataset `w_restaurant`
+tail(w_restaurant, n=10)
+
+# display structure from the dataset `w_restaurant`
+str(w_restaurant)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:628f701efd
 ## การดึงข้อมูลโดยใช้ Dplyr
 
-
 *** =instructions
+บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `w_restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
+ให้คุณลองทำแบบเดียวกันโดยใช้ function `select()` จาก package Dplyr แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_select`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 ```
 
 *** =sample_code
 ```{r}
+# without Dplyr
+normal_select <- w_restaurant[,c('name', 'price_range', 'parking', 'credit_card_accepted', 'wifi')]
 
+# with Dplyr
+deplyr_select <- 
 ```
 
 *** =solution
 ```{r}
+# without Dplyr
+normal_select <- w_restaurant[,c('name', 'price_range', 'parking', 'credit_card_accepted', 'wifi')]
 
+# with Dplyr
+deplyr_select <- select(w_restaurant, name, price_range, parking, credit_card_accepted, wifi)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
 ## การเปลี่ยนชื่อคอลัมน์และการดึงข้อมูลแบบไม่ซ้ำค่าด้วย Dplyr
 
+นอกจากการเลือกข้อมูลบางคอลัมน์ออกมาจาก data frame ตามปกติแล้ว เรายังสามารถเปลี่ยนชื่อคอลัมน์ต่างๆได้ด้วย
+และเราสามารถดึงแค่ข้อมูลที่ไม่ซ้ำค่าออกมาได้โดยการใช้ function `distinct()`
 
 *** =instructions
+- ให้คุณเลือกข้อมูลคอลัมน์ `name`, `price_range`, `parking` และ `bookable` จาก `w_restaurant` โดยเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
+- 
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 ```
 
 *** =sample_code
