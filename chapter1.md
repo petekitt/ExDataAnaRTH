@@ -159,8 +159,10 @@ success_msg("Good job!")
 และเราสามารถดึงแค่ข้อมูลที่ไม่ซ้ำค่าออกมาได้โดยการใช้ function `distinct()`
 
 *** =instructions
-- ให้คุณเลือกข้อมูลคอลัมน์ `name`, `price_range`, `parking` และ `bookable` จาก `w_restaurant` โดยเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
-- 
+- ให้คุณเลือกข้อมูลคอลัมน์ `name`, `price_range`, `parking` และ `bookable` จาก `w_restaurant` โดยเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_restaurant`
+- สั่งให้ R แสดงค่าตัวแปร `dplyr_restaurant`
+- ใช้ function `distinct()` กับ `dplyr_restaurant` เพื่อดูข้อมูลร้านอาหารทั้งหมดคร่าวๆว่ามีที่จอดรถกี่ที่บ้าง เก็บผลลัพธ์ไว้ในตัวแปร `distinct_parking`
+- สั่งให้ R แสดงค่าตัวแปร `distinct_parking`
 
 *** =hint
 
@@ -172,30 +174,61 @@ w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/producti
 
 *** =sample_code
 ```{r}
+# define `dplyr_restaurant` here using `select()` function, replace `...` with the arguments you need
+dplyr_restaurant <- select(...)
+
+# print out the values in `dplyr_restaurant`
+
+
+# now, let's see the distinct parking lots for all the restaurants in our `dplyr_restaurant` dataset, store result in `distinct_parking`
+distinct_parking <-
+
+# print out distinct values we stored in `distinct_parking`
 
 ```
 
 *** =solution
 ```{r}
+# define `dplyr_restaurant` here using `select()` function, replace `...` with the arguments you need
+dplyr_restaurant <- select(w_restaurant, name, price_range, parking, reservable=bookable)
 
+# print out the values in `dplyr_restaurant`
+dplyr_restaurant
+
+# now, let's see the distinct parking lots for all the restaurants in our `dplyr_restaurant` dataset, store result in `distinct_parking`
+distinct_parking <- distinct(dplyr_restaurant, parking)
+
+# print out distinct values we stored in `distinct_parking`
+distinct_parking
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good! Now you know how to use select, change the variable name as you need, and distinguish a redundant values in the dataset. We will move to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
-## aaaa
+## filter() และ mutate()!
 
+การคัดกรองข้อมูล และการคำนวณหรือเปลี่ยนแปลงรูปแบบข้อมูลให้เหมาะสม เป็นสิ่งที่หลีกเลี่ยงไม่ได้ในการวิเคราะห์ข้อมูล
+เราสามารถใช้ function `filter()` ในการเลือกคัดกรองเฉพาะกลุ่มข้อมูลที่เราสนใจได้
+ส่วน function `mutate()` นั้นจะช่วยให้เราสามารถเปลี่ยนแปลงรูปแบบของข้อมูล หรือแม้กระทั่งสร้างตัวแปรใหม่ที่เกิดจากการคำนวณด้วยตัวแปรอื่นๆในข้อมูลของเราได้ โดย function `mutate()` จะทำการเพิ่มตัวแปรใหม่เข้าไปใน dataset เดิมของเรา
+
+- and maybe we put some demonstration on how to simply use filter() and mutate() on `w_restaurant` here filtering just only the restaurant that have wifi then mutate the parking column to say something like have or don't have parking lots
 
 *** =instructions
+ตอนนี้เรามาลองดูข้อมูลเกี่ยวกับผู้ใช้งานเว็บ wongnai กันบ้าง สิ่งที่คุณต้องทำคือ
+- ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ n_reviews > 0)
+- เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการหาค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
+- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `new_w_user`
+เราได้ทำการ import dataset `w_user` มาไว้ใน R workspace ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปรต่างๆใน dataset ดังกล่าวได้โดยการพิมพ์ `str(w_user)` ลงไปใน Console เพื่อดูว่า `w_user` มีลักษณะข้อมูลต่างๆเป็นอย่างไร
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
 ```
 
 *** =sample_code
