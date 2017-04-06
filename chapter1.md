@@ -275,7 +275,8 @@ success_msg("Good job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
-## bbb
+## การสรุปข้อมูลด้วย summarise() และ group_by()
+
 
 
 *** =instructions
