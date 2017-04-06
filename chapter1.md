@@ -266,7 +266,7 @@ filtered_user$avg_rating <- (
 	5*filtered_user$n_5_ratings) / (filtered_user$n_1_ratings + filtered_user$n_2_ratings + filtered_user$n_3_ratings + filtered_user$n_4_ratings + w_user_new$n_5_ratings)
 
 # do the same thing in `Dplyr` way
-mutate_w_user <- mutate(filter(new_w_user, reviews_count > 0), avg_rating = (n_1_ratings + 2*n_2_ratings + 3*n_3_ratings +
+mutate_w_user <- mutate(filter(w_user_new, reviews_count > 0), avg_rating = (n_1_ratings + 2*n_2_ratings + 3*n_3_ratings +
 	4*n_4_ratings + 5*n_5_ratings) / (n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
 
 # print out sample results
@@ -276,4 +276,32 @@ head(mutate_w_user, n=10)
 *** =sct
 ```{r}
 success_msg("Good job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
+## bbb
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
 ```
