@@ -1,7 +1,7 @@
 --- 
 title_meta  : บทที่ 1 
-title       : การจัดการกับข้อมูลด้วย package Dplyr
-description : "ในบทเรียนนี้คุณจะได้เรียนรู้เกี่ยวกับการใช้ package Dplyr บนโปรแกรม R ซึ่ง package ดังกล่าวจะช่วยให้การจัดการกับข้อมูลเป็นเรื่องง่ายจนคุณจะต้องตกใจ!"
+title       : การจัดการกับข้อมูลด้วย package Dplyr ระดับเบื้องต้น
+description : "ในบทเรียนนี้คุณจะได้เรียนรู้เกี่ยวกับการใช้ package Dplyr ระดับเบื้องต้นบนโปรแกรม R ซึ่ง package ดังกล่าวจะช่วยให้การจัดการกับข้อมูลเป็นเรื่องง่ายจนคุณจะต้องตกใจ!"
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:12ff8cde26
 ## การนำข้อมูลเข้าสู่โปรแกรม R
@@ -10,7 +10,6 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =instructions
 ให้คุณนำข้อมูลต่างๆเหล่านี้เข้ามาใน R workspace โดยใช้คำสั่ง `read.delim()` กับไฟล์ `.tsv` ดังต่อไปนี้
-
 - `w_user.tsv`
 - `w_restaurant.tsv`
 - `w_chain.tsv`
@@ -19,7 +18,6 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 - `w_restaurant_category.tsv`
 - `w_chain_category.tsv`
 - `w_restaurant_checkin_user.tsv`
-
 จากนั้นเก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ `w_user.tsv` ก็ให้เก็บค่าไว้ในตัวแปรชื่อ `w_user`
 เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล `w_user.tsv` และ `w_restaurant.tsv` ไว้ให้คุณใน editor ทางขวามือแล้ว
 สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลอื่นๆที่เหลือเข้ามาใน R workspace!
@@ -155,14 +153,23 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
 ## การเปลี่ยนชื่อคอลัมน์และการดึงข้อมูลแบบไม่ซ้ำค่าด้วย Dplyr
 
-นอกจากการเลือกข้อมูลบางคอลัมน์ออกมาจาก data frame ตามปกติแล้ว เรายังสามารถเปลี่ยนชื่อคอลัมน์ต่างๆได้ด้วย
-และเราสามารถดึงแค่ข้อมูลที่ไม่ซ้ำค่าออกมาได้โดยการใช้ function `distinct()`
+Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` ยกตัวอย่างเช่น:
+- คุณสามารถพิมพ์คำสั่ง `select(w_restaurant, starts_with("good"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อขึ้นต้นด้วย "good" ได้
+- คุณสามารถพิมพ์คำสั่ง `select(w_restaurant, ends_with("id"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อลงท้ายด้วย "id" ได้
+- หรือแม้กระทั่งการใช้คำสั่ง `select(w_restaurant, ends_with("name"))` เพื่อดึงเฉพาะคอลัมน์ที่มีคำว่า "name" อยู่ในชื่อก็สามารถทำได้เช่นเดียวกัน
+(คุณสามารถพิมพ์คำสั่งต่างๆลงไปใน Console เพื่อลองทดสอบดูได้เลย)
+
+ซึ่งนอกจากการเลือกคอลัมน์ต่างๆออกมาจาก data frame แล้ว เรายังสามารถเปลี่ยนชื่อคอลัมน์ต่างๆได้ด้วย ยกตัวอย่างเช่น
+คำสั่ง `select(w_restaurant, id, name, reservable = bookable)` จะทำการเลือกคอลัมน์ `id`, `name` และ `bookable` ออกมาจาก `w_restaurant` และเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
+
+และเราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง ยกตัวอย่างเช่น
+คำสั่ง `distinct(w_restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
 
 *** =instructions
-- ให้คุณเลือกข้อมูลคอลัมน์ `name`, `price_range`, `parking` และ `bookable` จาก `w_restaurant` โดยเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_restaurant`
-- สั่งให้ R แสดงค่าตัวแปร `dplyr_restaurant`
-- ใช้ function `distinct()` กับ `dplyr_restaurant` เพื่อดูข้อมูลร้านอาหารทั้งหมดคร่าวๆว่ามีที่จอดรถกี่ที่บ้าง เก็บผลลัพธ์ไว้ในตัวแปร `distinct_parking`
-- สั่งให้ R แสดงค่าตัวแปร `distinct_parking`
+- ทำการเลือกข้อมูลจาก `w_user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `w_user_new`
+- สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `w_user_new`
+- ใช้ function `distinct()` กับ `w_user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
+- สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
 
 *** =hint
 
@@ -170,41 +177,42 @@ success_msg("Good job!")
 ```{r}
 library('dplyr')
 w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
 ```
 
 *** =sample_code
 ```{r}
-# define `dplyr_restaurant` here using `select()` function, replace `...` with the arguments you need
-dplyr_restaurant <- select(...)
+# define `w_user_new` here using `select()` function, replace `...` with the arguments you need
+w_user_new <- select(...)
 
-# print out the values in `dplyr_restaurant`
+# print out the the first 10 rows in `w_user_new`
 
 
-# now, let's see the distinct parking lots for all the restaurants in our `dplyr_restaurant` dataset, store result in `distinct_parking`
-distinct_parking <-
+# now, let's see the distinct gender in our `w_user_new` data frame, store result in `distinct_gender`
+distinct_gender <-
 
-# print out distinct values we stored in `distinct_parking`
+# print out distinct values we stored in `distinct_gender`
 
 ```
 
 *** =solution
 ```{r}
-# define `dplyr_restaurant` here using `select()` function, replace `...` with the arguments you need
-dplyr_restaurant <- select(w_restaurant, name, price_range, parking, reservable=bookable)
+# define `w_user_new` here using `select()` function, replace `...` with the arguments you need
+w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
 
-# print out the values in `dplyr_restaurant`
-dplyr_restaurant
+# print out the the first 10 rows in `w_user_new`
+head(w_user_new, n=10)
 
-# now, let's see the distinct parking lots for all the restaurants in our `dplyr_restaurant` dataset, store result in `distinct_parking`
-distinct_parking <- distinct(dplyr_restaurant, parking)
+# now, let's see the distinct gender in our `w_user_new` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(w_user_new, gender)
 
-# print out distinct values we stored in `distinct_parking`
-distinct_parking
+# print out distinct values we stored in `distinct_gender`
+distinct_gender
 ```
 
 *** =sct
 ```{r}
-success_msg("Good! Now you know how to use select, change the variable name as you need, and distinguish a redundant values in the dataset. We will move to the next exercise!")
+success_msg("Good! Now you know how to easily select, change the variable name as you need, and distinguish a redundant values in the dataset. We will move to the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
@@ -217,11 +225,12 @@ success_msg("Good! Now you know how to use select, change the variable name as y
 - and maybe we put some demonstration on how to simply use filter() and mutate() on `w_restaurant` here filtering just only the restaurant that have wifi then mutate the parking column to say something like have or don't have parking lots
 
 *** =instructions
-ตอนนี้เรามาลองดูข้อมูลเกี่ยวกับผู้ใช้งานเว็บ wongnai กันบ้าง สิ่งที่คุณต้องทำคือ
-- ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ n_reviews > 0)
-- เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการหาค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
-- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `new_w_user`
-เราได้ทำการ import dataset `w_user` มาไว้ใน R workspace ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปรต่างๆใน dataset ดังกล่าวได้โดยการพิมพ์ `str(w_user)` ลงไปใน Console เพื่อดูว่า `w_user` มีลักษณะข้อมูลต่างๆเป็นอย่างไร
+ต่อจากแบบฝึกหัดที่แล้ว สิ่งที่คุณต้องทำกับตัวแปร `w_user_new` คือ
+- ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ reviews_count > 0)
+- เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการเพิ่มคอลัมน์ `avg_rating` ที่เก็บค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
+- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `mutate_w_user`
+- สั่งให้ R แสดงค่า 10 แถวแรกจาก `mutate_w_user`
+เราได้ทำการเตรียมตัวแปร `w_user_new` ไว้ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปร `w_user_new` นี้ได้โดยการพิมพ์ `str(w_user_new)` ลงไปใน Console
 
 *** =hint
 
@@ -229,19 +238,42 @@ success_msg("Good! Now you know how to use select, change the variable name as y
 ```{r}
 library('dplyr')
 w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
 ```
 
 *** =sample_code
 ```{r}
+# or even columns that contain the same word by using `contains()` 
+filtered_user <- w_user_new[w_user_new$n_reviews > 0, ]
+filtered_user$avg_rating <- filtered_user$(
+	w_user_new$n_1_ratings + 2*w_user_new$n_2_ratings + 3*w_user_new$n_3_ratings + 4*w_user_new$n_4_ratings +
+	5*w_user_new$n_5_ratings) / (w_user_new$n_1_ratings + w_user_new$n_2_ratings + w_user_new$n_3_ratings + w_user_new$n_4_ratings + w_user_new$n_5_ratings)
+
+# do the same thing in `Dplyr` way
+
+
+
+# print out sample results
 
 ```
 
 *** =solution
 ```{r}
+# doing the job based on original R approach
+filtered_user <- w_user_new[w_user_new$n_reviews > 0, ]
+filtered_user$avg_rating <- (
+	filtered_user$n_1_ratings + 2*filtered_user$n_2_ratings + 3*filtered_user$n_3_ratings + 4*filtered_user$n_4_ratings +
+	5*filtered_user$n_5_ratings) / (filtered_user$n_1_ratings + filtered_user$n_2_ratings + filtered_user$n_3_ratings + filtered_user$n_4_ratings + w_user_new$n_5_ratings)
 
+# do the same thing in `Dplyr` way
+mutate_w_user <- mutate(filter(new_w_user, reviews_count > 0), avg_rating = (n_1_ratings + 2*n_2_ratings + 3*n_3_ratings +
+	4*n_4_ratings + 5*n_5_ratings) / (n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
+
+# print out sample results
+head(mutate_w_user, n=10)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good job!")
 ```
