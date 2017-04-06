@@ -244,7 +244,7 @@ w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ra
 *** =sample_code
 ```{r}
 # or even columns that contain the same word by using `contains()` 
-filtered_user <- w_user_new[w_user_new$n_reviews > 0, ]
+filtered_user <- w_user_new[w_user_new$reviews_count > 0, ]
 filtered_user$avg_rating <- filtered_user$(
 	w_user_new$n_1_ratings + 2*w_user_new$n_2_ratings + 3*w_user_new$n_3_ratings + 4*w_user_new$n_4_ratings +
 	5*w_user_new$n_5_ratings) / (w_user_new$n_1_ratings + w_user_new$n_2_ratings + w_user_new$n_3_ratings + w_user_new$n_4_ratings + w_user_new$n_5_ratings)
@@ -260,7 +260,7 @@ filtered_user$avg_rating <- filtered_user$(
 *** =solution
 ```{r}
 # doing the job based on original R approach
-filtered_user <- w_user_new[w_user_new$n_reviews > 0, ]
+filtered_user <- w_user_new[w_user_new$reviews_count > 0, ]
 filtered_user$avg_rating <- (
 	filtered_user$n_1_ratings + 2*filtered_user$n_2_ratings + 3*filtered_user$n_3_ratings + 4*filtered_user$n_4_ratings +
 	5*filtered_user$n_5_ratings) / (filtered_user$n_1_ratings + filtered_user$n_2_ratings + filtered_user$n_3_ratings + filtered_user$n_4_ratings + w_user_new$n_5_ratings)
