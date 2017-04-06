@@ -216,7 +216,7 @@ success_msg("Good! Now you know how to easily select, change the variable name a
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
-## filter() และ mutate()!
+## คัดกรองข้อมูลตามเงื่อนไขและสร้างคอลัมน์ใหม่ในข้อมูลด้วย filter() และ mutate()!
 
 การคัดกรองข้อมูล และการคำนวณหรือเปลี่ยนแปลงรูปแบบข้อมูลให้เหมาะสม เป็นสิ่งที่หลีกเลี่ยงไม่ได้ในการวิเคราะห์ข้อมูล
 เราสามารถใช้ function `filter()` ในการเลือกคัดกรองเฉพาะกลุ่มข้อมูลที่เราสนใจได้
@@ -277,30 +277,58 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
 ## การสรุปข้อมูลด้วย summarise() และ group_by()
 
+ในแบบฝึกหัดที่แล้ว เราได้ทำการคัดกรองข้อมูลเฉพาะผู้ใช้ที่มีการเขียนรีวิวลงบนเว็บไซต์ wongnai และคำนวณคะแนนเฉลี่ยที่ผู้ใช้แต่ละคนจะให้กับร้านอาหารต่างๆ แล้วเก็บไว้ในตัวแปร `mutate_w_user`
+คราวนี้เราจะมาลองวิเคราะห์ข้อมูลกันให้ลึกมากขึ้นโดยใช้ function `summarise()` และ `group_by()`
 
+function `summarise()` จะช่วยให้เราสามารถสรุปข้อมูลได้ตามที่เราต้องการ โดยขึ้นอยู่กับว่าเราใส่อะไรลงไปเป็น argument ของ function `summarise()` ยกตัวอย่างเช่น:
+- คำสั่ง `summarise(w_user, n())` จะทำการสรุปข้อมูลให้เราว่าข้อมูลใน data frame `w_user` มีทั้งหมดกี่แถว (หรือก็คือมีผู้ใช้จำนวนกี่คน)
+- คำสั่ง `summarise(w_user, mean(n_reviews), sum(n_3_ratings), median(n_followers))` จะแสดงผลลัพธ์เป็นจำนวน review เฉลี่ยต่อผู้ใช้ 1 คน, จำนวน rating ระดับ 3 ทั้งหมดที่ผู้ใช้ใน `w_user` ได้ให้กับร้านอาหาร และค่ามัธยฐานของจำนวนผู้ติดตามของผู้ใช้แต่ละคนใน `w_user`
+คุณสามารถลองเล่นกับ function `summarise()` นี้ได้โดยการนำ code เหล่านี้ไปพิมพ์ใน Console และลองดูว่าผลเป็นอย่างไร
+
+ในการวิเคราะห์ข้อมูลในการทำงานจริง เราอาจจะอยากทำการวิเคราะห์ให้ลึกลงไปโดยแบ่งข้อมูลที่เรามีตามกลุ่มต่างๆด้วย ซึ่ง function `group_by()` จะสามารถช่วยเราได้ในจุดนี้
+หากคุณลองพิมพ์คำสั่ง `summarise(group_by(w_restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
+
+ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี price_range จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
 
 *** =instructions
+ให้คุณทำการวิเคราะห์ข้อมูลผู้ใช้ต่อโดยใช้ข้อมูลจากตัวแปร `mutate_w_user` ที่ถูกเตรียมไว้ให้ใน workspace แล้ว
+- ทำการสรุปข้อมูลโดยใช้ function `summarise()` และ `group_by()` ในการหาว่าผู้ใช้เพศชายและเพศหญิง (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) มีจำนวน `reviews_count`, จำนวน rating ทั้งหมด (ผลรวมตั้งแต่ `n_1_ratings` ไปจนถึง `n_5_ratings`) โดยเฉลี่ยแตกต่างกันอย่างไร และมีค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของ `avg_rating` ต่างกันอย่างไร
+- คุณควรใช้ function `mean()` และ `sd()` ร่วมกับ `summarise()` ในการหาค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐาน
+- ไม่ต้องตั้งชื่อให้กับแต่ละคอลัมน์ และให้ R แสดงผลลัพธ์ออกมาได้เลยโดยไม่ต้องเก็บผลลัพธ์ไว้ในตัวแปรใดๆ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
+mutate_w_user <- mutate(filter(w_user_new, reviews_count > 0), avg_rating = (n_1_ratings + 2*n_2_ratings + 3*n_3_ratings +
+	4*n_4_ratings + 5*n_5_ratings) / (n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings))
 ```
 
 *** =sample_code
 ```{r}
+# This will return summary information about average amount of total level 1 rating through level 3 rating per 1 user
+summarise(w_user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
+
+# Your code here
 
 ```
 
 *** =solution
 ```{r}
+# This will return summary information about average amount of total level 1 rating through level 3 rating per 1 user
+summarise(w_user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
+
+# Your code here
 
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Well done!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b1f530f06d
