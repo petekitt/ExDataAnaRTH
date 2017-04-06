@@ -302,3 +302,87 @@ success_msg("Good job!")
 ```{r}
 
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b1f530f06d
+## การเรียงลำดับข้อมูลด้วย arrange()
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d2e7c1321d
+## เรามาวิเคราะห์ข้อมูลกันให้ลึกขึ้น!
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1aa667d382
+## เรามาวิเคราะห์ข้อมูลกันให้ลึกขึ้น! (2)
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
