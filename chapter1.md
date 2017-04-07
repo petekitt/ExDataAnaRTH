@@ -515,3 +515,91 @@ w_user %>% select(id, gender, n_reviews, n_photos, n_followers) %>% filter(n_fol
 ```{r}
 success_msg("Good job!")
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c2c15cb19a
+## ทำความรู้จักกับ Pipes (2)
+
+เราจะมาลองใช้ pipes ในระดับที่ยากขึ้นไปอีกหน่อย
+ในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
+- `8 %>% head(w_user, n=.)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
+
+*** =instructions
+
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+success_msg("Cool!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
+## pending 1
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5157e559cb
+## pending 2
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
