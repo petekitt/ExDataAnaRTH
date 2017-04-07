@@ -451,29 +451,67 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1aa667d382
-## เรามาวิเคราะห์ข้อมูลกันให้ลึกขึ้นกันอีกหน่อย! (2)
+## ทำความรู้จักกับ Pipes
 
+ในการวิเคราะห์ข้อมูล เราสามารถใช้คำสั่งที่เรียกว่า pipes (`%>%`) เพื่อทำให้เขียน code ได้เป็นระเบียบและเป็นขั้นตอนมากขึ้น
+โดยคำสั่ง pipes นี้จะประมวลผลเริ่มจากซ้ายไปขวา โดยใช้ตัวแปรหรือค่าใดๆก็ตามที่อยู่ด้านซ้ายของคำสั่งเป็น argument ตัวแรกของ function ทางด้านขวา เช่น:
+- `w_user %>% ncol()` จะใช้ `w_user` เป็น `argument ของ function `ncol()` ที่อยู่ด้านขวาและจะแสดงผลเป็นจำนวนคอลัมน์ในตัวแปร `w_user`
+- `w_rating %>% select(id, rating) %>% mutate(new_rating = rating + 2)` จะใช้ `w_rating` เป็น `argument ของ function `select()` ที่อยู่ด้านขวา จากนั้นจะใช้ผลลัพธ์ที่ได้จาก function `select()` เป็น argument ของ function `matate()` ทางด้านขวามือสุดต่อไป
 
 *** =instructions
+ให้คุณลองเขียนภาษา R โดยใช้ pipes (`%>%`) ในการสั่งให้ R แสดงค่าดังต่อไปนี้:
+- `str(w_rating)`
+- `nrow(w_rating)`
+- `head(w_rating, n=10)`
+- `distinct(w_rating, rating)`
+- `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
 ```
 
 *** =sample_code
 ```{r}
+# do the same thing as `str(w_rating)` using pipes (`%>%`)
+w_rating %>% str()
+
+# do the same thing as `nrow(w_rating)` using pipes (`%>%`)
+
+
+# do the same thing as `head(w_rating, n=10)` using pipes (`%>%`)
+
+
+# do the same thing as `distinct(w_rating, rating)` using pipes (`%>%`)
+
+
+# do the same thing as `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
 
 ```
 
 *** =solution
 ```{r}
+# do the same thing as `str(w_rating)` using pipes (`%>%`)
+w_rating %>% str()
 
+# do the same thing as `nrow(w_rating)` using pipes (`%>%`)
+w_rating %>% nrow()
+
+# do the same thing as `head(w_rating, n=10)` using pipes (`%>%`)
+w_rating %>% head(n=10)
+
+# do the same thing as `distinct(w_rating, rating)` using pipes (`%>%`)
+w_rating %>% distinct(rating)
+
+# do the same thing as `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
+w_user %>% select(id, gender, n_reviews, n_photos, n_followers) %>% filter(n_followers > 100) %>% head()
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good job!")
 ```
