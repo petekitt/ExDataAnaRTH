@@ -118,6 +118,9 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:628f701efd
 ## การดึงข้อมูลโดยใช้ Dplyr
 
+ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
+- `w_restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถว
+
 *** =instructions
 บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `w_restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
 ให้คุณลองทำแบบเดียวกันโดยใช้ function `select()` จาก package Dplyr แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_select`
@@ -393,7 +396,7 @@ success_msg("Cool! Let's go to the next exercise")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d2e7c1321d
-## เรามาเชื่อมข้อมูลต่างๆเข้าด้วยกันดีกว่า!
+## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน
 
 แน่นอนว่าการนำข้อมูลจากหลายๆ data frame มาหาจุดเชื่อมโยงกันนั้นเป็นเรื่องที่หลีกเลี่ยงไม่ได้
 
