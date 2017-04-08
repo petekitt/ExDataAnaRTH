@@ -119,7 +119,8 @@ success_msg("Good job!")
 ## การดึงข้อมูลโดยใช้ Dplyr
 
 ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
-- `w_restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถว
+- `w_restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `w_restaurant`
+- `w_restaurant[c(2,4,6), c('name', 'english_name', 'branch')]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
 
 *** =instructions
 บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `w_restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
@@ -346,7 +347,7 @@ success_msg("Well done!")
 
 หากคุณต้องการจะเรียงลำดับข้อมูลเพื่อใช้ในการวิเคราะห์ หรือแม้แต่เพื่อจัดข้อมูลให้เป็นระเบียบมากขึ้น คุณสามารถใช้ function `arrange()` ในการจัดเรียงข้อมูลได้ เช่น
 - คำสั่ง `arrange(w_user, id)` จะทำการเรียงข้อมูลในตัวแปร `w_user` ตามลำดับ `id`
-- คำสั่ง `arrange(w_user, -n_followers, -n_reviews)` จะทำการเรียงข้อมูลในตัวแปร `w_user` โดยใช้คอลัมน์ `n_followers` และ `n_reviews` เป็นเกณฑ์ตามลำดับโดยเรียงจากมากไปหาน้อย (นั่นคือ ถ้ามีข้อมูลผู้ใช้งานคนไหนที่มีจำนวนผู้ติดตาม (`n_followers`) เท่ากัน R จะทำการพิจารณาคอลัมน์ `n_reviews` เป็นลำดับต่อไป) 
+- คำสั่ง `arrange(w_user, -n_followers, -n_reviews)` จะทำการเรียงข้อมูลในตัวแปร `w_user` โดยใช้คอลัมน์ `n_followers` และ `n_reviews` เป็นเกณฑ์ตามลำดับโดยเรียงจากมากไปหาน้อย (นั่นคือ ถ้ามีข้อมูลผู้ใช้งานคนไหนที่มีจำนวนผู้ติดตาม (`n_followers`) เท่ากัน R จะทำการพิจารณาคอลัมน์ `n_reviews` เป็นลำดับต่อไป)
 
 สังเกตได้ว่า function `arrange()` จะทำหน้าที่คล้ายกับ function `order()` ในภาษา R ปกติ แต่นอกจากการใส่เครื่องหมายลบ (`-`) เพื่อบอกให้ R เรียงลำดับข้อมูลจากมากไปหาน้อยแล้ว เรายังสามารถใช้คำสั่ง `desc()` กับตัวแปรที่เราต้องการให้เรียงลำดับจากมากไปหาน้อยได้ด้วยเช่นกัน นั่นคือ คำสั่งดังต่อไปนี้:
 - `arrange(w_user, desc(n_followers), desc(n_reviews))`
@@ -401,12 +402,14 @@ success_msg("Cool! Let's go to the next exercise")
 แน่นอนว่าการนำข้อมูลจากหลายๆ data frame มาหาจุดเชื่อมโยงกันนั้นเป็นเรื่องที่หลีกเลี่ยงไม่ได้
 
 package Dplyr มี function ที่จะช่วยในการนำ data frame ต่างๆมาเชื่อมต่อกัน ได้แก่ `left_join()`, `right_join()`, `inner_join()`, `full_join()` และ `full_join()` ซึ่งมีคำอธิบายคร่าวๆดังต่อไปนี้:
-- `left_join(x, y, by=c('a'='b'))`: นำข้อมูลทุกแถวจาก `x` มาเชื่อมกับ `y` โดยใช้คอลัมน์ `a` จาก `x` และคอลัมน์ `b` จาก `y` เป็นตัวเชื่อม
-- `right_join(x, y, by=c('a'='b'))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `y` มาเชื่อมกับ `x` แทน
-- `inner_join(x, y, by=c('a'='b'))`: นำข้อมูลจาก `x` และ `y` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `x` และ `y`
-- `full_join(x, y, by=c('a'='b'))`: นำข้อมูลทั้งหมดจากทั้ง `x` และ `y` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
+- `left_join(t1, t2, by=c('a'='b'))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
+- `right_join(t1, t2, by=c('a'='b'))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
+- `inner_join(t1, t2, by=c('a'='b'))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
+- `full_join(t1, t2, by=c('a'='b'))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
 
-ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อม
+ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by=c('a'='b','e'='f'))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
+
+ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
 
 *** =instructions
 จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านจาก data frame ในตัวแปร `avg_restaurant_rating` ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame ในตัวแปร `w_restaurant` เพื่อทำการวิเคราะห์ต่อไป
@@ -524,13 +527,14 @@ success_msg("Good job!")
 
 เราจะมาลองใช้ pipes ในระดับที่ยากขึ้นไปอีกหน่อย
 ในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
-- `8 %>% head(w_user, n=.)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
+`8 %>% head(w_user, n=.)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
 
 *** =instructions
 เราได้สร้างตัวแปร `w_restaurant` และ `w_rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
 - ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
-- ใช้ function `inner_join()` ในการเชื่อม `w_restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เรียงข้อมูลตาม `id` ของร้านอาหาร
+- ใช้ function `inner_join()` ในการเชื่อม `w_restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `w_rating` เป็นตัวเชื่อมกับ `id` จาก `w_restaurant`
 - เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
+- เรียงลำดับผลลัพธ์ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย
 - เก็บผลลัพธ์ในคำสั่งที่แล้วไว้ในตัวแปร `result`
 - สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `result`
 
@@ -538,17 +542,29 @@ success_msg("Good job!")
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
 ```
 
 *** =sample_code
 ```{r}
+# define `result` here
+result <- 
+	
+# print the first 10 row from `result` out
 
 ```
 
 *** =solution
 ```{r}
-
+# define `result` here
+result <- w_rating %>% group_by(reviewed_item_id) %>% summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
+	inner_join(w_restaurant, by=c('reviewed_item_id'='id')) %>%
+	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% arrange(-avg_rating)
+	
+# print the first 10 row from `result` out
+result %>% head(n=10)
 ```
 
 *** =sct
@@ -557,16 +573,39 @@ success_msg("Cool!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
-## pending 1
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน!
 
+หลังจากที่คุณได้เรียนรู้กับ function พื้นฐานต่างๆของ package Dplyr ไปแล้ว ถึงเวลาแล้วที่เราจะให้คุณลองลงมือดึงข้อมูลเพื่อนำมาวิเคราะห์ด้วยตัวเอง!
+
+เพื่อเป็นการทบทวน รายละเอียดการใช้งานของแต่ละ function พื้นฐาน มีดังต่อไปนี้:
+- `select()` ใช้เลือกข้อมูลคอลัมน์ต่างๆจาก data frame
+- `distinct()` ใช้ในการดึงเฉพาะข้อมูลที่มีค่าไม่ซ้ำกัน สามารถใช้ในการสำรวจข้อมูลคร่าวๆได้ ว่ามีค่าที่เป็นไปได้ทั้งหมดกี่แบบ
+- `arrange()` ใช้ในการเรียงลำดับข้อมูล คุณสามารถเรียงจากค่ามากไปหาน้อยได้โดยการใส่เครื่องหมาย `-` หรือ `desc()`
+- `filter()` ใช้ในการกรองข้อมูลเพื่อดึงเฉพาะข้อมูลที่ตรงตามเงื่อนไขที่คุณต้องการออกมา
+- `summarise()` ใช้ในการสรุปข้อมูลจาก data frame ของคุณ สามารถใช้งานกับ function การคำนวณอื่นๆได้อย่างอิสระ เช่น `n()`, `n_distinct()`, `sum()`, `mean()` และ `sd()` เป็นต้น
+- `group_by` สามารถใช้ร่วมกับ function `summarise()` เพื่อแบ่งข้อมูลออกเป็นกลุ่มตามค่าในคอลัมน์ได้
+- `left_join()`, `right_join()`, `inner_join()`, `full_join()` ใช้ในการนำข้อมูลมาเชื่อมโยงกันตามค่าในคอลัมน์ที่คุณกำหนด
+- `%>%` ช่วยให้คุณสามารถเขียน code ได้อย่างเป็นขั้นเป็นตอนมากขึ้นจากซ้ายไปขวา ทำให้ code ของคุณเป็นระเบียบมากขึ้น และอาจช่วยให้คุณทำงานง่ายขึ้นด้วย!
 
 *** =instructions
+ตอนนี้เรามีข้อมูล `w_restaurant`, `w_rating` และ `w_category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
+- เราต้องการข้อมูลสรุป จำนวนร้านอาหาร, จำนวนครั้งที่มีการให้คะแนน (rating), คะแนนเฉลี่ย, ส่วนเบี่ยงเบนมาตรฐานของคะแนน โดยแบ่งตามแต่ละ category
+- ให้ดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (domain_id ใน `w_restaurant` มีค่าเป็น 1)
+- ไม่ต้องสนใจร้านอาหารที่ไม่มี rating
+- คัดกรองเฉพาะ category ที่มีจำนวนครั้ง rating มากกว่าหรือเท่ากับ 5 ครั้ง
+- เรียงลำดับผลลัพธ์สุดท้ายตามคะแนนเฉลี่ยจากมากไปหาน้อย หาก category ใดมีคะแนนเฉลี่ยเท่ากัน ให้เรียงตามจำนวนครั้ง rating จากมากไปน้อยเป็นลำดับต่อไป
+- ผลลัพธ์สุดท้ายควรประกอบด้วย category_id (รหัส category), category_name (ชื่อ category), n_restaurants (จำนวนร้านอาหารใน category นั้นๆ), n_ratings (จำนวน rating ใน category นั้นๆ), avg_rating (คะแนนเฉลี่ยของ category), sd_rating (ส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category)
+- เก็บผลลัพธ์ไว้ในตัวแปร `category_score` พร้อมทั้งให้ R แสดงผลลัพธ์ออกมาด้วย
+- คุณสามารถทำแบบฝึกหัดนี้โดยการทำไปทีละขั้นตอน หรือจะเขียน code ให้ต่อกันหมดในคำสั่งเดียวก็ได้
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library('dplyr')
+w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+w_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv')
 ```
 
 *** =sample_code
@@ -576,38 +615,27 @@ success_msg("Cool!")
 
 *** =solution
 ```{r}
+category_score <-
+	w_restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(w_rating, by=c('id'='reviewed_item_id')) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating)) %>%
+	inner_join(w_category, by=c('category_id'='id')) %>% 
+	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>% 
+	filter(n_ratings >= 5) %>% 
+	arrange(desc(avg_ratings))
+
+category_score
 
 ```
 
 *** =sct
 ```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:5157e559cb
-## pending 2
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
+success_msg("Wonderful! Now you've finished chapter 1!")
 ```
