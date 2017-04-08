@@ -629,7 +629,7 @@ category_score <-
 	inner_join(w_category, by=c('category_id'='id')) %>% 
 	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>% 
 	filter(n_ratings >= 5) %>% 
-	arrange(desc(avg_ratings))
+	arrange(desc(avg_rating))
 
 category_score
 
