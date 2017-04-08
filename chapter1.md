@@ -32,8 +32,8 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 *** =sample_code
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-# w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+# w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
 
@@ -42,16 +42,16 @@ w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/producti
 *** =solution
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-# w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+# w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 		
 # Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
-#w_chain <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv')
-#w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
-#w_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv')
-#w_restaurant_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv')
-#w_chain_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv')
-#w_restaurant_checkin_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv')
+#w_chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv")
+#w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+#w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
+#w_restaurant_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv")
+#w_chain_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv")
+#w_restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv")
 
 ```
 
@@ -86,7 +86,7 @@ success_msg("Good job!")
 
 *** =pre_exercise_code
 ```{r}
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
@@ -124,7 +124,7 @@ success_msg("Good job!")
 
 ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
 - `w_restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `w_restaurant`
-- `w_restaurant[c(2,4,6), c('name', 'english_name', 'branch')]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
+- `w_restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
 
 *** =instructions
 บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `w_restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
@@ -134,14 +134,14 @@ success_msg("Good job!")
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
 # without Dplyr
-normal_select <- w_restaurant[,c('name', 'price_range', 'parking', 'credit_card_accepted', 'wifi')]
+normal_select <- w_restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
 deplyr_select <- 
@@ -150,7 +150,7 @@ deplyr_select <-
 *** =solution
 ```{r}
 # without Dplyr
-normal_select <- w_restaurant[,c('name', 'price_range', 'parking', 'credit_card_accepted', 'wifi')]
+normal_select <- w_restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
 deplyr_select <- select(w_restaurant, name, price_range, parking, credit_card_accepted, wifi)
@@ -187,9 +187,9 @@ Dplyr มีตัวช่วยมากมายในการเลือ�
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
-w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 ```
 
 *** =sample_code
@@ -249,8 +249,8 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+library("dplyr")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 ```
 
@@ -315,7 +315,7 @@ function `summarise()` จะช่วยให้เราสามารถส
 ในการวิเคราะห์ข้อมูลในการทำงานจริง เราอาจจะอยากทำการวิเคราะห์ให้ลึกลงไปโดยแบ่งข้อมูลที่เรามีตามกลุ่มต่างๆด้วย ซึ่ง function `group_by()` จะสามารถช่วยเราได้ในจุดนี้
 หากคุณลองพิมพ์คำสั่ง `summarise(group_by(w_restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
 
-ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี price_range จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
+ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี `price_range` จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
 
 *** =instructions
 ให้คุณทำการวิเคราะห์ข้อมูลผู้ใช้ต่อโดยใช้ข้อมูลจากตัวแปร `w_user_with_rating` ที่ถูกเตรียมไว้ให้ใน workspace แล้ว
@@ -327,9 +327,9 @@ function `summarise()` จะช่วยให้เราสามารถส
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
-w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 
 w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 
@@ -396,8 +396,8 @@ success_msg("Well done!")
 *** =pre_exercise_code
 ```{r}
 library('dplyr')
-w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
-w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
@@ -444,12 +444,12 @@ success_msg("Cool! Let's go to the next exercise")
 แน่นอนว่าการนำข้อมูลจากหลายๆ data frame มาหาจุดเชื่อมโยงกันนั้นเป็นเรื่องที่หลีกเลี่ยงไม่ได้
 
 package Dplyr มี function ที่จะช่วยในการนำ data frame ต่างๆมาเชื่อมต่อกัน ได้แก่ `left_join()`, `right_join()`, `inner_join()`, `full_join()` และ `full_join()` ซึ่งมีคำอธิบายคร่าวๆดังต่อไปนี้:
-- `left_join(t1, t2, by = c('a' = 'b'))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
-- `right_join(t1, t2, by = c('a' = 'b'))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
-- `inner_join(t1, t2, by = c('a' = 'b'))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
-- `full_join(t1, t2, by = c('a' = 'b'))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
+- `left_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
+- `right_join(t1, t2, by = c("a" = "b"))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
+- `inner_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
+- `full_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
 
-ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by = c('a' = 'b', 'e' = 'f'))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
+ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by = c("a" = "b", "e" = "f"))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
 
 ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
 
@@ -464,9 +464,9 @@ package Dplyr มี function ที่จะช่วยในการนำ d
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
-w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 
 mean_w_rating <- arrange(
 	summarise(
@@ -491,7 +491,7 @@ no_rating_proportion <-
 w_restaurant_new <- select(w_restaurant, id, name, price_range, category_id)
 
 w_restaurant_with_rating <- arrange(
-	left_join(w_restaurant_new, avg_restaurant_rating, by = c('id' = 'reviewed_item_id')), 
+	left_join(w_restaurant_new, avg_restaurant_rating, by = c("id" = "reviewed_item_id")), 
 	id
 )
 
@@ -531,9 +531,9 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_user <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv')
-w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
+library("dplyr")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
@@ -600,9 +600,9 @@ success_msg("Good job!")
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
-w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
@@ -621,7 +621,7 @@ result <-
 	w_rating %>% 
 	group_by(reviewed_item_id) %>% 
 	summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
-	inner_join(w_restaurant, by = c('reviewed_item_id' = 'id')) %>%
+	inner_join(w_restaurant, by = c("reviewed_item_id" = "id")) %>%
 	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% 
 	arrange(-avg_rating)
 	
@@ -664,10 +664,10 @@ success_msg("Cool!")
 
 *** =pre_exercise_code
 ```{r}
-library('dplyr')
-w_restaurant <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv', encoding='UTF-8')
-w_rating <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv')
-w_category <- read.delim('http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv')
+library("dplyr")
+w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
 ```
 
 *** =sample_code
@@ -681,14 +681,14 @@ w_category_with_rating <-
 	w_restaurant %>% 
 	filter(domain_id == 1) %>% 
 	select(id, category_id) %>%
-	inner_join(w_rating, by = c('id' = 'reviewed_item_id')) %>% 
+	inner_join(w_rating, by = c("id" = "reviewed_item_id")) %>% 
 	group_by(category_id) %>% 
 	summarise(
 		n_restaurants = n_distinct(id), 
 		n_ratings = n(), 
 		avg_rating = mean(rating), 
 		sd_rating = sd(rating)) %>%
-	inner_join(w_category, by = c('category_id' = 'id')) %>% 
+	inner_join(w_category, by = c("category_id" = "id")) %>% 
 	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>% 
 	filter(n_ratings >= 5) %>% 
 	arrange(desc(avg_rating))
