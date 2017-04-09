@@ -13,12 +13,8 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 ให้คุณนำข้อมูลต่างๆเหล่านี้เข้ามาใน R workspace โดยใช้คำสั่ง `read.delim()` กับไฟล์ `.tsv` ดังต่อไปนี้
 - `w_user.tsv`
 - `w_restaurant.tsv`
-- `w_chain.tsv`
 - `w_rating.tsv`
 - `w_category.tsv`
-- `w_restaurant_category.tsv`
-- `w_chain_category.tsv`
-- `w_restaurant_checkin_user.tsv`
 จากนั้นเก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ `w_user.tsv` ก็ให้เก็บค่าไว้ในตัวแปรชื่อ `w_user`
 เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล `w_user.tsv` และ `w_restaurant.tsv` ไว้ให้คุณใน editor ทางขวามือแล้ว
 สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลอื่นๆที่เหลือเข้ามาใน R workspace!
@@ -32,42 +28,38 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 *** =sample_code
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-# w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 
-# Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
+# Import `w_rating`, `w_category` to R workspace
 
 ```
 
 *** =solution
 ```{r}
 # Import w_user and w_restaurant data to R workspace
-# w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 		
-# Import w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, and w_restaurant_checkin_user to R workspace
-#w_chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain.tsv")
-#w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
-#w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
-#w_restaurant_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_category.tsv")
-#w_chain_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_chain_category.tsv")
-#w_restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant_checkin_user.tsv")
+# Import `w_rating`, `w_category` to R workspace
+w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
 
 ```
 
 *** =sct
 ```{r}
-#undef_msg <- function(x) {
-#	paste("Please make sure that you already created variable `", deparse(substitute(x)), "`", sep="")
-#}
-#incor_msg <- function(x) {
-#	paste("Please make sure that you imported the correct data into variable `", deparse(substitute(x)), 
-#	"`. Use function `read.delim()` to import dataset to the variable", sep="")
-#} 
-#iteration_list <- c(w_restaurant, w_chain, w_rating, w_category, w_restaurant_category, w_chain_category, w_restaurant_checkin_user)
-#for (x in iteration_list) {
-#	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))
-#}
+undef_msg <- function(x) {
+	paste("Please make sure that you already created variable `", deparse(substitute(x)), "`", sep="")
+}
+incor_msg <- function(x) {
+	paste("Please make sure that you imported the correct data into variable `", deparse(substitute(x)), 
+	"`. Use function `read.delim()` to import dataset to the variable", sep="")
+} 
+iteration_list <- c(w_user, w_restaurant, w_rating, w_category)
+for (x in iteration_list) {
+	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))
+}
 success_msg("Good job!")
 ```
 
@@ -115,6 +107,9 @@ str(w_restaurant)
 
 *** =sct
 ```{r}
+test_output_contains("head(w_restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `head()` function with argument `n = 10`")
+test_output_contains("tail(w_restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `tail()` function with argument `n = 10`")
+test_output_contains("str(w_restaurant)", incorrect_msg = "Please make sure you already correctly call the `str()` function with `w_restaurant` as an argument")
 success_msg("Good job!")
 ```
 
