@@ -50,16 +50,14 @@ w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production
 *** =sct
 ```{r}
 undef_msg <- function(x) {
-	paste("Please make sure that you already created variable `", deparse(substitute(x)), "`", sep="")
+	paste("Please make sure that you already created variable `", x, "`", sep="")
 }
 incor_msg <- function(x) {
-	paste("Please make sure that you imported the correct data into variable `", deparse(substitute(x)), 
-	"`. Use function `read.delim()` to import dataset to the variable", sep="")
+	paste("Please make sure that you imported the correct data into variable `", x, "`. Use function `read.delim()` to import dataset to the variable", sep="")
 } 
-test_object(w_user, undefined_msg = undef_msg(w_user), incorrect_msg = incor_msg(w_user))
-#test_object(w_restaurant, undefined_msg = undef_msg(w_restaurant), incorrect_msg = incor_msg(w_restaurant))
-#test_object(w_rating, undefined_msg = undef_msg(w_rating), incorrect_msg = incor_msg(w_rating))
-#test_object(w_category, undefined_msg = undef_msg(w_category), incorrect_msg = incor_msg(w_category))
+for (item in c("w_user", "w_restaurant", "w_rating", "w_category")) {
+	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))
+}
 success_msg("Good job!")
 ```
 
