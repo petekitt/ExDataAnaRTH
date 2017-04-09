@@ -56,10 +56,10 @@ incor_msg <- function(x) {
 	paste("Please make sure that you imported the correct data into variable `", deparse(substitute(x)), 
 	"`. Use function `read.delim()` to import dataset to the variable", sep="")
 } 
-iteration_list <- c(w_user, w_restaurant, w_rating, w_category)
-for (x in iteration_list) {
-	test_object(x, undefined_msg = undef_msg(x), incorrect_msg = incor_msg(x))
-}
+test_object(w_user, undefined_msg = undef_msg(w_user), incorrect_msg = incor_msg(w_user))
+test_object(w_restaurant, undefined_msg = undef_msg(w_restaurant), incorrect_msg = incor_msg(w_restaurant))
+test_object(w_rating, undefined_msg = undef_msg(w_rating), incorrect_msg = incor_msg(w_rating))
+test_object(w_category, undefined_msg = undef_msg(w_category), incorrect_msg = incor_msg(w_category))
 success_msg("Good job!")
 ```
 
@@ -486,7 +486,7 @@ no_rating_proportion <-
 w_restaurant_new <- select(w_restaurant, id, name, price_range, category_id)
 
 w_restaurant_with_rating <- arrange(
-	left_join(w_restaurant_new, avg_restaurant_rating, by = c("id" = "reviewed_item_id")), 
+	left_join(w_restaurant_new, mean_w_rating, by = c("id" = "reviewed_item_id")), 
 	id
 )
 
