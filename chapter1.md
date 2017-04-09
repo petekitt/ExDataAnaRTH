@@ -56,10 +56,10 @@ incor_msg <- function(x) {
 	paste("Please make sure that you imported the correct data into variable `", deparse(substitute(x)), 
 	"`. Use function `read.delim()` to import dataset to the variable", sep="")
 } 
-test_object(w_user, undefined_msg = undef_msg(w_user), incorrect_msg = incor_msg(w_user))
-test_object(w_restaurant, undefined_msg = undef_msg(w_restaurant), incorrect_msg = incor_msg(w_restaurant))
-test_object(w_rating, undefined_msg = undef_msg(w_rating), incorrect_msg = incor_msg(w_rating))
-test_object(w_category, undefined_msg = undef_msg(w_category), incorrect_msg = incor_msg(w_category))
+#test_object(w_user, undefined_msg = undef_msg(w_user), incorrect_msg = incor_msg(w_user))
+#test_object(w_restaurant, undefined_msg = undef_msg(w_restaurant), incorrect_msg = incor_msg(w_restaurant))
+#test_object(w_rating, undefined_msg = undef_msg(w_rating), incorrect_msg = incor_msg(w_rating))
+#test_object(w_category, undefined_msg = undef_msg(w_category), incorrect_msg = incor_msg(w_category))
 success_msg("Good job!")
 ```
 
