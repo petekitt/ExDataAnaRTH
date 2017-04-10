@@ -105,7 +105,7 @@ str(w_restaurant)
 
 *** =sct
 ```{r}
-test_output_contains("head(w_restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `head()` function with argument `n = 10`")
+test_output_contains("head(w_restaurant, n = 10)", incorrect_msg = "อย่าลืม Please make sure you already correctly call the `head()` function with argument `n = 10`")
 test_output_contains("tail(w_restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `tail()` function with argument `n = 10`")
 test_output_contains("str(w_restaurant)", incorrect_msg = "Please make sure you already correctly call the `str()` function with `w_restaurant` as an argument")
 success_msg("Good job!")
