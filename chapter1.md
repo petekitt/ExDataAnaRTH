@@ -12,13 +12,13 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 *** =instructions
 ให้คุณนำข้อมูลต่างๆเหล่านี้เข้ามาใน R workspace โดยใช้คำสั่ง `read.delim()` กับไฟล์ `.tsv` ดังต่อไปนี้
 
-* `w_user.tsv`
-* `w_restaurant.tsv`
-* `w_rating.tsv`
-* `w_category.tsv`
+* `user.tsv`
+* `restaurant.tsv`
+* `rating.tsv`
+* `category.tsv`
 
-จากนั้นเก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ `w_user.tsv` ก็ให้เก็บค่าไว้ในตัวแปรชื่อ `w_user`
-เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล `w_user.tsv` และ `w_restaurant.tsv` ไว้ให้คุณใน editor ทางขวามือแล้ว
+จากนั้นเก็บข้อมูลจากแต่ละไฟล์ไว้ในตัวแปร(data frame)ที่มีชื่อเดียวกัน เช่น ข้อมูลที่นำเข้าจากไฟล์ `user.tsv` ก็ให้เก็บค่าไว้ในตัวแปรชื่อ `user`
+เราได้พิมพ์ code ตัวอย่างสำหรับการนำเข้าข้อมูล `user.tsv` และ `restaurant.tsv` ไว้ให้คุณใน editor ทางขวามือแล้ว
 สิ่งที่คุณต้องทำคือพิมพ์คำสั่งสำหรับนำข้อมูลอื่นๆที่เหลือเข้ามาใน R workspace!
 
 *** =hint
@@ -29,23 +29,23 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 
 *** =sample_code
 ```{r}
-# Import w_user and w_restaurant data to R workspace
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+# Import `user` and `restaurant` data to R workspace
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 
-# Import `w_rating`, `w_category` to R workspace
+# Import `rating`, `category` to R workspace
 
 ```
 
 *** =solution
 ```{r}
-# Import w_user and w_restaurant data to R workspace
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+# Import `user` and `restaurant` data to R workspace
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 		
-# Import `w_rating`, `w_category` to R workspace
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
-w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
+# Import `rating`, `category` to R workspace
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
 
 ```
 
@@ -57,7 +57,7 @@ undef_msg <- function(x) {
 incor_msg <- function(x) {
 	paste("Please make sure that you imported the correct data into variable `", x, "`. Use function `read.delim()` to import dataset to the variable", sep="")
 } 
-for (item in c("w_user", "w_restaurant", "w_rating", "w_category")) {
+for (item in c("user", "restaurant", "rating", "category")) {
 	test_object(item, undefined_msg = undef_msg(item), incorrect_msg = incor_msg(item))
 }
 success_msg("Good job!")
@@ -70,46 +70,46 @@ success_msg("Good job!")
 ก่อนที่จะเริ่มทำการวิเคราะห์ข้อมูลร้านอาหาร เราจะลองมาสำรวจลักษณะของข้อมูลร้านอาหารคร่าวๆดูก่อน โดยการใช้ function R ที่เราคุ้นเคย ได้แก่ `head()` `tail()` และ `str()`
 
 *** =instructions
-เราได้ import ข้อมูลร้านอาหารไว้ในตัวแปร `w_restaurant` ให้คุณแล้ว
-ให้คุณลองใช้ function `head()` และ `tail()` เพื่อตรวจสอบว่าข้อมูล 10 แถวแรกและ 10 แถวสุดท้ายจากตัวแปร `w_restaurant` นั้นเป็นอย่างไร
+เราได้ import ข้อมูลร้านอาหารไว้ในตัวแปร `restaurant` ให้คุณแล้ว
+ให้คุณลองใช้ function `head()` และ `tail()` เพื่อตรวจสอบว่าข้อมูล 10 แถวแรกและ 10 แถวสุดท้ายจากตัวแปร `restaurant` นั้นเป็นอย่างไร
 จากนั้นให้ใช้ function `str()` เพื่อตรวจสอบโครงสร้างของข้อมูลชุดนี้ด้วย
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-# display the first 10 rows from dataset `w_restaurant`
-head(w_restaurant, n = 10)
+# display the first 10 rows from dataset `restaurant`
+head(restaurant, n = 10)
 
-# display the last 10 rows from dataset `w_restaurant`
+# display the last 10 rows from dataset `restaurant`
 
 
-# display structure from the dataset `w_restaurant`
+# display structure from the dataset `restaurant`
 
 ```
 
 *** =solution
 ```{r}
-# display the first 10 rows from dataset `w_restaurant`
-head(w_restaurant, n = 10)
+# display the first 10 rows from dataset `restaurant`
+head(restaurant, n = 10)
 
-# display the last 10 rows from dataset `w_restaurant`
-tail(w_restaurant, n = 10)
+# display the last 10 rows from dataset `restaurant`
+tail(restaurant, n = 10)
 
-# display structure from the dataset `w_restaurant`
-str(w_restaurant)
+# display structure from the dataset `restaurant`
+str(restaurant)
 ```
 
 *** =sct
 ```{r}
-test_output_contains("head(w_restaurant, n = 10)", incorrect_msg = "อย่าลืม Please make sure you already correctly call the `head()` function with argument `n = 10`")
-test_output_contains("tail(w_restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `tail()` function with argument `n = 10`")
-test_output_contains("str(w_restaurant)", incorrect_msg = "Please make sure you already correctly call the `str()` function with `w_restaurant` as an argument")
+test_output_contains("head(restaurant, n = 10)", incorrect_msg = "อย่าลืม Please make sure you already correctly call the `head()` function with argument `n = 10`")
+test_output_contains("tail(restaurant, n = 10)", incorrect_msg = "Please make sure you already correctly call the `tail()` function with argument `n = 10`")
+test_output_contains("str(restaurant)", incorrect_msg = "Please make sure you already correctly call the `str()` function with `restaurant` as an argument")
 success_msg("Good job!")
 ```
 
@@ -118,11 +118,11 @@ success_msg("Good job!")
 ## การดึงข้อมูลโดยใช้ Dplyr
 
 ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
-- `w_restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `w_restaurant`
-- `w_restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
+- `restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `w_restaurant`
+- `restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
 
 *** =instructions
-บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `w_restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
+บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
 ให้คุณลองทำแบบเดียวกันโดยใช้ function `select()` จาก package Dplyr แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_select`
 
 *** =hint
@@ -130,25 +130,25 @@ success_msg("Good job!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
 # without Dplyr
-normal_select <- w_restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
+normal_select <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
-deplyr_select <- 
+dplyr_select <- 
 ```
 
 *** =solution
 ```{r}
 # without Dplyr
-normal_select <- w_restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
+normal_select <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
-deplyr_select <- select(w_restaurant, name, price_range, parking, credit_card_accepted, wifi)
+dplyr_select <- select(restaurant, name, price_range, parking, credit_card_accepted, wifi)
 ```
 
 *** =sct
@@ -161,21 +161,21 @@ success_msg("Good job!")
 ## การเปลี่ยนชื่อคอลัมน์และการดึงข้อมูลแบบไม่ซ้ำค่าด้วย Dplyr
 
 Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` ยกตัวอย่างเช่น:
-- คุณสามารถพิมพ์คำสั่ง `select(w_restaurant, starts_with("good"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อขึ้นต้นด้วย "good" ได้
-- คุณสามารถพิมพ์คำสั่ง `select(w_restaurant, ends_with("id"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อลงท้ายด้วย "id" ได้
-- หรือแม้กระทั่งการใช้คำสั่ง `select(w_restaurant, ends_with("name"))` เพื่อดึงเฉพาะคอลัมน์ที่มีคำว่า "name" อยู่ในชื่อก็สามารถทำได้เช่นเดียวกัน
+- คุณสามารถพิมพ์คำสั่ง `select(restaurant, starts_with("good"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อขึ้นต้นด้วย "good" ได้
+- คุณสามารถพิมพ์คำสั่ง `select(restaurant, ends_with("id"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อลงท้ายด้วย "id" ได้
+- หรือแม้กระทั่งการใช้คำสั่ง `select(restaurant, ends_with("name"))` เพื่อดึงเฉพาะคอลัมน์ที่มีคำว่า "name" อยู่ในชื่อก็สามารถทำได้เช่นเดียวกัน
 (คุณสามารถพิมพ์คำสั่งต่างๆลงไปใน Console เพื่อลองทดสอบดูได้เลย)
 
 ซึ่งนอกจากการเลือกคอลัมน์ต่างๆออกมาจาก data frame แล้ว เรายังสามารถเปลี่ยนชื่อคอลัมน์ต่างๆได้ด้วย ยกตัวอย่างเช่น
-คำสั่ง `select(w_restaurant, id, name, reservable = bookable)` จะทำการเลือกคอลัมน์ `id`, `name` และ `bookable` ออกมาจาก `w_restaurant` และเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
+คำสั่ง `select(restaurant, id, name, reservable = bookable)` จะทำการเลือกคอลัมน์ `id`, `name` และ `bookable` ออกมาจาก `restaurant` และเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
 
 และเราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง ยกตัวอย่างเช่น
-คำสั่ง `distinct(w_restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
+คำสั่ง `distinct(restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
 
 *** =instructions
-- ทำการเลือกข้อมูลจาก `w_user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `w_user_new`
+- ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `user_new`
 - สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `w_user_new`
-- ใช้ function `distinct()` กับ `w_user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
+- ใช้ function `distinct()` กับ `user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
 - สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
 
 *** =hint
@@ -183,19 +183,19 @@ Dplyr มีตัวช่วยมากมายในการเลือ�
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 ```
 
 *** =sample_code
 ```{r}
-# define `w_user_new` here using `select()` function, replace `...` with the arguments you need
-w_user_new <- select(...)
+# define `user_new` here using `select()` function, replace `...` with the arguments you need
+user_new <- select(...)
 
-# print out the the first 10 rows in `w_user_new`
+# print out the the first 10 rows in `user_new`
 
 
-# now, let's see the distinct gender in our `w_user_new` data frame, store result in `distinct_gender`
+# now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
 distinct_gender <-
 
 # print out distinct values we stored in `distinct_gender`
@@ -204,14 +204,14 @@ distinct_gender <-
 
 *** =solution
 ```{r}
-# define `w_user_new` here using `select()` function, replace `...` with the arguments you need
-w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
+# define `user_new` here using `select()` function, replace `...` with the arguments you need
+user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
 
 # print out the the first 10 rows in `w_user_new`
-head(w_user_new, n = 10)
+head(user_new, n = 10)
 
-# now, let's see the distinct gender in our `w_user_new` data frame, store result in `distinct_gender`
-distinct_gender <- distinct(w_user_new, gender)
+# now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(user_new, gender)
 
 # print out distinct values we stored in `distinct_gender`
 distinct_gender
@@ -230,29 +230,29 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 เราสามารถใช้ function `filter()` ในการเลือกคัดกรองเฉพาะกลุ่มข้อมูลที่เราสนใจได้
 ส่วน function `mutate()` นั้นจะช่วยให้เราสามารถเปลี่ยนแปลงรูปแบบของข้อมูล หรือแม้กระทั่งสร้างตัวแปรใหม่ที่เกิดจากการคำนวณด้วยตัวแปรอื่นๆในข้อมูลของเราได้ โดย function `mutate()` จะทำการเพิ่มตัวแปรใหม่เข้าไปใน dataset เดิมของเรา
 
-- and maybe we put some demonstration on how to simply use filter() and mutate() on `w_restaurant` here filtering just only the restaurant that have wifi then mutate the parking column to say something like have or don't have parking lots
+- and maybe we put some demonstration on how to simply use filter() and mutate() on `restaurant` here filtering just only the restaurant that have wifi then mutate the parking column to say something like have or don't have parking lots
 
 *** =instructions
-ต่อจากแบบฝึกหัดที่แล้ว สิ่งที่คุณต้องทำกับตัวแปร `w_user_new` คือ
+ต่อจากแบบฝึกหัดที่แล้ว สิ่งที่คุณต้องทำกับตัวแปร `user_new` คือ
 - ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ reviews_count > 0)
 - เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการเพิ่มคอลัมน์ `avg_rating` ที่เก็บค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
-- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `w_user_with_rating`
-- สั่งให้ R แสดงค่า 10 แถวแรกจาก `w_user_with_rating`
-เราได้ทำการเตรียมตัวแปร `w_user_new` ไว้ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปร `w_user_new` นี้ได้โดยการพิมพ์ `str(w_user_new)` ลงไปใน Console
+- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `user_with_rating`
+- สั่งให้ R แสดงค่า 10 แถวแรกจาก `user_with_rating`
+เราได้ทำการเตรียมตัวแปร `user_new` ไว้ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปร `user_new` นี้ได้โดยการพิมพ์ `str(user_new)` ลงไปใน Console
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 ```
 
 *** =sample_code
 ```{r}
 # or even columns that contain the same word by using `contains()` 
-filtered_user <- w_user_new[w_user_new$reviews_count > 0, ]
+filtered_user <- user_new[user_new$reviews_count > 0, ]
 
 filtered_user$avg_rating <- 
 	(filtered_user$n_1_ratings + 2 * filtered_user$n_2_ratings + 3 * filtered_user$n_3_ratings + 
@@ -271,7 +271,7 @@ filtered_user$avg_rating <-
 *** =solution
 ```{r}
 # doing the job based on original R approach
-filtered_user <- w_user_new[w_user_new$reviews_count > 0, ]
+filtered_user <- user_new[user_new$reviews_count > 0, ]
 
 filtered_user$avg_rating <- 
 	(filtered_user$n_1_ratings + 2 * filtered_user$n_2_ratings + 3 * filtered_user$n_3_ratings + 
@@ -280,14 +280,14 @@ filtered_user$avg_rating <-
 	filtered_user$n_4_ratings + filtered_user$n_5_ratings)
 
 # do the same thing in `Dplyr` way
-w_user_with_rating <- mutate(
-	filter(w_user_new, reviews_count > 0), 
+user_with_rating <- mutate(
+	filter(user_new, reviews_count > 0), 
 	avg_rating = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) / 
 	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
 )
 
 # print out sample results
-head(w_user_with_rating, n = 10)
+head(user_with_rating, n = 10)
 ```
 
 *** =sct
@@ -299,21 +299,21 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
 ## การสรุปข้อมูลด้วย summarise() และ group_by()
 
-ในแบบฝึกหัดที่แล้ว เราได้ทำการคัดกรองข้อมูลเฉพาะผู้ใช้ที่มีการเขียนรีวิวลงบนเว็บไซต์ wongnai และคำนวณคะแนนเฉลี่ยที่ผู้ใช้แต่ละคนจะให้กับร้านอาหารต่างๆ แล้วเก็บไว้ในตัวแปร `w_user_with_rating`
+ในแบบฝึกหัดที่แล้ว เราได้ทำการคัดกรองข้อมูลเฉพาะผู้ใช้ที่มีการเขียนรีวิวลงบนเว็บไซต์ wongnai และคำนวณคะแนนเฉลี่ยที่ผู้ใช้แต่ละคนจะให้กับร้านอาหารต่างๆ แล้วเก็บไว้ในตัวแปร `user_with_rating`
 คราวนี้เราจะมาลองวิเคราะห์ข้อมูลกันให้ลึกมากขึ้นโดยใช้ function `summarise()` และ `group_by()`
 
 function `summarise()` จะช่วยให้เราสามารถสรุปข้อมูลได้ตามที่เราต้องการ โดยขึ้นอยู่กับว่าเราใส่อะไรลงไปเป็น argument ของ function `summarise()` ยกตัวอย่างเช่น:
-- คำสั่ง `summarise(w_user, n())` จะทำการสรุปข้อมูลให้เราว่าข้อมูลใน data frame `w_user` มีทั้งหมดกี่แถว (หรือก็คือมีผู้ใช้จำนวนกี่คน)
-- คำสั่ง `summarise(w_user, mean(n_reviews), sum(n_3_ratings), median(n_followers))` จะแสดงผลลัพธ์เป็นจำนวน review เฉลี่ยต่อผู้ใช้ 1 คน, จำนวน rating ระดับ 3 ทั้งหมดที่ผู้ใช้ใน `w_user` ได้ให้กับร้านอาหาร และค่ามัธยฐานของจำนวนผู้ติดตามของผู้ใช้แต่ละคนใน `w_user`
+- คำสั่ง `summarise(user, n())` จะทำการสรุปข้อมูลให้เราว่าข้อมูลใน data frame `user` มีทั้งหมดกี่แถว (หรือก็คือมีผู้ใช้จำนวนกี่คน)
+- คำสั่ง `summarise(user, mean(n_reviews), sum(n_3_ratings), median(n_followers))` จะแสดงผลลัพธ์เป็นจำนวน review เฉลี่ยต่อผู้ใช้ 1 คน, จำนวน rating ระดับ 3 ทั้งหมดที่ผู้ใช้ใน `user` ได้ให้กับร้านอาหาร และค่ามัธยฐานของจำนวนผู้ติดตามของผู้ใช้แต่ละคนใน `user`
 คุณสามารถลองเล่นกับ function `summarise()` นี้ได้โดยการนำ code เหล่านี้ไปพิมพ์ใน Console และลองดูว่าผลเป็นอย่างไร
 
 ในการวิเคราะห์ข้อมูลในการทำงานจริง เราอาจจะอยากทำการวิเคราะห์ให้ลึกลงไปโดยแบ่งข้อมูลที่เรามีตามกลุ่มต่างๆด้วย ซึ่ง function `group_by()` จะสามารถช่วยเราได้ในจุดนี้
-หากคุณลองพิมพ์คำสั่ง `summarise(group_by(w_restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
+หากคุณลองพิมพ์คำสั่ง `summarise(group_by(restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
 
 ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี `price_range` จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
 
 *** =instructions
-ให้คุณทำการวิเคราะห์ข้อมูลผู้ใช้ต่อโดยใช้ข้อมูลจากตัวแปร `w_user_with_rating` ที่ถูกเตรียมไว้ให้ใน workspace แล้ว
+ให้คุณทำการวิเคราะห์ข้อมูลผู้ใช้ต่อโดยใช้ข้อมูลจากตัวแปร `user_with_rating` ที่ถูกเตรียมไว้ให้ใน workspace แล้ว
 - ทำการสรุปข้อมูลโดยใช้ function `summarise()` และ `group_by()` ในการหาว่าผู้ใช้เพศชายและเพศหญิง (`gender` มีค่าเป็น 1 และ 2 ตามลำดับ) มีจำนวน `reviews_count`, จำนวน rating ทั้งหมด (ผลรวมตั้งแต่ `n_1_ratings` ไปจนถึง `n_5_ratings`), จำนวน `n_photos` และจำนวน `n_followers` โดยเฉลี่ยแตกต่างกันอย่างไร และมีค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของ `avg_rating` ต่างกันอย่างไร
 - คุณควรใช้ function `mean()` และ `sd()` ร่วมกับ `summarise()` ในการหาค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐาน
 - ไม่ต้องตั้งชื่อให้กับแต่ละคอลัมน์ และให้ R แสดงผลลัพธ์ออกมาได้เลยโดยไม่ต้องเก็บผลลัพธ์ไว้ในตัวแปรใดๆ
@@ -323,12 +323,12 @@ function `summarise()` จะช่วยให้เราสามารถส
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
 
-w_user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
+user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 
-w_user_with_rating <- mutate(
+user_with_rating <- mutate(
 	filter(w_user_new, reviews_count > 0), 
 	avg_rating = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) / 
 	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
@@ -338,7 +338,7 @@ w_user_with_rating <- mutate(
 *** =sample_code
 ```{r}
 # This will return summary information about average amount of total level 1 rating through level 3 rating per 1 user
-summarise(w_user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
+summarise(user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
 
 # Your code here
 
@@ -347,11 +347,11 @@ summarise(w_user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
 *** =solution
 ```{r}
 # This will return summary information about average amount of total level 1 rating through level 3 rating per 1 user
-summarise(w_user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
+summarise(user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
 
 # Your code here
 summarise(
-	group_by(w_user_with_rating, gender), 
+	group_by(user_with_rating, gender), 
 	mean(reviews_count), 
 	mean(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings), 
 	mean(n_photos), 
@@ -371,17 +371,17 @@ success_msg("Well done!")
 ## การเรียงลำดับข้อมูลด้วย arrange()
 
 หากคุณต้องการจะเรียงลำดับข้อมูลเพื่อใช้ในการวิเคราะห์ หรือแม้แต่เพื่อจัดข้อมูลให้เป็นระเบียบมากขึ้น คุณสามารถใช้ function `arrange()` ในการจัดเรียงข้อมูลได้ เช่น
-- คำสั่ง `arrange(w_user, id)` จะทำการเรียงข้อมูลในตัวแปร `w_user` ตามลำดับ `id`
-- คำสั่ง `arrange(w_user, -n_followers, -n_reviews)` จะทำการเรียงข้อมูลในตัวแปร `w_user` โดยใช้คอลัมน์ `n_followers` และ `n_reviews` เป็นเกณฑ์ตามลำดับโดยเรียงจากมากไปหาน้อย (นั่นคือ ถ้ามีข้อมูลผู้ใช้งานคนไหนที่มีจำนวนผู้ติดตาม (`n_followers`) เท่ากัน R จะทำการพิจารณาคอลัมน์ `n_reviews` เป็นลำดับต่อไป)
+- คำสั่ง `arrange(user, id)` จะทำการเรียงข้อมูลในตัวแปร `user` ตามลำดับ `id`
+- คำสั่ง `arrange(user, -n_followers, -n_reviews)` จะทำการเรียงข้อมูลในตัวแปร `w_user` โดยใช้คอลัมน์ `n_followers` และ `n_reviews` เป็นเกณฑ์ตามลำดับโดยเรียงจากมากไปหาน้อย (นั่นคือ ถ้ามีข้อมูลผู้ใช้งานคนไหนที่มีจำนวนผู้ติดตาม (`n_followers`) เท่ากัน R จะทำการพิจารณาคอลัมน์ `n_reviews` เป็นลำดับต่อไป)
 
 สังเกตได้ว่า function `arrange()` จะทำหน้าที่คล้ายกับ function `order()` ในภาษา R ปกติ แต่นอกจากการใส่เครื่องหมายลบ (`-`) เพื่อบอกให้ R เรียงลำดับข้อมูลจากมากไปหาน้อยแล้ว เรายังสามารถใช้คำสั่ง `desc()` กับตัวแปรที่เราต้องการให้เรียงลำดับจากมากไปหาน้อยได้ด้วยเช่นกัน นั่นคือ คำสั่งดังต่อไปนี้:
-- `arrange(w_user, desc(n_followers), desc(n_reviews))`
-- `arrange(w_user, desc(n_followers, n_reviews))`
+- `arrange(user, desc(n_followers), desc(n_reviews))`
+- `arrange(user, desc(n_followers, n_reviews))`
 จะให้ผลเหมือนกันกับคำสั่งเรียงลำดับ `n_followers` และ `n_reviews` จากมากไปหาน้อยที่ได้กล่าวถึงไปในตอนแรก
 
 *** =instructions
 ในตอนนี้เรามีข้อมูล rating ทั้งหมดเก็บไว้ในตัวแปร `w_rating` ให้คุณทำตามคำสั่งดังต่อไปนี้:
-- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน แล้วเรียงลำดับข้อมูลตาม rating เฉลี่ยจากมากไปหาน้อย จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `mean_w_rating`
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน แล้วเรียงลำดับข้อมูลตาม rating เฉลี่ยจากมากไปหาน้อย จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
 - สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_rating_summary`
 - นับจำนวน rating ต่างๆตั้งแต่ 1 ถึง 5 (คอลัมน์ `rating`) รวมถึงนับจำนวน เรียงลำดับข้อมูลตามคอลัมน์ `rating` จากน้อยไปมาก จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `rating_counts`
 - สั่งให้ R แสดงค่าของ `rating_counts`
@@ -391,13 +391,13 @@ success_msg("Well done!")
 *** =pre_exercise_code
 ```{r}
 library('dplyr')
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
 ```{r}
-# define `mean_w_rating` here and print the first 10 rows out
+# define `mean_rating` here and print the first 10 rows out
 
 
 # define `rating_counts` here and print it out
@@ -406,20 +406,20 @@ w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/c
 
 *** =solution
 ```{r}
-# define `mean_w_rating` here and print the first 10 rows out
-mean_w_rating <- arrange(
+# define `mean_rating` here and print the first 10 rows out
+mean_rating <- arrange(
 	summarise(
-		group_by(w_rating, reviewed_item_id), 
+		group_by(rating, reviewed_item_id), 
 		avg_rating = mean(rating)
 	), desc(avg_rating)
 )
 
-head(mean_w_rating, n = 10)
+head(mean_rating, n = 10)
 
 # define `rating_counts` here and print it out
 rating_counts <- arrange(
 	summarise(
-		group_by(w_rating, rating), 
+		group_by(rating, rating), 
 		n()
 	), rating
 )
@@ -449,10 +449,10 @@ package Dplyr มี function ที่จะช่วยในการนำ d
 ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
 
 *** =instructions
-จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านจาก data frame ในตัวแปร `mean_w_rating` ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame ในตัวแปร `w_restaurant` เพื่อทำการวิเคราะห์ต่อไป
+จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านจาก data frame ในตัวแปร `mean_rating` ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame ในตัวแปร `restaurant` เพื่อทำการวิเคราะห์ต่อไป
 - เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `w_restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `w_restaurant_new`
-- ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `w_restaurant_new` เข้ากับ `mean_w_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เรียงข้อมูลตาม `id` ของร้านอาหาร เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `w_restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
-- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `w_restaurant_with_rating`
+- ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เรียงข้อมูลตาม `id` ของร้านอาหาร เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_with_rating`
 - คำนวณดูว่ามีร้านอาหารกี่เปอร์เซ็นต์ที่ไม่ได้รับการให้ rating เลย เก็บคำตอบไว้ในตัวแปร `no_rating_proportion` แล้วสั่งให้ R แสดงคำตอบดังกล่าวออกมาด้วย
 
 *** =hint
@@ -460,12 +460,12 @@ package Dplyr มี function ที่จะช่วยในการนำ d
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 
-mean_w_rating <- arrange(
+mean_rating <- arrange(
 	summarise(
-		group_by(w_rating, reviewed_item_id), 
+		group_by(rating, reviewed_item_id), 
 		avg_rating = mean(rating)
 	), -avg_rating
 )
@@ -473,8 +473,8 @@ mean_w_rating <- arrange(
 
 *** =sample_code
 ```{r}
-# link `w_restaurant_new` to `avg_restaurant_rating` by using `left_join()` or `right_join()`
-w_restaurant_new <- 
+# link `restaurant_new` to `mean_rating` by using `left_join()` or `right_join()`
+restaurant_new <- 
 
 # calculate the no-rating proportion here
 no_rating_proportion <- 
@@ -482,20 +482,20 @@ no_rating_proportion <-
 
 *** =solution
 ```{r}
-# link `w_restaurant_new` to `mean_w_rating` by using `left_join()` or `right_join()`
-w_restaurant_new <- select(w_restaurant, id, name, price_range, category_id)
+# link `restaurant_new` to `mean_rating` by using `left_join()` or `right_join()`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
 
-w_restaurant_with_rating <- arrange(
-	left_join(w_restaurant_new, mean_w_rating, by = c("id" = "reviewed_item_id")), 
+restaurant_with_rating <- arrange(
+	left_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id")), 
 	id
 )
 
-head(w_restaurant_with_rating, n = 10)
+head(restaurant_with_rating, n = 10)
 
 # calculate the no-rating proportion here
 no_rating_proportion <- 
-	nrow(filter(w_restaurant_with_rating, is.na(avg_rating))) / 
-	nrow(w_restaurant_with_rating)
+	nrow(filter(restaurant_with_rating, is.na(avg_rating))) / 
+	nrow(restaurant_with_rating)
 
 no_rating_proportion
 ```
@@ -511,60 +511,60 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 ในการวิเคราะห์ข้อมูล เราสามารถใช้คำสั่งที่เรียกว่า pipes (`%>%`) เพื่อทำให้เขียน code ได้เป็นระเบียบและเป็นขั้นตอนมากขึ้น
 โดยคำสั่ง pipes นี้จะประมวลผลเริ่มจากซ้ายไปขวา โดยใช้ตัวแปรหรือค่าใดๆก็ตามที่อยู่ด้านซ้ายของคำสั่งเป็น argument ตัวแรกของ function ทางด้านขวา เช่น:
-- `w_user %>% ncol()` จะใช้ `w_user` เป็น `argument ของ function `ncol()` ที่อยู่ด้านขวาและจะแสดงผลเป็นจำนวนคอลัมน์ในตัวแปร `w_user`
-- `w_rating %>% select(id, rating) %>% mutate(new_rating = rating + 2)` จะใช้ `w_rating` เป็น `argument ของ function `select()` ที่อยู่ด้านขวา จากนั้นจะใช้ผลลัพธ์ที่ได้จาก function `select()` เป็น argument ของ function `matate()` ทางด้านขวามือสุดต่อไป
+- `user %>% ncol()` จะใช้ `user` เป็น `argument ของ function `ncol()` ที่อยู่ด้านขวาและจะแสดงผลเป็นจำนวนคอลัมน์ในตัวแปร `user`
+- `rating %>% select(id, rating) %>% mutate(new_rating = rating + 2)` จะใช้ `rating` เป็น `argument ของ function `select()` ที่อยู่ด้านขวา จากนั้นจะใช้ผลลัพธ์ที่ได้จาก function `select()` เป็น argument ของ function `matate()` ทางด้านขวามือสุดต่อไป
 
 *** =instructions
 ให้คุณลองเขียนภาษา R โดยใช้ pipes (`%>%`) ในการสั่งให้ R แสดงค่าดังต่อไปนี้:
-- `str(w_rating)`
-- `nrow(w_rating)`
-- `head(w_rating, n = 10)`
-- `distinct(w_rating, rating)`
-- `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))`
+- `str(rating)`
+- `nrow(rating)`
+- `head(rating, n = 10)`
+- `distinct(rating, rating)`
+- `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
 ```{r}
-# do the same thing as `str(w_rating)` using pipes (`%>%`)
-w_rating %>% str()
+# do the same thing as `str(rating)` using pipes (`%>%`)
+rating %>% str()
 
-# do the same thing as `nrow(w_rating)` using pipes (`%>%`)
-
-
-# do the same thing as `head(w_rating, n=10)` using pipes (`%>%`)
+# do the same thing as `nrow(rating)` using pipes (`%>%`)
 
 
-# do the same thing as `distinct(w_rating, rating)` using pipes (`%>%`)
+# do the same thing as `head(rating, n=10)` using pipes (`%>%`)
 
 
-# do the same thing as `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
+# do the same thing as `distinct(rating, rating)` using pipes (`%>%`)
+
+
+# do the same thing as `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
 
 ```
 
 *** =solution
 ```{r}
-# do the same thing as `str(w_rating)` using pipes (`%>%`)
-w_rating %>% str()
+# do the same thing as `str(rating)` using pipes (`%>%`)
+rating %>% str()
 
-# do the same thing as `nrow(w_rating)` using pipes (`%>%`)
-w_rating %>% nrow()
+# do the same thing as `nrow(rating)` using pipes (`%>%`)
+rating %>% nrow()
 
-# do the same thing as `head(w_rating, n=10)` using pipes (`%>%`)
-w_rating %>% head(n = 10)
+# do the same thing as `head(rating, n=10)` using pipes (`%>%`)
+rating %>% head(n = 10)
 
-# do the same thing as `distinct(w_rating, rating)` using pipes (`%>%`)
-w_rating %>% distinct(rating)
+# do the same thing as `distinct(rating, rating)` using pipes (`%>%`)
+rating %>% distinct(rating)
 
-# do the same thing as `head(filter(select(w_user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
-w_user %>% 
+# do the same thing as `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
+user %>% 
 	select(id, gender, n_reviews, n_photos, n_followers) %>% 
 	filter(n_followers > 100) %>% 
 	head()
@@ -580,12 +580,12 @@ success_msg("Good job!")
 
 เราจะมาลองใช้ pipes ในระดับที่ยากขึ้นไปอีกหน่อย
 ในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
-`8 %>% head(w_user, n = .)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
+`8 %>% head(user, n = .)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
 
 *** =instructions
-เราได้สร้างตัวแปร `w_restaurant` และ `w_rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
+เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
 - ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
-- ใช้ function `inner_join()` ในการเชื่อม `w_restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `w_rating` เป็นตัวเชื่อมกับ `id` จาก `w_restaurant`
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant`
 - เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
 - เรียงลำดับผลลัพธ์ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย
 - เก็บผลลัพธ์ในคำสั่งที่แล้วไว้ในตัวแปร `result`
@@ -596,8 +596,8 @@ success_msg("Good job!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
 ```
 
 *** =sample_code
@@ -613,10 +613,10 @@ result <-
 ```{r}
 # define `result` here
 result <- 
-	w_rating %>% 
+	rating %>% 
 	group_by(reviewed_item_id) %>% 
 	summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
-	inner_join(w_restaurant, by = c("reviewed_item_id" = "id")) %>%
+	inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
 	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% 
 	arrange(-avg_rating)
 	
@@ -645,14 +645,14 @@ success_msg("Cool!")
 - `%>%` ช่วยให้คุณสามารถเขียน code ได้อย่างเป็นขั้นเป็นตอนมากขึ้นจากซ้ายไปขวา ทำให้ code ของคุณเป็นระเบียบมากขึ้น และอาจช่วยให้คุณทำงานง่ายขึ้นด้วย!
 
 *** =instructions
-ตอนนี้เรามีข้อมูล `w_restaurant`, `w_rating` และ `w_category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
+ตอนนี้เรามีข้อมูล `restaurant`, `rating` และ `category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
 - เราต้องการข้อมูลสรุป จำนวนร้านอาหาร, จำนวนครั้งที่มีการให้คะแนน (`rating`), คะแนนเฉลี่ย, ส่วนเบี่ยงเบนมาตรฐานของคะแนน โดยแบ่งตามแต่ละ category
-- ให้ดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `w_restaurant` มีค่าเป็น 1)
+- ให้ดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `restaurant` มีค่าเป็น 1)
 - ไม่ต้องสนใจร้านอาหารที่ไม่มี `rating`
 - คัดกรองเฉพาะ category ที่มีจำนวนครั้ง `rating` มากกว่าหรือเท่ากับ 5 ครั้ง
 - เรียงลำดับผลลัพธ์สุดท้ายตามคะแนนเฉลี่ยจากมากไปหาน้อย หาก category ใดมีคะแนนเฉลี่ยเท่ากัน ให้เรียงตามจำนวนครั้ง `rating` จากมากไปน้อยเป็นลำดับต่อไป
 - ผลลัพธ์สุดท้ายควรประกอบด้วย `category_id` (รหัส category), `category_name` (ชื่อ category), `n_restaurants` (จำนวนร้านอาหารใน category นั้นๆ), `n_ratings` (จำนวน rating ใน category นั้นๆ), `avg_rating` (คะแนนเฉลี่ยของ category), `sd_rating` (ส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category)
-- เก็บผลลัพธ์ไว้ในตัวแปร `w_category_with_rating` พร้อมทั้งให้ R แสดงผลลัพธ์ออกมาด้วย
+- เก็บผลลัพธ์ไว้ในตัวแปร `category_with_rating` พร้อมทั้งให้ R แสดงผลลัพธ์ออกมาด้วย
 - คุณสามารถทำแบบฝึกหัดนี้โดยการทำไปทีละขั้นตอน หรือจะเขียน code ให้ต่อกันหมดในคำสั่งเดียวก็ได้
 
 *** =hint
@@ -660,9 +660,9 @@ success_msg("Cool!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-w_restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-w_rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
-w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
 ```
 
 *** =sample_code
@@ -672,23 +672,23 @@ w_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production
 
 *** =solution
 ```{r}
-w_category_with_rating <-
-	w_restaurant %>% 
+category_with_rating <-
+	restaurant %>% 
 	filter(domain_id == 1) %>% 
 	select(id, category_id) %>%
-	inner_join(w_rating, by = c("id" = "reviewed_item_id")) %>% 
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
 	group_by(category_id) %>% 
 	summarise(
 		n_restaurants = n_distinct(id), 
 		n_ratings = n(), 
 		avg_rating = mean(rating), 
 		sd_rating = sd(rating)) %>%
-	inner_join(w_category, by = c("category_id" = "id")) %>% 
+	inner_join(category, by = c("category_id" = "id")) %>% 
 	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>% 
 	filter(n_ratings >= 5) %>% 
 	arrange(desc(avg_rating))
 
-w_category_with_rating
+category_with_rating
 
 ```
 
