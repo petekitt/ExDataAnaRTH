@@ -117,14 +117,16 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:628f701efd
 ## การดึงข้อมูลโดยใช้ Dplyr
 
-ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
+คุณสามารถเลือกข้อมูลจาก data frame ต่างๆได้โดยใช้คำสั่ง `select` ยกตัวอย่างเช่น:
 
-- `restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `restaurant`
-- `restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `restaurant`
+- `select(restaurant, name, price_range)` จะทำการเลือกแค่คอลัมน์ `name` และ `price_range` ออกมาจาก data frame `restaurant`
+- `select(restaurant, 1, 2, 3)` จะทำการเลือกแค่คอลัมน์ที่ 1, 2 และ 3 ออกมาจาก data frame `restaurant`
+
+argument ที่ 1 ของ `select()` จะเป็นตัวแทนของ data frame ที่คุณต้องการจะดึงข้อมูลออกมา
 
 *** =instructions
-บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
-ให้คุณลองทำแบบเดียวกันโดยใช้ function `select()` จาก package Dplyr แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_select`
+บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_selection` อยู่
+ให้คุณลองทำแบบเดียวกันโดยใช้ function `select()` จาก package Dplyr แล้วเก็บผลลัพธ์ไว้ในตัวแปร `dplyr_selection`
 
 *** =hint
 
@@ -137,19 +139,19 @@ restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production
 *** =sample_code
 ```{r}
 # without Dplyr
-normal_select <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
+normal_selection <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
-dplyr_select <- 
+dplyr_selection <- 
 ```
 
 *** =solution
 ```{r}
 # without Dplyr
-normal_select <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
+normal_selection <- restaurant[, c("name", "price_range", "parking", "credit_card_accepted", "wifi")]
 
 # with Dplyr
-dplyr_select <- select(restaurant, name, price_range, parking, credit_card_accepted, wifi)
+dplyr_selection <- select(restaurant, name, price_range, parking, credit_card_accepted, wifi)
 ```
 
 *** =sct
@@ -158,8 +160,41 @@ success_msg("Good job!")
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:9c0aecf43f
+## การเปลี่ยนชื่อคอลัมน์
+
+นอกจากการเลือกข้อมูลโดยพิมพ์ชื่อคอลัมน์ของคอลัมน์นั้นๆลงไปใน fucntion `select()` คุณยังสามารถเปลี่ยนชื่อคอลัมน์ที่คุณดึงออกมาได้อีกด้วย
+
+คำสั่ง `select(restaurant, id, name, parking_lot = parking)` จะทำการเลือกคอลัมน์ `id`, `name`, และ `parking` ออกมาจาก `restaurant` แล้วเปลี่ยนชื่อคอลัมน์ `parking` เป็น `parking_lot`
+
+*** =instructions
+
+ให้คุณเลือกคอลัมน์ `id`, `name` และ `bookable` จาก data frame `restaurant` แล้วเปลี่ยนชื่อคอลัมน์เหล่านี้เป็น `restaurant_id`, `restaurant_name` และ `reservable` ตามลำดับ
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
-## การเปลี่ยนชื่อคอลัมน์และการดึงข้อมูลแบบไม่ซ้ำค่าด้วย Dplyr
+## การเลือกคอลัมน์โดยใช้ starts_with(), ends_with() และ contains()
 
 Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` ยกตัวอย่างเช่น:
 - คุณสามารถพิมพ์คำสั่ง `select(restaurant, starts_with("good"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อขึ้นต้นด้วย "good" ได้
@@ -224,6 +259,90 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:21152f4415
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:139d1b8d08
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d8f571fd73
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
 ## คัดกรองข้อมูลตามเงื่อนไขและสร้างคอลัมน์ใหม่ในข้อมูลด้วย filter() และ mutate()!
 
@@ -297,6 +416,34 @@ success_msg("Good job!")
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:03371e8ac0
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
 ## การสรุปข้อมูลด้วย summarise() และ group_by()
 
@@ -368,6 +515,34 @@ success_msg("Well done!")
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ee82ffad79
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:b1f530f06d
 ## การเรียงลำดับข้อมูลด้วย arrange()
 
@@ -434,6 +609,34 @@ success_msg("Cool! Let's go to the next exercise")
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:6bcc105e72
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:d2e7c1321d
 ## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน
 
@@ -507,6 +710,34 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 ```
 
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a1bb016a43
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:1aa667d382
 ## ทำความรู้จักกับ Pipes
 
@@ -630,6 +861,34 @@ result %>% head(n = 10)
 success_msg("Cool!")
 ```
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b2a93e992b
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
 ## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน!
 
@@ -696,4 +955,60 @@ category_with_rating
 *** =sct
 ```{r}
 success_msg("Wonderful! Now you've finished chapter 1!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a3b42e7270
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:733ce43a78
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
 ```
