@@ -200,7 +200,7 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
 ## การเลือกคอลัมน์โดยดูจากชื่อขึ้นต้น
 
-Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` เช่น `start_with()`, `ends_with()` และ `contains()`
+Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` เช่น `start_with()`, `ends_with()` และ `contains()` ซึ่งเราจะเรียก function เหล่านี้ว่า `helper function`
 
 คำสั่ง `starts_with()` จะช่วยให้คุณเลือกคอลัมน์โดยดูจากชื่อขึ้นต้นของคอลัมน์นั้นๆได้ ยกตัวอย่างเช่น
 
@@ -209,8 +209,6 @@ Dplyr มีตัวช่วยมากมายในการเลือ�
 *** =instructions
 - ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `user_new` (`starts_with()` สามารถช่วยคุณให้คุณไม่ต้องพิมพ์คำสั่งยาวๆได้ในจุดนี้)
 - สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `user_new`
-- ใช้ function `distinct()` กับ `user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
-- สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
 
 *** =hint
 
@@ -254,24 +252,36 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 --- type:NormalExercise lang:r xp:100 skills:1 key:21152f4415
 ## การเลือกคอลัมน์โดยดูจากชื่อลงท้าย
 
+ตรงกันข้ามกับ function `starts_with()` ที่เราได้เรียนรู้ไปในแบบฝึกหัดก่อนหน้านี้ function `ends_with()` จะทำการเลือกเฉพาะคอลัมน์ที่ลงท้ายด้วยคำที่คุณกำหนด
 
 *** =instructions
+- ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender` และทุกคอลัมน์ที่ลงท้ายด้วยคำว่า `ratings`
+- เก็บผลลัพธ์ไว้ในตัวแปร `user_new` และแสดงค่าข้อมูล 10 แถวแรกออกมา
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
 ```{r}
+# select id, gender, and all the columns that end with `ratings` in the column names and store the results in `user_new`
+user_new <- select(user, ...)
+
+#print out the first 10 rows from `user_new`
 
 ```
 
 *** =solution
 ```{r}
+# select id, gender, and all the columns that end with `ratings` in the column names and store the results in `user_new`
+user_new <- select(user, id, gender, ends_with("ratings"))
 
+#print out the first 10 rows from `user_new`
+head(user_new, n = 10)
 ```
 
 *** =sct
@@ -282,55 +292,71 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:139d1b8d08
 ## การเลือกคอลัมน์โดยดูจากคำที่อยู่ในชื่อ
 
+อีกหนึ่งตัวอย่างคือการเลือกเฉพาะคอลัมน์ที่มีคำที่คุณกำหรดอยู่ในชื่อคอลัมน์ออกมา ซึ่งคุณสามารถทำได้โดยการใช้คำสั่ง `contains()`
+
+ที่จริงแล้วยังมี function อื่นๆที่ช่วยในการเลือกคอลัมน์อีกมากมาย ซึ่งคุณสามารถศึกษาเพิ่มเติมได้จากการพิมพ์ `?dplyr::select_helpers` ลงไปใน Console
 
 *** =instructions
+- ลองใช้ function `select()` กับตัวแปร `user` อีกครั้ง แต่คราวนี้ให้เลือกทุกลัมน์ที่ประกอบด้วย `_` ในชื่อออกมา แล้วเก็บผลลัพธ์ไว้ในตัวแปร `user_new`
+- แสดงค่าข้อมูล 20 แถวแรกจาก `user_new`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
 ```{r}
+# your code here
+
 
 ```
 
 *** =solution
 ```{r}
-
+# your code here
+user_new <- select(user, contains("_"))
+head(user_new, n = 20)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Cool!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d8f571fd73
 ## การแสดงค่าทั้งหมดที่เป็นไปได้ของแต่ละคอลัมน์โดยใช้ distinct()
 
-เราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง ยกตัวอย่างเช่น
+เราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง
 คำสั่ง `distinct(restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
 
 *** =instructions
+- ใช้ function `distinct()` กับ `user` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
+- สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
 ```{r}
+# let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(user_new, ...)
+
+# print out distinct values we stored in `distinct_gender`
 
 ```
 
 *** =solution
 ```{r}
-
-# now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
+# let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
 distinct_gender <- distinct(user_new, gender)
 
 # print out distinct values we stored in `distinct_gender`
@@ -339,24 +365,21 @@ distinct_gender
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:0783bbda27
-## คัดกรองข้อมูลตามเงื่อนไขและสร้างคอลัมน์ใหม่ในข้อมูลด้วย filter() และ mutate()!
+## คัดกรองข้อมูลตามเงื่อนไขด้วย filter()!
 
 การคัดกรองข้อมูล และการคำนวณหรือเปลี่ยนแปลงรูปแบบข้อมูลให้เหมาะสม เป็นสิ่งที่หลีกเลี่ยงไม่ได้ในการวิเคราะห์ข้อมูล
 เราสามารถใช้ function `filter()` ในการเลือกคัดกรองเฉพาะกลุ่มข้อมูลที่เราสนใจได้
-ส่วน function `mutate()` นั้นจะช่วยให้เราสามารถเปลี่ยนแปลงรูปแบบของข้อมูล หรือแม้กระทั่งสร้างตัวแปรใหม่ที่เกิดจากการคำนวณด้วยตัวแปรอื่นๆในข้อมูลของเราได้ โดย function `mutate()` จะทำการเพิ่มตัวแปรใหม่เข้าไปใน dataset เดิมของเรา
-
-- and maybe we put some demonstration on how to simply use filter() and mutate() on `restaurant` here filtering just only the restaurant that have wifi then mutate the parking column to say something like have or don't have parking lots
 
 *** =instructions
-ต่อจากแบบฝึกหัดที่แล้ว สิ่งที่คุณต้องทำกับตัวแปร `user_new` คือ
+เติมคำลงใน `...` เพื่อทำตามคำสั่งต่อไปนี้:
+- ให้คุณสร้างตัวแปร `user_new` โดยการเลือกคอลัมน์ `id`, `gender`, `n_reviews`, และทุกคอลัมน์ที่ลงท้ายด้วย `ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count`
 - ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ `reviews_count` > 0)
-- เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการเพิ่มคอลัมน์ `avg_rating` ที่เก็บค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
-- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `user_with_rating`
-- สั่งให้ R แสดงค่า 10 แถวแรกจาก `user_with_rating`
-เราได้ทำการเตรียมตัวแปร `user_new` ไว้ให้คุณแล้ว คุณสามารถลองสำรวจตัวแปร `user_new` นี้ได้โดยการพิมพ์ `str(user_new)` ลงไปใน Console
+- เก็บผลลัพธ์จากข้อก่อนหน้านี้ไว้ในตัวแปร `filtered_user_new`
 
 *** =hint
 
@@ -364,48 +387,30 @@ distinct_gender
 ```{r}
 library("dplyr")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
-user_new <- select(user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 ```
 
 *** =sample_code
 ```{r}
-# or even columns that contain the same word by using `contains()` 
+# create `user_new` here and do not forget to change `n_reviews` column name to `reviews_count`
+user_new <- select(user, id, gender, ... = n_reviews, ends_with(...))
+
+# This is the original R code without `Dplyr` package
 filtered_user <- user_new[user_new$reviews_count > 0, ]
 
-filtered_user$avg_rating <- 
-	(filtered_user$n_1_ratings + 2 * filtered_user$n_2_ratings + 3 * filtered_user$n_3_ratings + 
-	4 * filtered_user$n_4_ratings + 5 * filtered_user$n_5_ratings) / 
-	(filtered_user$n_1_ratings + filtered_user$n_2_ratings + filtered_user$n_3_ratings + 
-	filtered_user$n_4_ratings + filtered_user$n_5_ratings)
-
-# do the same thing in `Dplyr` way
-
-
-
-# print out sample results
+# do the same thing in `Dplyr` way and store result in `filtered_user_new`
 
 ```
 
 *** =solution
 ```{r}
-# doing the job based on original R approach
+# create `user_new` here and do not forget to change `n_reviews` column name to `reviews_count`
+user_new <- select(user, id, gender, reviews_count = n_reviews, ends_with("ratings"))
+
+# This is the original R code without `Dplyr` package
 filtered_user <- user_new[user_new$reviews_count > 0, ]
 
-filtered_user$avg_rating <- 
-	(filtered_user$n_1_ratings + 2 * filtered_user$n_2_ratings + 3 * filtered_user$n_3_ratings + 
-	4 * filtered_user$n_4_ratings + 5 * filtered_user$n_5_ratings) / 
-	(filtered_user$n_1_ratings + filtered_user$n_2_ratings + filtered_user$n_3_ratings + 
-	filtered_user$n_4_ratings + filtered_user$n_5_ratings)
-
-# do the same thing in `Dplyr` way
-user_with_rating <- mutate(
-	filter(user_new, reviews_count > 0), 
-	avg_rating = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) / 
-	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
-)
-
-# print out sample results
-head(user_with_rating, n = 10)
+# do the same thing in `Dplyr` way and store result in `filtered_user_new`
+filtered_user_new <- filter(user_new, reviews_count > 0)
 ```
 
 *** =sct
@@ -416,31 +421,69 @@ success_msg("Good job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:03371e8ac0
-## a
+## การสร้างคอลัมน์ใหม่จากการคำนวณด้วย mutate()!
+
+function `mutate()` นั้นจะช่วยให้เราสามารถเปลี่ยนแปลงรูปแบบของข้อมูล หรือแม้กระทั่งสร้างตัวแปรใหม่ที่เกิดจากการคำนวณด้วยตัวแปรอื่นๆในข้อมูลของเราได้ โดย function `mutate()` จะทำการเพิ่มตัวแปรใหม่เข้าไปใน dataset เดิมของเรา
 
 *** =instructions
+เราได้เตรียม `filtered_user_new` จากแบบฝึกหัดที่แล้วไว้ให้คุณแล้ว กรุณาปฏิบัติตามคำสั่งดังต่อไปนี้:
+- ให้คุณใช้ function `mutate()` กับ `filtered_user_new` ในการเพิ่มคอลัมน์ `avg_rating` ที่เก็บค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
+- เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `user_with_rating`
+- สั่งให้ R แสดงค่า 10 แถวแรกจาก `user_with_rating`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+filtered_user_new <- filter(select(user_new, id, gender, reviews_count = n_reviews, ends_with("ratings")), reviews_count > 0)
 ```
 
 *** =sample_code
 ```{r}
+# This is the original R code without `Dplyr` package
+average_ratings <- 
+	(filtered_user_new$n_1_ratings + 2 * filtered_user_new$n_2_ratings + 3 * filtered_user_new$n_3_ratings + 
+	4 * filtered_user_new$n_4_ratings + 5 * filtered_user_new$n_5_ratings) / 
+	(filtered_user_new$n_1_ratings + filtered_user_new$n_2_ratings + filtered_user_new$n_3_ratings + 
+	filtered_user_new$n_4_ratings + filtered_user_new$n_5_ratings)
 
+# do the same thing in `Dplyr` way
+user_with_rating <- mutate(filtered_user_new,
+	avg_ratings = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) /
+	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
+)
+
+# print out sample results
+head(user_with_rating, n = 10)
 ```
 
 *** =solution
 ```{r}
+# This is the original R code without `Dplyr` package
+average_ratings <- 
+	(filtered_user_new$n_1_ratings + 2 * filtered_user_new$n_2_ratings + 3 * filtered_user_new$n_3_ratings + 
+	4 * filtered_user_new$n_4_ratings + 5 * filtered_user_new$n_5_ratings) / 
+	(filtered_user_new$n_1_ratings + filtered_user_new$n_2_ratings + filtered_user_new$n_3_ratings + 
+	filtered_user_new$n_4_ratings + filtered_user_new$n_5_ratings)
 
+# do the same thing in `Dplyr` way
+user_with_rating <- mutate(...,
+	avg_ratings = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) /
+	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
+)
+
+# print out sample results
+head(user_with_rating, n = 10)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
 ## การสรุปข้อมูลด้วย summarise() และ group_by()
 
@@ -510,7 +553,6 @@ summarise(
 ```{r}
 success_msg("Well done!")
 ```
-
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ee82ffad79
