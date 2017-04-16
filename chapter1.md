@@ -78,7 +78,7 @@ success_msg("Good job!")
 
 *** =pre_exercise_code
 ```{r}
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
@@ -118,8 +118,8 @@ success_msg("Good job!")
 ## การดึงข้อมูลโดยใช้ Dplyr
 
 ปกติแล้ว เราสามารถึงข้อมูลบางคอลัมน์จาก data frame ใน R ได้ด้วยการใช้คำสั่งต่างๆ เช่น:
-- `restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `w_restaurant`
-- `restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `w_restaurant`
+- `restaurant[, 1:3]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ที่ 1 ถึง 3 ออกมาทุกแถวจาก `restaurant`
+- `restaurant[c(2,4,6), c("name", "english_name", "branch")]` จะทำการดึงข้อมูลเฉพาะคอลัมน์ `name`, `english_name` และ `branch` ในแถวที่ 2, 4, และ 6 ออกมาจาก `restaurant`
 
 *** =instructions
 บน editor มีตัวอย่างของการเลือกข้อมูลบางคอลัมน์จากตัวแปร `restaurant` แล้วเก็บค่าไว้ในตัวแปร `normal_select` อยู่
@@ -130,7 +130,7 @@ success_msg("Good job!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
@@ -183,8 +183,8 @@ Dplyr มีตัวช่วยมากมายในการเลือ�
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
@@ -245,8 +245,8 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+user_new <- select(user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 ```
 
 *** =sample_code
