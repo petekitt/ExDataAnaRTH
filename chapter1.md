@@ -117,7 +117,7 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:628f701efd
 ## การดึงข้อมูลโดยใช้ Dplyr
 
-คุณสามารถเลือกข้อมูลจาก data frame ต่างๆได้โดยใช้คำสั่ง `select` ยกตัวอย่างเช่น:
+คุณสามารถเลือกข้อมูลจาก data frame ต่างๆได้โดยใช้คำสั่ง `select()` ยกตัวอย่างเช่น:
 
 - `select(restaurant, name, price_range)` จะทำการเลือกแค่คอลัมน์ `name` และ `price_range` ออกมาจาก data frame `restaurant`
 - `select(restaurant, 1, 2, 3)` จะทำการเลือกแค่คอลัมน์ที่ 1, 2 และ 3 ออกมาจาก data frame `restaurant`
@@ -160,7 +160,6 @@ success_msg("Good job!")
 ```
 
 
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:9c0aecf43f
 ## การเปลี่ยนชื่อคอลัมน์
 
@@ -169,47 +168,46 @@ success_msg("Good job!")
 คำสั่ง `select(restaurant, id, name, parking_lot = parking)` จะทำการเลือกคอลัมน์ `id`, `name`, และ `parking` ออกมาจาก `restaurant` แล้วเปลี่ยนชื่อคอลัมน์ `parking` เป็น `parking_lot`
 
 *** =instructions
-
-ให้คุณเลือกคอลัมน์ `id`, `name` และ `bookable` จาก data frame `restaurant` แล้วเปลี่ยนชื่อคอลัมน์เหล่านี้เป็น `restaurant_id`, `restaurant_name` และ `reservable` ตามลำดับ
+- ให้คุณเลือกคอลัมน์ `id`, `name` และ `bookable` จาก data frame `restaurant` แล้วเปลี่ยนชื่อคอลัมน์เหล่านี้เป็น `restaurant_id`, `restaurant_name` และ `reservable` ตามลำดับ แล้วเก็บค่าไว้ในตัวแปรชื่อ `answer`
+- แสดงค่าข้อมูล 10 แถวแรกจากตัวแปร `answer`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+answer <- select(...)
 ```
 
 *** =solution
 ```{r}
+answer <- select(restaurant, restaurant_id = id, restaurant_name = name, reservable = bookable)
 
+head(answer, n = 10)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:c3e6460fb1
-## การเลือกคอลัมน์โดยใช้ starts_with(), ends_with() และ contains()
+## การเลือกคอลัมน์โดยดูจากชื่อขึ้นต้น
 
-Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` ยกตัวอย่างเช่น:
-- คุณสามารถพิมพ์คำสั่ง `select(restaurant, starts_with("good"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อขึ้นต้นด้วย "good" ได้
-- คุณสามารถพิมพ์คำสั่ง `select(restaurant, ends_with("id"))` เพื่อดึงเฉพาะคอลัมน์ที่มีชื่อลงท้ายด้วย "id" ได้
-- หรือแม้กระทั่งการใช้คำสั่ง `select(restaurant, ends_with("name"))` เพื่อดึงเฉพาะคอลัมน์ที่มีคำว่า "name" อยู่ในชื่อก็สามารถทำได้เช่นเดียวกัน
-(คุณสามารถพิมพ์คำสั่งต่างๆลงไปใน Console เพื่อลองทดสอบดูได้เลย)
+Dplyr มีตัวช่วยมากมายในการเลือกข้อมูลคอลัมน์ต่างๆออกมาจาก data frame ของคุณ โดยการใช้งานร่วมกับ function `select()` เช่น `start_with()`, `ends_with()` และ `contains()`
 
-ซึ่งนอกจากการเลือกคอลัมน์ต่างๆออกมาจาก data frame แล้ว เรายังสามารถเปลี่ยนชื่อคอลัมน์ต่างๆได้ด้วย ยกตัวอย่างเช่น
-คำสั่ง `select(restaurant, id, name, reservable = bookable)` จะทำการเลือกคอลัมน์ `id`, `name` และ `bookable` ออกมาจาก `restaurant` และเปลี่ยนชื่อคอลัมน์ `bookable` เป็น `reservable`
+คำสั่ง `starts_with()` จะช่วยให้คุณเลือกคอลัมน์โดยดูจากชื่อขึ้นต้นของคอลัมน์นั้นๆได้ ยกตัวอย่างเช่น
 
-และเราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง ยกตัวอย่างเช่น
-คำสั่ง `distinct(restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
+`select(restaurant, starts_with("good"))` จะดึงทุกๆคอลัมน์ใน `restaurant` ที่มีชื่อคอลัมน์ขึ้นต้นด้วย "good" ออกมา (คุณสามารถพิมพ์คำสั่งต่างๆลงไปใน Console เพื่อลองทดสอบดูได้เลย)
 
 *** =instructions
-- ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `user_new`
+- ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `user_new` (`starts_with()` สามารถช่วยคุณให้คุณไม่ต้องพิมพ์คำสั่งยาวๆได้ในจุดนี้)
 - สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `user_new`
 - ใช้ function `distinct()` กับ `user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
 - สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
@@ -245,12 +243,6 @@ user_new <- select(user, id, gender, reviews_count = n_reviews, contains("rating
 
 # print out the the first 10 rows in `user_new`
 head(user_new, n = 10)
-
-# now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
-distinct_gender <- distinct(user_new, gender)
-
-# print out distinct values we stored in `distinct_gender`
-distinct_gender
 ```
 
 *** =sct
@@ -259,9 +251,8 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 ```
 
 
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:21152f4415
-## <<<New Exercise>>>
+## การเลือกคอลัมน์โดยดูจากชื่อลงท้าย
 
 
 *** =instructions
@@ -285,11 +276,11 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:139d1b8d08
-## <<<New Exercise>>>
+## การเลือกคอลัมน์โดยดูจากคำที่อยู่ในชื่อ
 
 
 *** =instructions
@@ -317,8 +308,10 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d8f571fd73
-## <<<New Exercise>>>
+## การแสดงค่าทั้งหมดที่เป็นไปได้ของแต่ละคอลัมน์โดยใช้ distinct()
 
+เราสามารถใช้ function `distinct()` ในการที่เราจะดูว่า data frame ที่เราใส่ลงไปมีค่าที่ไม่ซ้ำกันกี่ค่าบ้าง ยกตัวอย่างเช่น
+คำสั่ง `distinct(restaurant, opening_date)` จะแสดงผลลัพธ์เป็นวันทั้งหมดที่ร้านอาหารเริ่มเปิดโดยดึงมาเฉพาะค่าที่ไม่ซ้ำกัน (คล้ายกับ function `unique()` ในภาษา R ปกติ)
 
 *** =instructions
 
@@ -337,6 +330,11 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 *** =solution
 ```{r}
 
+# now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(user_new, gender)
+
+# print out distinct values we stored in `distinct_gender`
+distinct_gender
 ```
 
 *** =sct
@@ -418,8 +416,7 @@ success_msg("Good job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:03371e8ac0
-## <<<New Exercise>>>
-
+## a
 
 *** =instructions
 
