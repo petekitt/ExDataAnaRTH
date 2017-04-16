@@ -174,7 +174,7 @@ Dplyr มีตัวช่วยมากมายในการเลือ�
 
 *** =instructions
 - ทำการเลือกข้อมูลจาก `user` โดยเลือกมาแค่คอลัมน์ `id`, `gender`, `n_reviews`, `n_ratings`, และ `n_1_ratings` ไปจนถึง `n_5_ratings` เปลี่ยนชื่อคอลัมน์ `n_reviews` เป็น `reviews_count` แล้วเก็บผลลัพธ์ดังกล่าวไว้ในตัวแปร `user_new`
-- สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `w_user_new`
+- สั่งให้ R แสดงค่า 10 แถวแรกของตัวแปร `user_new`
 - ใช้ function `distinct()` กับ `user_new` เพื่อตรวจสอบว่า dataset ผู้ใช้งานของเรานั้นมีแค่เพศชายและหญิงจริงๆ (`gender` มีค่าเป็น 0 และ 1 ตามลำดับ) แล้วเก็บผลลัพธ์ไว้ในตัวแปร `distinct_gender`
 - สั่งให้ R แสดงค่าตัวแปร `distinct_gender`
 
@@ -205,9 +205,9 @@ distinct_gender <-
 *** =solution
 ```{r}
 # define `user_new` here using `select()` function, replace `...` with the arguments you need
-user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"))
+user_new <- select(user, id, gender, reviews_count = n_reviews, contains("ratings"))
 
-# print out the the first 10 rows in `w_user_new`
+# print out the the first 10 rows in `user_new`
 head(user_new, n = 10)
 
 # now, let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
@@ -234,7 +234,7 @@ success_msg("Good! Now you can see that we actually have 3 genders in our user d
 
 *** =instructions
 ต่อจากแบบฝึกหัดที่แล้ว สิ่งที่คุณต้องทำกับตัวแปร `user_new` คือ
-- ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ reviews_count > 0)
+- ทำการกรองข้อมูลผู้ใช้ โดยใช้ function `filter()` เลือกเฉพาะผู้ใช้ที่เคยเขียนรีวิวร้านอาหารให้กับเว็บไซต์ wongnai (หรือก็คือ `reviews_count` > 0)
 - เมื่อทำการคัดกรองข้อมูลผู้ใช้เรียบร้อยแล้ว ให้คุณใช้ function `mutate()` ในการเพิ่มคอลัมน์ `avg_rating` ที่เก็บค่าเฉลี่ยของ rating ที่ user แต่ละคนให้กับร้านอาหาร
 - เก็บผลลัพธ์สุดท้ายไว้ในตัวแปร `user_with_rating`
 - สั่งให้ R แสดงค่า 10 แถวแรกจาก `user_with_rating`
@@ -323,13 +323,13 @@ function `summarise()` จะช่วยให้เราสามารถส
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
-user_new <- select(w_user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
+user_new <- select(user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
 
 user_with_rating <- mutate(
-	filter(w_user_new, reviews_count > 0), 
+	filter(user_new, reviews_count > 0), 
 	avg_rating = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) / 
 	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
 )
@@ -380,7 +380,7 @@ success_msg("Well done!")
 จะให้ผลเหมือนกันกับคำสั่งเรียงลำดับ `n_followers` และ `n_reviews` จากมากไปหาน้อยที่ได้กล่าวถึงไปในตอนแรก
 
 *** =instructions
-ในตอนนี้เรามีข้อมูล rating ทั้งหมดเก็บไว้ในตัวแปร `w_rating` ให้คุณทำตามคำสั่งดังต่อไปนี้:
+ในตอนนี้เรามีข้อมูล rating ทั้งหมดเก็บไว้ในตัวแปร `rating` ให้คุณทำตามคำสั่งดังต่อไปนี้:
 - ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน แล้วเรียงลำดับข้อมูลตาม rating เฉลี่ยจากมากไปหาน้อย จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
 - สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_rating_summary`
 - นับจำนวน rating ต่างๆตั้งแต่ 1 ถึง 5 (คอลัมน์ `rating`) รวมถึงนับจำนวน เรียงลำดับข้อมูลตามคอลัมน์ `rating` จากน้อยไปมาก จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `rating_counts`
@@ -391,8 +391,8 @@ success_msg("Well done!")
 *** =pre_exercise_code
 ```{r}
 library('dplyr')
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
@@ -450,7 +450,7 @@ package Dplyr มี function ที่จะช่วยในการนำ d
 
 *** =instructions
 จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านจาก data frame ในตัวแปร `mean_rating` ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame ในตัวแปร `restaurant` เพื่อทำการวิเคราะห์ต่อไป
-- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `w_restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `w_restaurant_new`
+- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `w_restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
 - ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เรียงข้อมูลตาม `id` ของร้านอาหาร เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
 - สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_with_rating`
 - คำนวณดูว่ามีร้านอาหารกี่เปอร์เซ็นต์ที่ไม่ได้รับการให้ rating เลย เก็บคำตอบไว้ในตัวแปร `no_rating_proportion` แล้วสั่งให้ R แสดงคำตอบดังกล่าวออกมาด้วย
@@ -460,8 +460,8 @@ package Dplyr มี function ที่จะช่วยในการนำ d
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 
 mean_rating <- arrange(
 	summarise(
@@ -527,8 +527,8 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
@@ -596,8 +596,8 @@ success_msg("Good job!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
@@ -660,9 +660,9 @@ success_msg("Cool!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
-rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_rating.tsv")
-category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_category.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
 ```
 
 *** =sample_code
