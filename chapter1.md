@@ -30,8 +30,8 @@ description : "ในบทเรียนนี้คุณจะได้เ�
 *** =sample_code
 ```{r}
 # Import `user` and `restaurant` data to R workspace
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_user.tsv")
-restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/w_restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 
 # Import `rating`, `category` to R workspace
 
