@@ -394,9 +394,6 @@ user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cours
 # create `user_new` here and do not forget to change `n_reviews` column name to `reviews_count`
 user_new <- select(user, id, gender, ... = n_reviews, ends_with(...))
 
-# This is the original R code without `Dplyr` package
-filtered_user <- user_new[user_new$reviews_count > 0, ]
-
 # do the same thing in `Dplyr` way and store result in `filtered_user_new`
 
 ```
@@ -406,9 +403,6 @@ filtered_user <- user_new[user_new$reviews_count > 0, ]
 # create `user_new` here and do not forget to change `n_reviews` column name to `reviews_count`
 user_new <- select(user, id, gender, reviews_count = n_reviews, ends_with("ratings"))
 
-# This is the original R code without `Dplyr` package
-filtered_user <- user_new[user_new$reviews_count > 0, ]
-
 # do the same thing in `Dplyr` way and store result in `filtered_user_new`
 filtered_user_new <- filter(user_new, reviews_count > 0)
 ```
@@ -417,7 +411,6 @@ filtered_user_new <- filter(user_new, reviews_count > 0)
 ```{r}
 success_msg("Good job!")
 ```
-
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:03371e8ac0
@@ -442,34 +435,20 @@ filtered_user_new <- filter(select(user_new, id, gender, reviews_count = n_revie
 
 *** =sample_code
 ```{r}
-# This is the original R code without `Dplyr` package
-average_ratings <- 
-	(filtered_user_new$n_1_ratings + 2 * filtered_user_new$n_2_ratings + 3 * filtered_user_new$n_3_ratings + 
-	4 * filtered_user_new$n_4_ratings + 5 * filtered_user_new$n_5_ratings) / 
-	(filtered_user_new$n_1_ratings + filtered_user_new$n_2_ratings + filtered_user_new$n_3_ratings + 
-	filtered_user_new$n_4_ratings + filtered_user_new$n_5_ratings)
-
-# do the same thing in `Dplyr` way
+# sample code is for finding average ratings from 1 to 3. Change it to finding average from 1 to 5 so you get the correct answer
 user_with_rating <- mutate(filtered_user_new,
-	avg_ratings = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) /
-	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
+	avg_ratings = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings) /
+	(n_1_ratings + n_2_ratings + n_3_ratings)
 )
 
 # print out sample results
-head(user_with_rating, n = 10)
+
 ```
 
 *** =solution
 ```{r}
-# This is the original R code without `Dplyr` package
-average_ratings <- 
-	(filtered_user_new$n_1_ratings + 2 * filtered_user_new$n_2_ratings + 3 * filtered_user_new$n_3_ratings + 
-	4 * filtered_user_new$n_4_ratings + 5 * filtered_user_new$n_5_ratings) / 
-	(filtered_user_new$n_1_ratings + filtered_user_new$n_2_ratings + filtered_user_new$n_3_ratings + 
-	filtered_user_new$n_4_ratings + filtered_user_new$n_5_ratings)
-
-# do the same thing in `Dplyr` way
-user_with_rating <- mutate(...,
+# sample code is for finding average ratings from 1 to 3. Change it to finding average from 1 to 5 so you get the correct answer
+user_with_rating <- mutate(filtered_user_new,
 	avg_ratings = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) /
 	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
 )
@@ -485,24 +464,22 @@ success_msg("Good Job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c38435d99
-## การสรุปข้อมูลด้วย summarise() และ group_by()
+## การสรุปข้อมูลด้วย summarise()!
 
-ในแบบฝึกหัดที่แล้ว เราได้ทำการคัดกรองข้อมูลเฉพาะผู้ใช้ที่มีการเขียนรีวิวลงบนเว็บไซต์ wongnai และคำนวณคะแนนเฉลี่ยที่ผู้ใช้แต่ละคนจะให้กับร้านอาหารต่างๆ แล้วเก็บไว้ในตัวแปร `user_with_rating`
-คราวนี้เราจะมาลองวิเคราะห์ข้อมูลกันให้ลึกมากขึ้นโดยใช้ function `summarise()` และ `group_by()`
+ในแบบฝึกหัดที่แล้ว เราได้ทำการคัดกรองข้อมูลเฉพาะผู้ใช้ที่มีการเขียนรีวิวลงบนเว็บไซต์ และคำนวณคะแนนเฉลี่ยที่ผู้ใช้แต่ละคนจะให้กับร้านอาหารต่างๆ แล้วเก็บไว้ในตัวแปร `user_with_rating`
+
+คราวนี้เราจะมาลองวิเคราะห์ภาพรวมของข้อมูลกันโดยใช้ function `summarise()`
 
 function `summarise()` จะช่วยให้เราสามารถสรุปข้อมูลได้ตามที่เราต้องการ โดยขึ้นอยู่กับว่าเราใส่อะไรลงไปเป็น argument ของ function `summarise()` ยกตัวอย่างเช่น:
+
 - คำสั่ง `summarise(user, n())` จะทำการสรุปข้อมูลให้เราว่าข้อมูลใน data frame `user` มีทั้งหมดกี่แถว (หรือก็คือมีผู้ใช้จำนวนกี่คน)
 - คำสั่ง `summarise(user, mean(n_reviews), sum(n_3_ratings), median(n_followers))` จะแสดงผลลัพธ์เป็นจำนวน review เฉลี่ยต่อผู้ใช้ 1 คน, จำนวน rating ระดับ 3 ทั้งหมดที่ผู้ใช้ใน `user` ได้ให้กับร้านอาหาร และค่ามัธยฐานของจำนวนผู้ติดตามของผู้ใช้แต่ละคนใน `user`
+
 คุณสามารถลองเล่นกับ function `summarise()` นี้ได้โดยการนำ code เหล่านี้ไปพิมพ์ใน Console และลองดูว่าผลเป็นอย่างไร
-
-ในการวิเคราะห์ข้อมูลในการทำงานจริง เราอาจจะอยากทำการวิเคราะห์ให้ลึกลงไปโดยแบ่งข้อมูลที่เรามีตามกลุ่มต่างๆด้วย ซึ่ง function `group_by()` จะสามารถช่วยเราได้ในจุดนี้
-หากคุณลองพิมพ์คำสั่ง `summarise(group_by(restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
-
-ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี `price_range` จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
 
 *** =instructions
 ให้คุณทำการวิเคราะห์ข้อมูลผู้ใช้ต่อโดยใช้ข้อมูลจากตัวแปร `user_with_rating` ที่ถูกเตรียมไว้ให้ใน workspace แล้ว
-- ทำการสรุปข้อมูลโดยใช้ function `summarise()` และ `group_by()` ในการหาว่าผู้ใช้เพศชายและเพศหญิง (`gender` มีค่าเป็น 1 และ 2 ตามลำดับ) มีจำนวน `reviews_count`, จำนวน rating ทั้งหมด (ผลรวมตั้งแต่ `n_1_ratings` ไปจนถึง `n_5_ratings`), จำนวน `n_photos` และจำนวน `n_followers` โดยเฉลี่ยแตกต่างกันอย่างไร และมีค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของ `avg_rating` ต่างกันอย่างไร
+- ทำการสรุปข้อมูลโดยใช้ function `summarise()` หาว่า `user_with_rating` มีจำนวน `reviews_count` โดยเฉลี่ย, จำนวน `n_photos` โดยเฉลี่ย, จำนวน `n_followers` โดยเฉลี่ย, ค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของ `avg_rating` เป็นเท่าไรบ้าง
 - คุณควรใช้ function `mean()` และ `sd()` ร่วมกับ `summarise()` ในการหาค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐาน
 - ไม่ต้องตั้งชื่อให้กับแต่ละคอลัมน์ และให้ R แสดงผลลัพธ์ออกมาได้เลยโดยไม่ต้องเก็บผลลัพธ์ไว้ในตัวแปรใดๆ
 
@@ -529,7 +506,11 @@ user_with_rating <- mutate(
 summarise(user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
 
 # Your code here
-
+summarise(
+	user_with_rating, 
+	mean(...), mean(...), mean(...), 
+	mean(...), sd(...)
+)
 ```
 
 *** =solution
@@ -539,13 +520,9 @@ summarise(user, mean(n_1_ratings + n_2_ratings + n_3_ratings))
 
 # Your code here
 summarise(
-	group_by(user_with_rating, gender), 
-	mean(reviews_count), 
-	mean(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings), 
-	mean(n_photos), 
-	mean(n_followers), 
-	mean(avg_rating), 
-	sd(avg_rating)
+	user_with_rating, 
+	mean(reviews_count), mean(n_photos), mean(n_followers), 
+	mean(avg_rating), sd(avg_rating)
 )
 ```
 
@@ -556,32 +533,68 @@ success_msg("Well done!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ee82ffad79
-## <<<New Exercise>>>
+## สรุปข้อมูลให้ดีขึ้นและละเอียดขึ้นด้วย group_by()!
 
+ในการวิเคราะห์ข้อมูลในการทำงานจริง เราอาจจะอยากทำการวิเคราะห์ให้ลึกลงไปโดยแบ่งข้อมูลที่เรามีตามกลุ่มต่างๆด้วย ซึ่ง function `group_by()` จะสามารถช่วยเราได้ในจุดนี้
+
+หากคุณลองพิมพ์คำสั่ง `summarise(group_by(restaurant, price_range), n(), sum(verified_info), verified_rate = sum(verified_info) / n())` ลงไปใน Console สิ่งที่คุณจะเห็นจากผลลัพธ์คือการสรุปข้อมูลของจำนวนร้านอาหารทั้งหมด, จำนวนร้านที่ได้รับการยืนยันข้อมูลแล้ว และอัตราการยืนยันข้อมูล โดยแบ่งกลุ่มตาม `price_range`
+
+ซึ่งจากผลลัพธ์ดังกล่าว คุณจะเห็นได้ว่าร้านอาหารที่มี `price_range` จัดอยู่ในระดับสูงกว่า(ราคาอาหารแพงกว่า) มีแนวโน้มที่จะได้รับการยืนยันข้อมูลมากกว่าอย่างชัดเจน
 
 *** =instructions
+ต่อจากแบบฝึกหัดที่แล้วกับตัวแปร `user_with_rating`
+- คล้ายกับแบบฝึกหัดที่แล้ว ให้คุณทำการสรุปข้อมูลโดยใช้ function `summarise()` และ `group_by()` ในการหาว่าผู้ใช้เพศชายและเพศหญิง (`gender` มีค่าเป็น 1 และ 2 ตามลำดับ) มีจำนวน `reviews_count` โดยเฉลี่ย, จำนวน `n_photos` โดยเฉลี่ย, จำนวน `n_followers` โดยเฉลี่ย, ค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของ `avg_rating` แตกต่างกันอย่างไร
+- ไม่ต้องตั้งชื่อให้กับแต่ละคอลัมน์ และให้ R แสดงผลลัพธ์ออกมาได้เลยโดยไม่ต้องเก็บผลลัพธ์ไว้ในตัวแปรใดๆ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
+user_new <- select(user, id, gender, reviews_count = n_reviews, contains("ratings"), n_photos, n_followers)
+
+user_with_rating <- mutate(
+	filter(user_new, reviews_count > 0), 
+	avg_rating = (n_1_ratings + 2 * n_2_ratings + 3 * n_3_ratings + 4 * n_4_ratings + 5 * n_5_ratings) / 
+	(n_1_ratings + n_2_ratings + n_3_ratings + n_4_ratings + n_5_ratings)
+)
 ```
 
 *** =sample_code
 ```{r}
+# This to to summarise numbers of followers deparately by gender
+summarise(group_by(user_with_rating, gender, n(n_followers))
 
+# Use the code above as an example to complete your code here
+summarise(
+	group_by(..., ...), 
+	mean(...), mean(...), mean(...), 
+	mean(...), sd(...)
+)
 ```
 
 *** =solution
 ```{r}
+# This to to summarise numbers of followers deparately by gender
+summarise(group_by(user_with_rating, gender, n(n_followers))
 
+# Use the code above as an example to complete your code here
+summarise(
+	group_by(user_with_rating, gender), 
+	mean(reviews_count), mean(n_photos), mean(n_followers), 
+	mean(avg_rating), sd(avg_rating)
+)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:b1f530f06d
 ## การเรียงลำดับข้อมูลด้วย arrange()
 
