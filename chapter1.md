@@ -596,23 +596,72 @@ success_msg("Good Job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b1f530f06d
-## การเรียงลำดับข้อมูลด้วย arrange()
+## การเรียงลำดับข้อมูลด้วย arrange() (1)
 
 หากคุณต้องการจะเรียงลำดับข้อมูลเพื่อใช้ในการวิเคราะห์ หรือแม้แต่เพื่อจัดข้อมูลให้เป็นระเบียบมากขึ้น คุณสามารถใช้ function `arrange()` ในการจัดเรียงข้อมูลได้ เช่น
 - คำสั่ง `arrange(user, id)` จะทำการเรียงข้อมูลในตัวแปร `user` ตามลำดับ `id`
 - คำสั่ง `arrange(user, -n_followers, -n_reviews)` จะทำการเรียงข้อมูลในตัวแปร `w_user` โดยใช้คอลัมน์ `n_followers` และ `n_reviews` เป็นเกณฑ์ตามลำดับโดยเรียงจากมากไปหาน้อย (นั่นคือ ถ้ามีข้อมูลผู้ใช้งานคนไหนที่มีจำนวนผู้ติดตาม (`n_followers`) เท่ากัน R จะทำการพิจารณาคอลัมน์ `n_reviews` เป็นลำดับต่อไป)
 
-สังเกตได้ว่า function `arrange()` จะทำหน้าที่คล้ายกับ function `order()` ในภาษา R ปกติ แต่นอกจากการใส่เครื่องหมายลบ (`-`) เพื่อบอกให้ R เรียงลำดับข้อมูลจากมากไปหาน้อยแล้ว เรายังสามารถใช้คำสั่ง `desc()` กับตัวแปรที่เราต้องการให้เรียงลำดับจากมากไปหาน้อยได้ด้วยเช่นกัน นั่นคือ คำสั่งดังต่อไปนี้:
-- `arrange(user, desc(n_followers), desc(n_reviews))`
-- `arrange(user, desc(n_followers, n_reviews))`
-จะให้ผลเหมือนกันกับคำสั่งเรียงลำดับ `n_followers` และ `n_reviews` จากมากไปหาน้อยที่ได้กล่าวถึงไปในตอนแรก
-
 *** =instructions
 ในตอนนี้เรามีข้อมูล rating ทั้งหมดเก็บไว้ในตัวแปร `rating` ให้คุณทำตามคำสั่งดังต่อไปนี้:
-- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน แล้วเรียงลำดับข้อมูลตาม rating เฉลี่ยจากมากไปหาน้อย จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
-- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_rating_summary`
-- นับจำนวน rating ต่างๆตั้งแต่ 1 ถึง 5 (คอลัมน์ `rating`) รวมถึงนับจำนวน เรียงลำดับข้อมูลตามคอลัมน์ `rating` จากน้อยไปมาก จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `rating_counts`
-- สั่งให้ R แสดงค่าของ `rating_counts`
+- ใช้ function `arrange()` ในการเรียงลำดับ `restaurant` จาก `id` โดยให้เรียงจากน้อยไปหามาก แล้วเก็บค่าไว้ในตัวแปร `ascending_restaurant`
+- ใช้ function `arrange()` ในการเรียงลำดับ `restaurant` จาก `id` โดยให้เรียงจากมากไปหาน้อย แล้วเก็บค่าไว้ในตัวแปร `descending_restaurant`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `ascending_restaurant`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `descending_restaurant`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library('dplyr')
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+```
+
+*** =sample_code
+```{r}
+# `arrange` `restaurant` ascendingly by `id` and store result in `ascending_restaurant`
+ascending_restaurant <- arrange(restaurant, ...)
+
+# `arrange` `restaurant` descendingly by `id` and store result in `descending_restaurant`
+... <- arrange(..., ...)
+
+# print out the first 10 rows from `ascending_restaurant` and `descending_restaurant`
+head(..., n = 10)
+head(..., n = 10)
+```
+
+*** =solution
+```{r}
+# `arrange` `restaurant` ascendingly by `id` and store result in `ascending_restaurant`
+ascending_restaurant <- arrange(restaurant, id)
+
+# `arrange` `restaurant` descendingly by `id` and store result in `descending_restaurant`
+descending_restaurant <- arrange(restaurant, id)
+
+# print out the first 10 rows from `ascending_restaurant` and `descending_restaurant`
+head(ascending_restaurant, n = 10)
+head(descending_restaurant, n = 10)
+```
+
+*** =sct
+```{r}
+success_msg("Cool! Let's go to the next exercise")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:6bcc105e72
+## การเรียงลำดับข้อมูลด้วย arrange() (2)
+
+นอกจากการใช้เครื่องหมายลบ (`-`) แล้ว เรายังสามารถใช้คำสั่ง `desc()` กับตัวแปรที่เราต้องการให้เรียงลำดับจากมากไปหาน้อยได้ด้วยเช่นกัน คำสั่งดังต่อไปนี้:
+- `arrange(user, desc(n_followers), desc(n_reviews))`
+- `arrange(user, desc(n_followers, n_reviews))`
+จะให้ผลเหมือนกันกับคำสั่งเรียงลำดับ `n_followers` และ `n_reviews` จากมากไปหาน้อยที่ได้กล่าวถึงไปในแบบฝึกหัดก่อนหน้านี้
+
+*** =instructions
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐานจาก data frame `rating` ตั้งชื่อคอลัมน์ว่า `avg_rating` และ `sd_rating` ตามลำดับ จากนั้นเก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
+- เรียงลำดับข้อมูลใน `mean_rating` ตามลำดับคอลัมน์ `avg_rating` และ `sd_rating` โดยเรียงจากมากไปหาน้อยcและน้อยไปหามากตามลำดับ แล้วเก็บผลลัพธ์ไว้ในตัวแปร `arranged_mean_rating`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `arranged_mean_rating`
 
 *** =hint
 
@@ -625,91 +674,56 @@ rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cou
 
 *** =sample_code
 ```{r}
-# define `mean_rating` here and print the first 10 rows out
+# define a variable `mean_rating` here
+mean_rating <- summarise(
+	group_by(rating, ...),
+	... = mean(...),
+	... = sd(...)
+)
 
+# descendingly order `mean_rating` based on `avg_rating` and `sd_rating` and store result in `arranged_mean_rating`
+arranged_mean_rating <- arrange(..., ..., ...)
 
-# define `rating_counts` here and print it out
+# print out the first 10 row from `arranged_mean_rating`
 
 ```
 
 *** =solution
 ```{r}
-# define `mean_rating` here and print the first 10 rows out
-mean_rating <- arrange(
-	summarise(
-		group_by(rating, reviewed_item_id), 
-		avg_rating = mean(rating)
-	), desc(avg_rating)
+# define a variable `mean_rating` here
+mean_rating <- summarise(
+	group_by(rating, reviewed_item_id),
+	avg_rating = mean(rating),
+	sd_rating = sd(rating)
 )
 
-head(mean_rating, n = 10)
+# descendingly order `mean_rating` based on `avg_rating` and `sd_rating` and store result in `arranged_mean_rating`
+arranged_mean_rating <- arrange(mean_rating, desc(avg_rating), sd_rating)
 
-# define `rating_counts` here and print it out
-rating_counts <- arrange(
-	summarise(
-		group_by(rating, rating), 
-		n()
-	), rating
-)
-
-rating_counts
+# print out the first 10 row from `arranged_mean_rating`
+head(arranged_mean_rating, n = 10)
 ```
 
 *** =sct
 ```{r}
-success_msg("Cool! Let's go to the next exercise")
+success_msg("Great Job!!")
 ```
 
 
-
---- type:NormalExercise lang:r xp:100 skills:1 key:6bcc105e72
-## <<<New Exercise>>>
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
 --- type:NormalExercise lang:r xp:100 skills:1 key:d2e7c1321d
-## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน
+## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน (1)
 
-แน่นอนว่าการนำข้อมูลจากหลายๆ data frame มาหาจุดเชื่อมโยงกันนั้นเป็นเรื่องที่หลีกเลี่ยงไม่ได้
+การนำข้อมูลต่างๆมาเชื่อมโยงเข้าด้วยกัน จะช่วยให้เราเห็นความเกี่ยวข้องกันของข้อมูล อาจช่วยให้เราเข้าใจข้อมูลในภาพที่กว้างขึ้น ละเอียดขึ้น และเป็นจุดเริ่มต้นของการวิเคราะห์ข้อมูลให้เป็นประโยชน์ในลำดับต่อๆไปได้
 
-package Dplyr มี function ที่จะช่วยในการนำ data frame ต่างๆมาเชื่อมต่อกัน ได้แก่ `left_join()`, `right_join()`, `inner_join()`, `full_join()` และ `full_join()` ซึ่งมีคำอธิบายคร่าวๆดังต่อไปนี้:
-- `left_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
-- `right_join(t1, t2, by = c("a" = "b"))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
-- `inner_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
-- `full_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
+เราสามารถใช้ function `inner_join()` มาช่วยในเชื่อม data frame เข้าด้วยกัน โดยคุณจะต้องทำการกำหนดว่าจะเชื่อม data frame เข้าด้วยกันโดยใช้คอลัมน์ใด เช่น
 
-ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by = c("a" = "b", "e" = "f"))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
-
-ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
+คำสั่ง `inner_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
 
 *** =instructions
-จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านจาก data frame ในตัวแปร `mean_rating` ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame ในตัวแปร `restaurant` เพื่อทำการวิเคราะห์ต่อไป
-- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `w_restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
-- ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เรียงข้อมูลตาม `id` ของร้านอาหาร เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
+จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านเก็บไว้ในตัวแปร `mean_rating` แต่เรายังไม่มีข้อมูลชื่อร้านอาหารและอื่นๆ ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame `restaurant` เพื่อให้มองเห็นข้อมูลในมุมที่ละเอียดขึ้น
+- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยใช้ `id` และ `reviewed_item_id` เป็นตัวเชื่อม (เนื่องจากทั้งคู่เป็นตัวแทนของ `id` ร้านอาหาร) เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating`
 - สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_with_rating`
-- คำนวณดูว่ามีร้านอาหารกี่เปอร์เซ็นต์ที่ไม่ได้รับการให้ rating เลย เก็บคำตอบไว้ในตัวแปร `no_rating_proportion` แล้วสั่งให้ R แสดงคำตอบดังกล่าวออกมาด้วย
 
 *** =hint
 
@@ -719,41 +733,35 @@ library("dplyr")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 
-mean_rating <- arrange(
-	summarise(
-		group_by(rating, reviewed_item_id), 
-		avg_rating = mean(rating)
-	), -avg_rating
+mean_rating <- summarise(
+	group_by(rating, reviewed_item_id), 
+	avg_rating = mean(rating),
+	sd_rating = sd(rating)
 )
 ```
 
 *** =sample_code
 ```{r}
-# link `restaurant_new` to `mean_rating` by using `left_join()` or `right_join()`
-restaurant_new <- 
+# define `restaurant_new`
+restaurant_new <- ...
 
-# calculate the no-rating proportion here
-no_rating_proportion <- 
+# connect `restaurant_new` to `mean_rating` using `inner_join()` and store result in `restaurant_with_rating`
+restaurant_with_rating <- inner_join(..., ..., by = c("..." = "..."))
+
+# print out the first 10 row from `restaurant_with_rating`
+
 ```
 
 *** =solution
 ```{r}
-# link `restaurant_new` to `mean_rating` by using `left_join()` or `right_join()`
+# define `restaurant_new`
 restaurant_new <- select(restaurant, id, name, price_range, category_id)
 
-restaurant_with_rating <- arrange(
-	left_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id")), 
-	id
-)
+# connect `restaurant_new` to `mean_rating` using `inner_join()` and store result in `restaurant_with_rating`
+restaurant_with_rating <- inner_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id"))
 
+# print out the first 10 row from `restaurant_with_rating`
 head(restaurant_with_rating, n = 10)
-
-# calculate the no-rating proportion here
-no_rating_proportion <- 
-	nrow(filter(restaurant_with_rating, is.na(avg_rating))) / 
-	nrow(restaurant_with_rating)
-
-no_rating_proportion
 ```
 
 *** =sct
@@ -764,26 +772,81 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a1bb016a43
-## <<<New Exercise>>>
+## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน (2)
 
+ข้อจำกัดของ function `inner_join()` คือ การเชื่อมข้อมูลจะเกิดขึ้นกับแค่ข้อมูลที่มีอยู่ใน data frame ทั้ง 2 อันเท่านั้น ข้อมูลใดๆที่อยู่ใน data frame เพียงอันใดอันหนึ่งจะถูกตัดทิ้งไป
+
+ในการแก้ปัญหาดังกล่าว เราสามารถใช้ function `left_join()` และ `right_join()` มาช่วยได้ ซึ่งมีคำอธิบายคร่าวๆดังต่อไปนี้:
+- `left_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
+- `right_join(t1, t2, by = c("a" = "b"))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
+
+ในกรณีของ `left_join()` หากข้อมูลตัวใดที่มีอยู่ใน `t1` แต่ไม่อยู่ใน `t2` ทุกๆคอลัมน์จาก `t2` สำหรับข้อมูลตัวนั้นๆจะแสดงผลออกมาเป็น `NA`
+
+--- may not include contents below
+
+- `full_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
+
+ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by = c("a" = "b", "e" = "f"))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
+
+ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
 
 *** =instructions
+ให้คุณนำ `restaurant_new` มาเชื่อมกับ `mean_rating` เหมือนใแบบฝึกหัดที่แล้ว
+- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
+- ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
+- เรียงลำดับข้อมูลใน `restaurant_with_rating` ตามคอลัมน์ `avg_rating` โดยเรียงจากมากไปหาน้อย และเก็บผลลัพธ์ไว้ใน `arranged_restaurant_with_rating`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `arranged_restaurant_with_rating`
+- คำนวณดูว่ามีร้านอาหารกี่เปอร์เซ็นต์ที่ไม่ได้รับการให้ rating เลย ให้ R แสดงคำตอบดังกล่าวออกมาด้วย
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 
+mean_rating <- summarise(
+	group_by(rating, reviewed_item_id), 
+	avg_rating = mean(rating),
+	sd_rating = sd(rating)
+)
 ```
 
 *** =sample_code
 ```{r}
+# define `restaurant_new`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
 
+# connect `restaurant_new` to `mean_rating` using `left_join()` to get all restaurants info and store result in `restaurant_with_rating`
+restaurant_with_rating <- ...
+
+# ascendingly arrange `restaurant_with_rating` based on `avg_rating` and store result in `arranged_restaurant_with_rating`
+arranged_restaurant_with_rating <- ...
+
+# print out the first 10 row from `arranged_restaurant_with_rating`
+
+
+# calculating proportion of restaurant with no rating and show the result
+nrow(filter(arranged_restaurant_with_rating, ...)) / nrow(arranged_restaurant_with_rating)
 ```
 
 *** =solution
 ```{r}
+# define `restaurant_new`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
 
+# connect `restaurant_new` to `mean_rating` using `left_join()` to get all restaurants info and store result in `restaurant_with_rating`
+restaurant_with_rating <- left_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id"))
+
+# ascendingly arrange `restaurant_with_rating` based on `avg_rating` and store result in `arranged_restaurant_with_rating`
+arranged_restaurant_with_rating <- arrange(restaurant_with_rating, -avg_rating)
+
+# print out the first 10 row from `arranged_restaurant_with_rating`
+head(arranged_restaurant_with_rating, n = 10)
+
+# calculating proportion of restaurant with no rating and show the result
+nrow(filter(arranged_restaurant_with_rating, is.na(avg_rating))) / nrow(arranged_restaurant_with_rating)
 ```
 
 *** =sct
@@ -830,7 +893,10 @@ rating %>% str()
 
 
 # do the same thing as `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
-
+user %>% 
+	select(..., ..., ..., ..., ...) %>% 
+	filter(...) 
+	%>% ...
 ```
 
 *** =solution
@@ -862,18 +928,17 @@ success_msg("Good job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:c2c15cb19a
 ## ทำความรู้จักกับ Pipes (2)
 
-เราจะมาลองใช้ pipes ในระดับที่ยากขึ้นไปอีกหน่อย
-ในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
+ในกรณีที่เราต้องการจะเก็บผลลัพธ์จากการใช้ pipes ไว้ในตัวแปร เราก็สามารถทำได้โดยการใช้เครื่องหมายกำหนดค่า `<-` ตามปกติ เช่น `a <- 1:5 %>% sum()`
+
+และในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
 `8 %>% head(user, n = .)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
 
 *** =instructions
 เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
-- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
-- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant`
-- เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
-- เรียงลำดับผลลัพธ์ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย
-- เก็บผลลัพธ์ในคำสั่งที่แล้วไว้ในตัวแปร `result`
-- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `result`
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ เก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_with_rating`
+- เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `reviewed_item_id`, `name`, `price_range`, `avg_rating` และ `sd_rating` เก็บผลลัพธ์ไว้ในตัวแปร `temp_result`
+- เรียงลำดับ `result` ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย และเก็บผลลัพธ์ไว้ในตัวแปร `final_result`
 
 *** =hint
 
@@ -886,26 +951,30 @@ rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cou
 
 *** =sample_code
 ```{r}
-# define `result` here
-result <- 
-	
-# print the first 10 row from `result` out
+# your code here
+mean_rating <- rating %>% 
+	group_by(...) %>% 
+	summarise(avg_rating = ..., sd_rating = ...)
 
+restaurant_with_rating <- ... %>% inner_join(..., by = ...)
+
+temp_result <- ... %>% select(..., ..., ..., ..., ...)
+
+final_result <- ... %>% arange(...)
 ```
 
 *** =solution
 ```{r}
-# define `result` here
-result <- 
-	rating %>% 
+# your code here
+mean_rating <- rating %>% 
 	group_by(reviewed_item_id) %>% 
-	summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
-	inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
-	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% 
-	arrange(-avg_rating)
-	
-# print the first 10 row from `result` out
-result %>% head(n = 10)
+	summarise(avg_rating = mean(rating), sd_rating = sd(rating))
+
+restaurant_with_rating <- mean_rating %>% inner_join(restaurant, by = c("reviewed_item_id" = "id"))
+
+temp_result <- restaurant_with_rating %>% select(reviewed_item_id, name, price_range, avg_rating, sd_rating)
+
+final_result <- temp_result %>% arange(-avg_rating)
 ```
 
 *** =sct
@@ -915,32 +984,59 @@ success_msg("Cool!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b2a93e992b
-## <<<New Exercise>>>
+## ทำความรู้จักกับ Pipes (3)
 
+การใช้ pipes จะช่วยให้เราสามารถเขียน code ต่อกันได้อย่างเป็นระเบียบและเป็นลำดับ โดยอาจไม่จำเป็นต้องสร้างตัวแปรขึ้นมาเก็บผลลัพธ์ระหว่างทางก็ได้ เช่น
+
+คำสั่ง `restaurant %>% filter(wifi == 1) %>% group_by(price_range) %>% summarise(verified_rate = mean(verified_info))` จะทำการวิเคราะห์ข้อมูลอย่างเป็นขั้นเป็นตอน เริ่มจากการกรองข้อมูล จัดกลุ่มข้อมูล และสรุปข้อมูล ซึ่งทั้งหมดนี้สามารถทำได้ในคำสั่งเดียวโดยไม่ต้องพึ่งการสร้างตัวแปรใดๆ
 
 *** =instructions
+เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ทำตามแบบฝึกหัดที่แล้ว โดยใช้ pipes (`%>%`) และเขียนทุกอย่างต่อกันตั้งแต่ต้นจนจบในคำสั่งเดียว:
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant`
+- เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
+- เรียงลำดับ `result` ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย
+- สุดท้าย แสดงผลลัพธ์ 10 แถวแรกออกมา
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
 ```{r}
-
+# create a chain of pipes code here
+rating %>% 
+	group_by(...) %>% 
+	summarise(avg_rating = ..., sd_rating = ...) %>%
+	inner_join(..., by = ...) %>%
+	select(...) %>% 
+	arrange(...) %>%
+	head(...)
 ```
 
 *** =solution
 ```{r}
-
+# create a chain of pipes code here
+rating %>% 
+	group_by(reviewed_item_id) %>% 
+	summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
+	inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% 
+	arrange(-avg_rating) %>%
+	head(n = 10)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Cool!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
 ## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน!
 
