@@ -1038,30 +1038,21 @@ success_msg("Cool!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
-## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน!
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (1)
 
 หลังจากที่คุณได้เรียนรู้กับ function พื้นฐานต่างๆของ package Dplyr ไปแล้ว ถึงเวลาแล้วที่เราจะให้คุณลองลงมือดึงข้อมูลเพื่อนำมาวิเคราะห์ด้วยตัวเอง!
 
-เพื่อเป็นการทบทวน รายละเอียดการใช้งานของแต่ละ function พื้นฐาน มีดังต่อไปนี้:
-- `select()` ใช้เลือกข้อมูลคอลัมน์ต่างๆจาก data frame
-- `distinct()` ใช้ในการดึงเฉพาะข้อมูลที่มีค่าไม่ซ้ำกัน สามารถใช้ในการสำรวจข้อมูลคร่าวๆได้ ว่ามีค่าที่เป็นไปได้ทั้งหมดกี่แบบ
-- `arrange()` ใช้ในการเรียงลำดับข้อมูล คุณสามารถเรียงจากค่ามากไปหาน้อยได้โดยการใส่เครื่องหมาย `-` หรือ `desc()`
-- `filter()` ใช้ในการกรองข้อมูลเพื่อดึงเฉพาะข้อมูลที่ตรงตามเงื่อนไขที่คุณต้องการออกมา
-- `summarise()` ใช้ในการสรุปข้อมูลจาก data frame ของคุณ สามารถใช้งานกับ function การคำนวณอื่นๆได้อย่างอิสระ เช่น `n()`, `n_distinct()`, `sum()`, `mean()` และ `sd()` เป็นต้น
-- `group_by` สามารถใช้ร่วมกับ function `summarise()` เพื่อแบ่งข้อมูลออกเป็นกลุ่มตามค่าในคอลัมน์ได้
-- `left_join()`, `right_join()`, `inner_join()`, `full_join()` ใช้ในการนำข้อมูลมาเชื่อมโยงกันตามค่าในคอลัมน์ที่คุณกำหนด
-- `%>%` ช่วยให้คุณสามารถเขียน code ได้อย่างเป็นขั้นเป็นตอนมากขึ้นจากซ้ายไปขวา ทำให้ code ของคุณเป็นระเบียบมากขึ้น และอาจช่วยให้คุณทำงานง่ายขึ้นด้วย!
+เราต้องการให้คุณทำการสรุป จำนวนร้านอาหาร, จำนวนครั้งที่มีการให้คะแนน (`rating`), คะแนนเฉลี่ย, ส่วนเบี่ยงเบนมาตรฐานของคะแนน โดยแบ่งตามแต่ละ category
+
+ข้อมูลเพิ่มเติม: สำหรับข้อมูลใน data frame `restaurant` ถ้า `domain_id` มีค่าเป็น 1 และ 2 จะหมายถึงร้านอาหารและร้านอื่นๆที่ไม่ใช่ร้านอาหารตามลำดับ
+
+**maybe we should repeat in brief all the contents we have taught in previous exercises...
 
 *** =instructions
 ตอนนี้เรามีข้อมูล `restaurant`, `rating` และ `category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
-- เราต้องการข้อมูลสรุป จำนวนร้านอาหาร, จำนวนครั้งที่มีการให้คะแนน (`rating`), คะแนนเฉลี่ย, ส่วนเบี่ยงเบนมาตรฐานของคะแนน โดยแบ่งตามแต่ละ category
-- ให้ดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `restaurant` มีค่าเป็น 1)
-- ไม่ต้องสนใจร้านอาหารที่ไม่มี `rating`
-- คัดกรองเฉพาะ category ที่มีจำนวนครั้ง `rating` มากกว่าหรือเท่ากับ 5 ครั้ง
-- เรียงลำดับผลลัพธ์สุดท้ายตามคะแนนเฉลี่ยจากมากไปหาน้อย หาก category ใดมีคะแนนเฉลี่ยเท่ากัน ให้เรียงตามจำนวนครั้ง `rating` จากมากไปน้อยเป็นลำดับต่อไป
-- ผลลัพธ์สุดท้ายควรประกอบด้วย `category_id` (รหัส category), `category_name` (ชื่อ category), `n_restaurants` (จำนวนร้านอาหารใน category นั้นๆ), `n_ratings` (จำนวน rating ใน category นั้นๆ), `avg_rating` (คะแนนเฉลี่ยของ category), `sd_rating` (ส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category)
-- เก็บผลลัพธ์ไว้ในตัวแปร `category_with_rating` พร้อมทั้งให้ R แสดงผลลัพธ์ออกมาด้วย
-- คุณสามารถทำแบบฝึกหัดนี้โดยการทำไปทีละขั้นตอน หรือจะเขียน code ให้ต่อกันหมดในคำสั่งเดียวก็ได้
+- เริ่มต้นด้วยการดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `restaurant` มีค่าเป็น 1)
+- เลือกข้อมูลออกมาแค่คอลัมน์ `id` และ `category_id` เพื่อเตรียมนำไปเชื่อมกับข้อมูลใน data frame `category`
+- จากนั้นนำไป `inner_join()` กับ data frame `rating` โดยใช้คอลัมน์ `id` เป็นตัวเชื่อมกับ `reviewed_item_id`
 
 *** =hint
 
@@ -1075,6 +1066,126 @@ category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/c
 
 *** =sample_code
 ```{r}
+category_with_rating <-
+	... %>% 
+	filter(...) %>% 
+	select(..., ...) %>%
+	inner_join(..., by = ...)
+```
+
+*** =solution
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id"))
+```
+
+*** =sct
+```{r}
+success_msg("Wonderful! Now you've finished chapter 1!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a3b42e7270
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (2)
+
+
+
+*** =instructions
+ต่อจากแบบฝึกหัดที่แล้ว ให้คุณเขียน code โดยใช้ pipes ต่อ โดยปฏิบัติตามคำสั่งต่อไปนี้:
+- จัดกลุ่มข้อมูลตาม `category_id` โดยใช้ function `group_by()`
+- ทำการสรุปข้อมูลโดยให้มีข้อมูล จำนวนร้านอาหารทั้งหมดที่อยู่ใน category นั้นๆ, จำนวน rating ที่มีใน category นั้นๆ, คะแนน rating เฉลี่ยของแต่ละ category และส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category
+- ตั้งชื่อคอลัมน์ต่างๆด้านบนว่า n_restaurants, n_ratings, avg_rating และ sd_rating ตามลำดับ
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
+```
+
+*** =sample_code
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>%
+	group_by(...) %>%
+	summarise(
+		n_restaurants = ...,
+		n_ratings = ...,
+		avg_rating = ...,
+		sd_rating = ...)
+```
+
+*** =solution
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating))
+```
+
+*** =sct
+```{r}
+success_msg("Good Job!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:733ce43a78
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (3)
+
+
+*** =instructions
+ต่อจากแบบฝึกหัดที่แล้ว ให้คุณ:
+- `filter` มาเฉพาะ category ที่มี `n_ratiings` มากกว่าหรือเท่ากับ 5
+- นำผลลัพธ์สุดท้ายจากแบบฝึกหัดที่แล้วไปเชื่อมกับ data frame `category` โดยให้ `category_id` เท่ากับ `id`
+- เลือกข้อมูลมาเฉพาะคอลัมน์ `id`, `name`, `n_restaurants`, `n_ratings`, `avg_rating` และ `sd_rating` โดยให้เปลี่ยนชื่อคอลัมน์ที่ 2 เป็น `category_name`
+- เรียงลำดับผลลัพธ์สุดท้ายตามคะแนนเฉลี่ยจากมากไปหาน้อย หาก category ใดมีคะแนนเฉลี่ยเท่ากัน ให้เรียงตาม `n_ratings` จากมากไปน้อยเป็นลำดับต่อไป
+- สั่งให้ R แสดงค่า `category_with_rating`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
+```
+
+*** =sample_code
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating)) %>%
+	filter(...) %>%
+	inner_join(..., by = ...) %>%
+	select(..., category_name = ..., ..., ..., ..., ...) %>%  
+	arrange(...)
+
+# print out your work here
 
 ```
 
@@ -1091,72 +1202,16 @@ category_with_rating <-
 		n_ratings = n(), 
 		avg_rating = mean(rating), 
 		sd_rating = sd(rating)) %>%
-	inner_join(category, by = c("category_id" = "id")) %>% 
-	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>% 
-	filter(n_ratings >= 5) %>% 
+	filter(n_ratings >= 5) %>%
+	inner_join(category, by = c("category_id" = "id")) %>%
+	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>%  
 	arrange(desc(avg_rating))
 
+# print out your work here
 category_with_rating
-
 ```
 
 *** =sct
 ```{r}
-success_msg("Wonderful! Now you've finished chapter 1!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:a3b42e7270
-## <<<New Exercise>>>
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:733ce43a78
-## <<<New Exercise>>>
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
+success_msg("Great!!You have completed chapter 1!!")
 ```
