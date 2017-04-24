@@ -781,7 +781,7 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 ในกรณีของ `left_join()` หากข้อมูลตัวใดที่มีอยู่ใน `t1` แต่ไม่อยู่ใน `t2` ทุกๆคอลัมน์จาก `t2` สำหรับข้อมูลตัวนั้นๆจะแสดงผลออกมาเป็น `NA`
 
---- may not include contents below
+**may not include contents below
 
 - `full_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
 
