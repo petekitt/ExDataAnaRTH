@@ -791,6 +791,7 @@ success_msg("That's good! Let's move on to the next on the next exercise")
 
 *** =instructions
 ให้คุณนำ `restaurant_new` มาเชื่อมกับ `mean_rating` เหมือนใแบบฝึกหัดที่แล้ว
+
 - เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
 - ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
 - เรียงลำดับข้อมูลใน `restaurant_with_rating` ตามคอลัมน์ `avg_rating` โดยเรียงจากมากไปหาน้อย และเก็บผลลัพธ์ไว้ใน `arranged_restaurant_with_rating`
@@ -859,11 +860,13 @@ success_msg("Good Job!")
 
 ในการวิเคราะห์ข้อมูล เราสามารถใช้คำสั่งที่เรียกว่า pipes (`%>%`) เพื่อทำให้เขียน code ได้เป็นระเบียบและเป็นขั้นตอนมากขึ้น
 โดยคำสั่ง pipes นี้จะประมวลผลเริ่มจากซ้ายไปขวา โดยใช้ตัวแปรหรือค่าใดๆก็ตามที่อยู่ด้านซ้ายของคำสั่งเป็น argument ตัวแรกของ function ทางด้านขวา เช่น:
+
 - `user %>% ncol()` จะใช้ `user` เป็น `argument ของ function `ncol()` ที่อยู่ด้านขวาและจะแสดงผลเป็นจำนวนคอลัมน์ในตัวแปร `user`
 - `rating %>% select(id, rating) %>% mutate(new_rating = rating + 2)` จะใช้ `rating` เป็น `argument ของ function `select()` ที่อยู่ด้านขวา จากนั้นจะใช้ผลลัพธ์ที่ได้จาก function `select()` เป็น argument ของ function `matate()` ทางด้านขวามือสุดต่อไป
 
 *** =instructions
 ให้คุณลองเขียนภาษา R โดยใช้ pipes (`%>%`) ในการสั่งให้ R แสดงค่าดังต่อไปนี้:
+
 - `str(rating)`
 - `nrow(rating)`
 - `head(rating, n = 10)`
@@ -937,6 +940,7 @@ success_msg("Good job!")
 
 *** =instructions
 เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
+
 - ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ เก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
 - ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_with_rating`
 - เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `reviewed_item_id`, `name`, `price_range`, `avg_rating` และ `sd_rating` เก็บผลลัพธ์ไว้ในตัวแปร `temp_result`
@@ -994,6 +998,7 @@ success_msg("Cool!")
 
 *** =instructions
 เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ทำตามแบบฝึกหัดที่แล้ว โดยใช้ pipes (`%>%`) และเขียนทุกอย่างต่อกันตั้งแต่ต้นจนจบในคำสั่งเดียว:
+
 - ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
 - ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant`
 - เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
@@ -1052,6 +1057,7 @@ success_msg("Cool!")
 
 *** =instructions
 ตอนนี้เรามีข้อมูล `restaurant`, `rating` และ `category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
+
 - เริ่มต้นด้วยการดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `restaurant` มีค่าเป็น 1)
 - เลือกข้อมูลออกมาแค่คอลัมน์ `id` และ `category_id` เพื่อเตรียมนำไปเชื่อมกับข้อมูลใน data frame `category`
 - จากนั้นนำไป `inner_join()` กับ data frame `rating` โดยใช้คอลัมน์ `id` เป็นตัวเชื่อมกับ `reviewed_item_id`
@@ -1098,6 +1104,7 @@ success_msg("Wonderful! Now you've finished chapter 1!")
 
 *** =instructions
 ต่อจากแบบฝึกหัดที่แล้ว ให้คุณเขียน code โดยใช้ pipes ต่อ โดยปฏิบัติตามคำสั่งต่อไปนี้:
+
 - จัดกลุ่มข้อมูลตาม `category_id` โดยใช้ function `group_by()`
 - ทำการสรุปข้อมูลโดยให้มีข้อมูล จำนวนร้านอาหารทั้งหมดที่อยู่ใน category นั้นๆ, จำนวน rating ที่มีใน category นั้นๆ, คะแนน rating เฉลี่ยของแต่ละ category และส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category
 - ตั้งชื่อคอลัมน์ต่างๆด้านบนว่า n_restaurants, n_ratings, avg_rating และ sd_rating ตามลำดับ
