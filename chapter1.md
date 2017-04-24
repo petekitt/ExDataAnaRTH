@@ -1155,6 +1155,7 @@ success_msg("Good Job!")
 
 *** =instructions
 ต่อจากแบบฝึกหัดที่แล้ว ให้คุณ:
+
 - `filter` มาเฉพาะ category ที่มี `n_ratiings` มากกว่าหรือเท่ากับ 5
 - นำผลลัพธ์สุดท้ายจากแบบฝึกหัดที่แล้วไปเชื่อมกับ data frame `category` โดยให้ `category_id` เท่ากับ `id`
 - เลือกข้อมูลมาเฉพาะคอลัมน์ `id`, `name`, `n_restaurants`, `n_ratings`, `avg_rating` และ `sd_rating` โดยให้เปลี่ยนชื่อคอลัมน์ที่ 2 เป็น `category_name`
