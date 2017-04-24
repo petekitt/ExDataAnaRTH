@@ -851,8 +851,10 @@ nrow(filter(arranged_restaurant_with_rating, is.na(avg_rating))) / nrow(arranged
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:1aa667d382
 ## ทำความรู้จักกับ Pipes
 
@@ -924,6 +926,7 @@ user %>%
 ```{r}
 success_msg("Good job!")
 ```
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c2c15cb19a
 ## ทำความรู้จักกับ Pipes (2)
@@ -1091,6 +1094,7 @@ success_msg("Wonderful! Now you've finished chapter 1!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:a3b42e7270
 ## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (2)
 
+...
 
 
 *** =instructions
@@ -1148,6 +1152,7 @@ success_msg("Good Job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:733ce43a78
 ## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (3)
 
+...
 
 *** =instructions
 ต่อจากแบบฝึกหัดที่แล้ว ให้คุณ:
