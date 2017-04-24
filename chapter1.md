@@ -853,3 +853,369 @@ nrow(filter(arranged_restaurant_with_rating, is.na(avg_rating))) / nrow(arranged
 success_msg("Good Job!")
 ```
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1aa667d382
+## ทำความรู้จักกับ Pipes
+
+ในการวิเคราะห์ข้อมูล เราสามารถใช้คำสั่งที่เรียกว่า pipes (`%>%`) เพื่อทำให้เขียน code ได้เป็นระเบียบและเป็นขั้นตอนมากขึ้น
+โดยคำสั่ง pipes นี้จะประมวลผลเริ่มจากซ้ายไปขวา โดยใช้ตัวแปรหรือค่าใดๆก็ตามที่อยู่ด้านซ้ายของคำสั่งเป็น argument ตัวแรกของ function ทางด้านขวา เช่น:
+- `user %>% ncol()` จะใช้ `user` เป็น `argument ของ function `ncol()` ที่อยู่ด้านขวาและจะแสดงผลเป็นจำนวนคอลัมน์ในตัวแปร `user`
+- `rating %>% select(id, rating) %>% mutate(new_rating = rating + 2)` จะใช้ `rating` เป็น `argument ของ function `select()` ที่อยู่ด้านขวา จากนั้นจะใช้ผลลัพธ์ที่ได้จาก function `select()` เป็น argument ของ function `matate()` ทางด้านขวามือสุดต่อไป
+
+*** =instructions
+ให้คุณลองเขียนภาษา R โดยใช้ pipes (`%>%`) ในการสั่งให้ R แสดงค่าดังต่อไปนี้:
+- `str(rating)`
+- `nrow(rating)`
+- `head(rating, n = 10)`
+- `distinct(rating, rating)`
+- `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+```
+
+*** =sample_code
+```{r}
+# do the same thing as `str(rating)` using pipes (`%>%`)
+rating %>% str()
+
+# do the same thing as `nrow(rating)` using pipes (`%>%`)
+
+
+# do the same thing as `head(rating, n=10)` using pipes (`%>%`)
+
+
+# do the same thing as `distinct(rating, rating)` using pipes (`%>%`)
+
+
+# do the same thing as `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
+user %>% 
+	select(..., ..., ..., ..., ...) %>% 
+	filter(...) 
+	%>% ...
+```
+
+*** =solution
+```{r}
+# do the same thing as `str(rating)` using pipes (`%>%`)
+rating %>% str()
+
+# do the same thing as `nrow(rating)` using pipes (`%>%`)
+rating %>% nrow()
+
+# do the same thing as `head(rating, n=10)` using pipes (`%>%`)
+rating %>% head(n = 10)
+
+# do the same thing as `distinct(rating, rating)` using pipes (`%>%`)
+rating %>% distinct(rating)
+
+# do the same thing as `head(filter(select(user, id, gender, n_reviews, n_photos, n_followers), n_followers > 100))` using pipes (`%>%`)
+user %>% 
+	select(id, gender, n_reviews, n_photos, n_followers) %>% 
+	filter(n_followers > 100) %>% 
+	head()
+```
+
+*** =sct
+```{r}
+success_msg("Good job!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c2c15cb19a
+## ทำความรู้จักกับ Pipes (2)
+
+ในกรณีที่เราต้องการจะเก็บผลลัพธ์จากการใช้ pipes ไว้ในตัวแปร เราก็สามารถทำได้โดยการใช้เครื่องหมายกำหนดค่า `<-` ตามปกติ เช่น `a <- 1:5 %>% sum()`
+
+และในกรณีที่เราต้องการจะใช้ข้อมูลที่อยู่ด้านซ้ายของคำสั่ง `%>%` เป็น argument ในตำแหน่งอื่นๆที่ไม่ใช่ตำแหน่งแรก เราก็สามารถใช้ `.` เป็นตัวแทนตำแหน่งที่เราต้องการได้ เช่น
+`8 %>% head(user, n = .)` จะทำการนำ `8` ไปใส่เป็น argument ตรงตำแหน่ง `.` แทนที่จะเป็นตำแหน่งแรก
+
+*** =instructions
+เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ปฏิบัติตามคำสั่งต่อไปนี้ โดยใช้ pipes (`%>%`):
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ เก็บผลลัพธ์ไว้ในตัวแปร `mean_rating`
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_with_rating`
+- เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `reviewed_item_id`, `name`, `price_range`, `avg_rating` และ `sd_rating` เก็บผลลัพธ์ไว้ในตัวแปร `temp_result`
+- เรียงลำดับ `result` ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย และเก็บผลลัพธ์ไว้ในตัวแปร `final_result`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+```
+
+*** =sample_code
+```{r}
+# your code here
+mean_rating <- rating %>% 
+	group_by(...) %>% 
+	summarise(avg_rating = ..., sd_rating = ...)
+
+restaurant_with_rating <- ... %>% inner_join(..., by = ...)
+
+temp_result <- ... %>% select(..., ..., ..., ..., ...)
+
+final_result <- ... %>% arange(...)
+```
+
+*** =solution
+```{r}
+# your code here
+mean_rating <- rating %>% 
+	group_by(reviewed_item_id) %>% 
+	summarise(avg_rating = mean(rating), sd_rating = sd(rating))
+
+restaurant_with_rating <- mean_rating %>% inner_join(restaurant, by = c("reviewed_item_id" = "id"))
+
+temp_result <- restaurant_with_rating %>% select(reviewed_item_id, name, price_range, avg_rating, sd_rating)
+
+final_result <- temp_result %>% arange(-avg_rating)
+```
+
+*** =sct
+```{r}
+success_msg("Cool!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b2a93e992b
+## ทำความรู้จักกับ Pipes (3)
+
+การใช้ pipes จะช่วยให้เราสามารถเขียน code ต่อกันได้อย่างเป็นระเบียบและเป็นลำดับ โดยอาจไม่จำเป็นต้องสร้างตัวแปรขึ้นมาเก็บผลลัพธ์ระหว่างทางก็ได้ เช่น
+
+คำสั่ง `restaurant %>% filter(wifi == 1) %>% group_by(price_range) %>% summarise(verified_rate = mean(verified_info))` จะทำการวิเคราะห์ข้อมูลอย่างเป็นขั้นเป็นตอน เริ่มจากการกรองข้อมูล จัดกลุ่มข้อมูล และสรุปข้อมูล ซึ่งทั้งหมดนี้สามารถทำได้ในคำสั่งเดียวโดยไม่ต้องพึ่งการสร้างตัวแปรใดๆ
+
+*** =instructions
+เราได้สร้างตัวแปร `restaurant` และ `rating` ไว้ให้คุณใน workspace แล้ว ให้ทำตามแบบฝึกหัดที่แล้ว โดยใช้ pipes (`%>%`) และเขียนทุกอย่างต่อกันตั้งแต่ต้นจนจบในคำสั่งเดียว:
+- ใช้ function `summarise()` ร่วมกับ `group_by()` ในการหา rating เฉลี่ยของร้านอาหารแต่ละร้าน (`reviewed_item_id`) พร้อมส่วนเบี่ยงเบนมาตรฐาน ตั้งชื่อคอลัมน์ใหม่ว่า `avg_rating` และ `sd_rating` ตามลำดับ
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant` เข้ากับผลลัพธ์ในคำสั่งที่แล้ว โดยใช้คอลัมน์ `reviewed_item_id` จาก `rating` เป็นตัวเชื่อมกับ `id` จาก `restaurant`
+- เลือกข้อมูลจากผลลัพธ์ในคำสั่งที่แล้ว โดยเลือกมาแต่คอลัมน์ `id`, `name`, `price_range`, `avg_rating` และ `sd_rating`
+- เรียงลำดับ `result` ตามคอลัมน์ `avg_rating` โดยเรียงจากร้านอาหารที่มีคะแนนเฉลี่ยมากไปถึงน้อย
+- สุดท้าย แสดงผลลัพธ์ 10 แถวแรกออกมา
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+```
+
+*** =sample_code
+```{r}
+# create a chain of pipes code here
+rating %>% 
+	group_by(...) %>% 
+	summarise(avg_rating = ..., sd_rating = ...) %>%
+	inner_join(..., by = ...) %>%
+	select(...) %>% 
+	arrange(...) %>%
+	head(...)
+```
+
+*** =solution
+```{r}
+# create a chain of pipes code here
+rating %>% 
+	group_by(reviewed_item_id) %>% 
+	summarise(avg_rating = mean(rating), sd_rating = sd(rating)) %>%
+	inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+	select(reviewed_item_id, name, price_range, avg_rating, sd_rating) %>% 
+	arrange(-avg_rating) %>%
+	head(n = 10)
+```
+
+*** =sct
+```{r}
+success_msg("Cool!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c916ed8e54
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (1)
+
+หลังจากที่คุณได้เรียนรู้กับ function พื้นฐานต่างๆของ package Dplyr ไปแล้ว ถึงเวลาแล้วที่เราจะให้คุณลองลงมือดึงข้อมูลเพื่อนำมาวิเคราะห์ด้วยตัวเอง!
+
+เราต้องการให้คุณทำการสรุป จำนวนร้านอาหาร, จำนวนครั้งที่มีการให้คะแนน (`rating`), คะแนนเฉลี่ย, ส่วนเบี่ยงเบนมาตรฐานของคะแนน โดยแบ่งตามแต่ละ category
+
+ข้อมูลเพิ่มเติม: สำหรับข้อมูลใน data frame `restaurant` ถ้า `domain_id` มีค่าเป็น 1 และ 2 จะหมายถึงร้านอาหารและร้านอื่นๆที่ไม่ใช่ร้านอาหารตามลำดับ
+
+**maybe we should repeat in brief all the contents we have taught in previous exercises...
+
+*** =instructions
+ตอนนี้เรามีข้อมูล `restaurant`, `rating` และ `category` อยู่ใน workspace ให้คุณนำ data frame ทั้ง 3 อันมาวิเคราะห์ข้อมูลร่วมกันตามนี้:
+- เริ่มต้นด้วยการดึงข้อมูลมาเฉพาะร้านที่เป็นร้านอาหารจริงๆเท่านั้น (`domain_id` ใน `restaurant` มีค่าเป็น 1)
+- เลือกข้อมูลออกมาแค่คอลัมน์ `id` และ `category_id` เพื่อเตรียมนำไปเชื่อมกับข้อมูลใน data frame `category`
+- จากนั้นนำไป `inner_join()` กับ data frame `rating` โดยใช้คอลัมน์ `id` เป็นตัวเชื่อมกับ `reviewed_item_id`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
+```
+
+*** =sample_code
+```{r}
+category_with_rating <-
+	... %>% 
+	filter(...) %>% 
+	select(..., ...) %>%
+	inner_join(..., by = ...)
+```
+
+*** =solution
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id"))
+```
+
+*** =sct
+```{r}
+success_msg("Wonderful! Now you've finished chapter 1!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a3b42e7270
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (2)
+
+...
+
+
+*** =instructions
+ต่อจากแบบฝึกหัดที่แล้ว ให้คุณเขียน code โดยใช้ pipes ต่อ โดยปฏิบัติตามคำสั่งต่อไปนี้:
+- จัดกลุ่มข้อมูลตาม `category_id` โดยใช้ function `group_by()`
+- ทำการสรุปข้อมูลโดยให้มีข้อมูล จำนวนร้านอาหารทั้งหมดที่อยู่ใน category นั้นๆ, จำนวน rating ที่มีใน category นั้นๆ, คะแนน rating เฉลี่ยของแต่ละ category และส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category
+- ตั้งชื่อคอลัมน์ต่างๆด้านบนว่า n_restaurants, n_ratings, avg_rating และ sd_rating ตามลำดับ
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
+```
+
+*** =sample_code
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>%
+	group_by(...) %>%
+	summarise(
+		n_restaurants = ...,
+		n_ratings = ...,
+		avg_rating = ...,
+		sd_rating = ...)
+```
+
+*** =solution
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating))
+```
+
+*** =sct
+```{r}
+success_msg("Good Job!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:733ce43a78
+## เรามาวิเคราะห์คะแนนเฉลี่ยของร้านอาหารแต่ละกลุ่มกัน! (3)
+
+...
+
+*** =instructions
+ต่อจากแบบฝึกหัดที่แล้ว ให้คุณ:
+- `filter` มาเฉพาะ category ที่มี `n_ratiings` มากกว่าหรือเท่ากับ 5
+- นำผลลัพธ์สุดท้ายจากแบบฝึกหัดที่แล้วไปเชื่อมกับ data frame `category` โดยให้ `category_id` เท่ากับ `id`
+- เลือกข้อมูลมาเฉพาะคอลัมน์ `id`, `name`, `n_restaurants`, `n_ratings`, `avg_rating` และ `sd_rating` โดยให้เปลี่ยนชื่อคอลัมน์ที่ 2 เป็น `category_name`
+- เรียงลำดับผลลัพธ์สุดท้ายตามคะแนนเฉลี่ยจากมากไปหาน้อย หาก category ใดมีคะแนนเฉลี่ยเท่ากัน ให้เรียงตาม `n_ratings` จากมากไปน้อยเป็นลำดับต่อไป
+- สั่งให้ R แสดงค่า `category_with_rating`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv")
+```
+
+*** =sample_code
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating)) %>%
+	filter(...) %>%
+	inner_join(..., by = ...) %>%
+	select(..., category_name = ..., ..., ..., ..., ...) %>%  
+	arrange(...)
+
+# print out your work here
+
+```
+
+*** =solution
+```{r}
+category_with_rating <-
+	restaurant %>% 
+	filter(domain_id == 1) %>% 
+	select(id, category_id) %>%
+	inner_join(rating, by = c("id" = "reviewed_item_id")) %>% 
+	group_by(category_id) %>% 
+	summarise(
+		n_restaurants = n_distinct(id), 
+		n_ratings = n(), 
+		avg_rating = mean(rating), 
+		sd_rating = sd(rating)) %>%
+	filter(n_ratings >= 5) %>%
+	inner_join(category, by = c("category_id" = "id")) %>%
+	select(category_id, category_name = name, n_restaurants, n_ratings, avg_rating, sd_rating) %>%  
+	arrange(desc(avg_rating))
+
+# print out your work here
+category_with_rating
+```
+
+*** =sct
+```{r}
+success_msg("Great!!You have completed chapter 1!!")
+```
