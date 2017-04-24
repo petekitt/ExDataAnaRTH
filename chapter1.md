@@ -708,3 +708,148 @@ head(arranged_mean_rating, n = 10)
 ```{r}
 success_msg("Great Job!!")
 ```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d2e7c1321d
+## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน (1)
+
+การนำข้อมูลต่างๆมาเชื่อมโยงเข้าด้วยกัน จะช่วยให้เราเห็นความเกี่ยวข้องกันของข้อมูล อาจช่วยให้เราเข้าใจข้อมูลในภาพที่กว้างขึ้น ละเอียดขึ้น และเป็นจุดเริ่มต้นของการวิเคราะห์ข้อมูลให้เป็นประโยชน์ในลำดับต่อๆไปได้
+
+เราสามารถใช้ function `inner_join()` มาช่วยในเชื่อม data frame เข้าด้วยกัน โดยคุณจะต้องทำการกำหนดว่าจะเชื่อม data frame เข้าด้วยกันโดยใช้คอลัมน์ใด เช่น
+
+คำสั่ง `inner_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลจาก `t1` และ `t2` มาเชื่อมกับผ่านคอลัมน์ `a` และ `b` โดยที่จะแสดงเฉพาะข้อมูลที่มีทั้งใน `t1` และ `t2`
+
+*** =instructions
+จากแบบฝึกหัดที่แล้ว เรามีข้อมูล rating เฉลี่ยของร้านอาหารแต่ละร้านเก็บไว้ในตัวแปร `mean_rating` แต่เรายังไม่มีข้อมูลชื่อร้านอาหารและอื่นๆ ในแบบฝึกหัดนี้เราจะลองนำข้อมูลดังกล่าวมาเชื่อมกับ data frame `restaurant` เพื่อให้มองเห็นข้อมูลในมุมที่ละเอียดขึ้น
+- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
+- ใช้ function `inner_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยใช้ `id` และ `reviewed_item_id` เป็นตัวเชื่อม (เนื่องจากทั้งคู่เป็นตัวแทนของ `id` ร้านอาหาร) เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `restaurant_with_rating`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+
+mean_rating <- summarise(
+	group_by(rating, reviewed_item_id), 
+	avg_rating = mean(rating),
+	sd_rating = sd(rating)
+)
+```
+
+*** =sample_code
+```{r}
+# define `restaurant_new`
+restaurant_new <- ...
+
+# connect `restaurant_new` to `mean_rating` using `inner_join()` and store result in `restaurant_with_rating`
+restaurant_with_rating <- inner_join(..., ..., by = c("..." = "..."))
+
+# print out the first 10 row from `restaurant_with_rating`
+
+```
+
+*** =solution
+```{r}
+# define `restaurant_new`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
+
+# connect `restaurant_new` to `mean_rating` using `inner_join()` and store result in `restaurant_with_rating`
+restaurant_with_rating <- inner_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id"))
+
+# print out the first 10 row from `restaurant_with_rating`
+head(restaurant_with_rating, n = 10)
+```
+
+*** =sct
+```{r}
+success_msg("That's good! Let's move on to the next on the next exercise")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a1bb016a43
+## การเชื่อมโยงข้อมูลต่างๆเข้าด้วยกัน (2)
+
+ข้อจำกัดของ function `inner_join()` คือ การเชื่อมข้อมูลจะเกิดขึ้นกับแค่ข้อมูลที่มีอยู่ใน data frame ทั้ง 2 อันเท่านั้น ข้อมูลใดๆที่อยู่ใน data frame เพียงอันใดอันหนึ่งจะถูกตัดทิ้งไป
+
+ในการแก้ปัญหาดังกล่าว เราสามารถใช้ function `left_join()` และ `right_join()` มาช่วยได้ ซึ่งมีคำอธิบายคร่าวๆดังต่อไปนี้:
+- `left_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทุกแถวจาก `t1` มาเชื่อมกับ `t2` โดยใช้คอลัมน์ `a` จาก `t1` และคอลัมน์ `b` จาก `t2` เป็นตัวเชื่อม
+- `right_join(t1, t2, by = c("a" = "b"))`: ตรงข้ามกับ `left_join()` คือจะเป็นการนำข้อมูลทุกแถวจาก `t2` มาเชื่อมกับ `t1` แทน
+
+ในกรณีของ `left_join()` หากข้อมูลตัวใดที่มีอยู่ใน `t1` แต่ไม่อยู่ใน `t2` ทุกๆคอลัมน์จาก `t2` สำหรับข้อมูลตัวนั้นๆจะแสดงผลออกมาเป็น `NA`
+
+--- may not include contents below
+
+- `full_join(t1, t2, by = c("a" = "b"))`: นำข้อมูลทั้งหมดจากทั้ง `t1` และ `t2` มาเชื่อมกันผ่านคอลัมน์ `a` และ `b` โดยจะแสดงทุก combination ที่จะเป็นไปได้
+
+ในกรณีที่ต้องการเชื่อมข้อมูลโดยมีคอลัมน์ที่ใช้เชื่อมมากกว่า 1 คอลัมน์ คุณสามารถกำหนด argument `by` ให้มีหลายเงื่อนไขได้เช่น `inner_join(t1, t2, by = c("a" = "b", "e" = "f"))` จะทำการเชื่อมข้อจาก `t1` และ `t2` เฉพาะข้อมูลในแถวที่มีคอลัมน์ `a` จาก `t1` เท่ากับ `b` จาก `t2` และ `e` จาก `t1` เท่ากับ `f` จาก `t2` เท่านั้น
+
+ในกรณีที่ `t1` และ `t2` มีคอลัมน์ที่มีชื่อเดียวกัน R จะทำการเปลี่ยนชื่อคอลัมน์ที่ซ้ำกันให้ไม่เหมือนกัน เช่น ถ้าทั้ง `t1` และ `t2` มีคอลัมน์ `a` ทั้งคู่ คอลัมน์ หลังจากนำข้อมูลมาเชื่อมกัน คอลัมน์ `a` ใน `t1` จะถูกเปลี่ยนชื่อเป็น `a.x` ส่วนคอลัมน์ `a` ใน `t2` จะถูกเปลี่ยนชื่อเป็น `a.y`
+
+*** =instructions
+ให้คุณนำ `restaurant_new` มาเชื่อมกับ `mean_rating` เหมือนใแบบฝึกหัดที่แล้ว
+- เลือกข้อมูลคอลัมน์ `id`, `name`, `price_range`, `category_id` จาก `restaurant` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `restaurant_new`
+- ใช้ function `left_join()` หรือ `right_join()` ในการเชื่อม `restaurant_new` เข้ากับ `mean_rating` โดยเราต้องการให้ผลลัพธ์มีข้อมูลของร้านอาหารครบทุกร้าน เก็บผลลัพธ์ทีไ่ด้ไว้ในตัวแปร `restaurant_with_rating` อย่าลืมว่าการนำ data frame มาเชื่อมกันควรมีการระบุคอลัมน์ที่จะใช้เป็นตัวเชื่อมด้วย
+- เรียงลำดับข้อมูลใน `restaurant_with_rating` ตามคอลัมน์ `avg_rating` โดยเรียงจากมากไปหาน้อย และเก็บผลลัพธ์ไว้ใน `arranged_restaurant_with_rating`
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `arranged_restaurant_with_rating`
+- คำนวณดูว่ามีร้านอาหารกี่เปอร์เซ็นต์ที่ไม่ได้รับการให้ rating เลย ให้ R แสดงคำตอบดังกล่าวออกมาด้วย
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
+
+mean_rating <- summarise(
+	group_by(rating, reviewed_item_id), 
+	avg_rating = mean(rating),
+	sd_rating = sd(rating)
+)
+```
+
+*** =sample_code
+```{r}
+# define `restaurant_new`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
+
+# connect `restaurant_new` to `mean_rating` using `left_join()` to get all restaurants info and store result in `restaurant_with_rating`
+restaurant_with_rating <- ...
+
+# ascendingly arrange `restaurant_with_rating` based on `avg_rating` and store result in `arranged_restaurant_with_rating`
+arranged_restaurant_with_rating <- ...
+
+# print out the first 10 row from `arranged_restaurant_with_rating`
+
+
+# calculating proportion of restaurant with no rating and show the result
+nrow(filter(arranged_restaurant_with_rating, ...)) / nrow(arranged_restaurant_with_rating)
+```
+
+*** =solution
+```{r}
+# define `restaurant_new`
+restaurant_new <- select(restaurant, id, name, price_range, category_id)
+
+# connect `restaurant_new` to `mean_rating` using `left_join()` to get all restaurants info and store result in `restaurant_with_rating`
+restaurant_with_rating <- left_join(restaurant_new, mean_rating, by = c("id" = "reviewed_item_id"))
+
+# ascendingly arrange `restaurant_with_rating` based on `avg_rating` and store result in `arranged_restaurant_with_rating`
+arranged_restaurant_with_rating <- arrange(restaurant_with_rating, -avg_rating)
+
+# print out the first 10 row from `arranged_restaurant_with_rating`
+head(arranged_restaurant_with_rating, n = 10)
+
+# calculating proportion of restaurant with no rating and show the result
+nrow(filter(arranged_restaurant_with_rating, is.na(avg_rating))) / nrow(arranged_restaurant_with_rating)
+```
+
+*** =sct
+```{r}
+success_msg("Good Job!")
+```
+
