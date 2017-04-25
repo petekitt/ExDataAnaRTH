@@ -347,8 +347,8 @@ user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cours
 
 *** =sample_code
 ```{r}
-# let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
-distinct_gender <- distinct(user_new, ...)
+# let's see the distinct gender in our `user` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(user, ...)
 
 # print out distinct values we stored in `distinct_gender`
 
@@ -356,8 +356,8 @@ distinct_gender <- distinct(user_new, ...)
 
 *** =solution
 ```{r}
-# let's see the distinct gender in our `user_new` data frame, store result in `distinct_gender`
-distinct_gender <- distinct(user_new, gender)
+# let's see the distinct gender in our `user` data frame, store result in `distinct_gender`
+distinct_gender <- distinct(user, gender)
 
 # print out distinct values we stored in `distinct_gender`
 distinct_gender
