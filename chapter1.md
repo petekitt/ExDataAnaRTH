@@ -432,7 +432,7 @@ function `mutate()` นั้นจะช่วยให้เราสามา
 ```{r}
 library("dplyr")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
-filtered_user_new <- filter(select(user_new, id, gender, reviews_count = n_reviews, ends_with("ratings")), reviews_count > 0)
+filtered_user_new <- filter(select(user, id, gender, reviews_count = n_reviews, ends_with("ratings")), reviews_count > 0)
 ```
 
 *** =sample_code
