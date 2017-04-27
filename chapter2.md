@@ -46,7 +46,8 @@ summary(gender_factor)
 success_msg("Good Job!")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:fcedaaaa8f
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:4d53216bc3
 ## เรามาลองสำรวจข้อมูลผู้ใช้งานกันอีกหน่อย (1)
 
 นอกจากการใช้ `summary` เพื่อสรุปข้อมูลแล้ว หากเราต้องการนับจำนวนข้อมูล categorical อย่างง่ายๆใน R เราก็สามารถใช้ function `table` ช่วยได้
@@ -80,6 +81,7 @@ table(gender_factor)
 ```{r}
 success_msg("You might see that `table` is another good way to help you count for the number of each possible categorical value in R. Now, we get to the next exercise!")
 ```
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a1a6a34df8
 ## เตรียมข้อมูลก่อนการวิเคราะห์ต่อไป
@@ -184,6 +186,7 @@ success_msg("Great! Now, you are ready to start learning more about ggplot2!")
 
 *** =pre_exercise_code
 ```{r}
+library("Dplyr")
 library("ggplot2")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
@@ -209,4 +212,200 @@ ggplot(data = gender_summary, mapping = aes(x = gender))
 *** =sct
 ```{r}
 success_msg("Good Job! However, you can see from the visualixation that the graph is still empty. This is because you haven't tell R to create the graphic layer yet. Let's go to the next exercise to see how to do it.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:064426575a
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:4b82ef22be
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:846659ff03
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
+## <<<New Exercise>>>
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
 ```
