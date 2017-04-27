@@ -336,7 +336,6 @@ success_msg("You're doing good! And what if we just want to change the bar color
 ## Bar Chart (5)
 
 
-
 *** =instructions
 - ลบ argument `fill = gender` ออกจาก function `aes()` เพื่อยกเลิกการกำหนดสีตามกลุ่มเพศ
 - เพิ่ม argument `fill = "#48b6a3"` และ `width = 0.5` ลงไปใน function `geom_bar()` แทนเพื่อเปลี่ยนสีและขนาด Bar Chart
@@ -359,13 +358,15 @@ gender_summary <- user %>%
 *** =sample_code
 ```{r}
 # switch `fill` to `geom_bar()` function instead and also put more arguments there
-ggplot(data = gender_summary, mapping = aes(x = gender, y = pct, fill = gender)) + geom_bar(stat = "identity", ..., ...)
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct, fill = gender)) + 
+  geom_bar(stat = "identity", ..., ...)
 ```
 
 *** =solution
 ```{r}
 # switch `fill` to `geom_bar()` function instead and also put more arguments there
-ggplot(data = gender_summary, mapping = aes(x = gender, y = pct)) + geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5)
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct)) + 
+  geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5)
 ```
 
 *** =sct
@@ -378,34 +379,53 @@ success_msg("Good Job! But looks like something's still missing... Would it be b
 
 
 *** =instructions
+เพิ่มอีก `layer` หนึ่งด้วย function `labs()` ตั้งชื่อให้กับแผนภูมิ แกน `x` และแกน `y` ว่า `"Wongnai's Users: Gender Distribution"`, `"Gender"` และ `"Proportion (%)"` ตามลำดับ อย่าลืมใส่ double quotes เพื่อบอก R ว่าข้อมูลเหล่านี้เป็นข้อมูลตัวอักษรด้วย
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
+gender_summary <- user %>%
+  mutate(gender = factor(gender, levels=c(1, 2, 0), labels=c('male', 'female', 'unknown'))) %>%
+  group_by(gender) %>%
+  summarise(count = n()) %>%
+  mutate(pct = count / sum(count) * 100)
 ```
 
 *** =sample_code
 ```{r}
-
+# switch `fill` to `geom_bar()` function instead and also put more arguments there
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct)) + 
+  geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+  labs(title = ..., x = ..., y = ...)
 ```
 
 *** =solution
 ```{r}
-
+# switch `fill` to `geom_bar()` function instead and also put more arguments there
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct)) + 
+  geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+  labs(title="Wongnai's Users: Gender Distribution", x="Gender", y="Proportion (%)")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Very good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
-## Bar Chart (7)
+## More on Bar Chart (1)
 
+คราวนี้เราจะลองเปลี่ยนมาสร้าง Bar Chart จากข้อมูลร้านอาหารกันบ้าง แต่ก่อนที่จะสร้าง Bar Chart ได้ คุณจะต้องจัดการกับข้อมูลก่อน!
+
+เราจะทำการวิเคราะห์ข้อมูล
 
 *** =instructions
+ให้คุณทำการสรุป
 
 *** =hint
 
