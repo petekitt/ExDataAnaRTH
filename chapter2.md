@@ -48,7 +48,7 @@ success_msg("Good Job!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:4d53216bc3
-## เรามาลองสำรวจข้อมูลผู้ใช้งานกันอีกหน่อย (1)
+## เรามาลองสำรวจข้อมูลผู้ใช้งานกันอีกหน่อย (2)
 
 นอกจากการใช้ `summary` เพื่อสรุปข้อมูลแล้ว หากเราต้องการนับจำนวนข้อมูล categorical อย่างง่ายๆใน R เราก็สามารถใช้ function `table` ช่วยได้
 
@@ -175,12 +175,88 @@ success_msg("Great! Now, you are ready to start learning more about ggplot2!")
 
 ในการใช้งาน package `ggplot2` สิ่งที่คุณต้องทำก็คือการสร้างสิ่งที่เรียกว่า `layer` ซ้อนทับไปเรื่อยๆจนก่อเกิดเป็นแผนภูมิขึ้นมา โดย `layer` แรกสุดก็คือ function `ggplot()` ซึ่งจะเป็นการบอก R ว่าคุณจะใช้ข้อมูลอะไรในการสร้างแผนภูมิ รวมไปถึงการกำหนดแกน `x` และ `y` ต่างๆเบื้องต้นด้วย
 
-จากนั้นเมื่อคุณสร้าง `layer` `ggplot` เรียบร้อยแล้ว คุณจะต้องใช้ function `geom_bar()` เพื่อบอก R ว่าคุณต้องการแผนภูมิแบบแท่ง
-
 คำสั่ง `ggplot(data = dataset, mapping = aes(x = x_coordinate))` เป็นการบอกให้ R สร้าง `layer` แรกสุดจากข้อมูล `dataset` โดยใช้คอลัมน์ `x_coordinate` เป็นแกน `x`
 
 *** =instructions
-ให้คุณลองใช้ function `ggplot()` ในการสร้าง `layer` สำหรับแผนภูมิโดยใช้ข้อมูลจาก `gender_summary` และกำหนดให้คอลัมน์ `gender` เป็นแกน `x`
+ให้คุณลองใช้ function `ggplot()` ในการสร้าง `layer` สำหรับแผนภูมิโดยใช้ข้อมูลจาก `user` และกำหนดให้คอลัมน์ `gender` เป็นแกน `x`
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("Dplyr")
+library("ggplot2")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+```
+
+*** =sample_code
+```{r}
+# create the first layer with `ggplot()` function here
+ggplot(data = ..., mapping = aes(x = ...))
+```
+
+*** =solution
+```{r}
+# create the first layer with `ggplot()` function here
+ggplot(data = user, mapping = aes(x = gender))
+```
+
+*** =sct
+```{r}
+success_msg("Good Job! However, you can see from the visualixation that the graph is still empty. This is because you haven't tell R to create the graphic layer yet. Let's go to the next exercise to see how to do it.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:064426575a
+## Bar Chart (2)
+
+เมื่อคุณได้สร้าง `layer` แรกเป็นที่เรียบร้อยแล้ว คุณต้องใช้ function `geom_bar()` เพื่อบอกให้ R สร้าง `layer` ต่อไปสำหรับแสดงภาพแผนภูมิแบบแท่ง โดยคุณสามารถทำการซ้อนทับ `layer` ดังกล่าวลงไปบน `layer` `ggplot` ได้เลยโดยใช้เครื่องหมาย `+` ยกตัวอย่างเช่น:
+
+คำสั่ง `ggplot(data = dataset, mapping = aes(x = x_coordinate)) + geom_bar()` จะบอกให้ R ทำการสร้าง `layer` แรกจาก function `ggplot()` ตามด้วยการซ้อน `layer` ที่สร้างจาก function `geom_bar()` เพื่อแสดงภาพแผนภูมิแท่งลงไป
+
+ปกติแล้วถ้า
+
+*** =instructions
+พิมพ์ `+ geom_bar()` ต่อท้ายคำสั่ง `ggplot()` เดิมใน editor เพื่อทำการสร้างแผนภูมิแท่ง
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+library("Dplyr")
+library("ggplot2")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+```
+
+*** =sample_code
+```{r}
+# create the first layer with `ggplot()` function here
+ggplot(data = user, mapping = aes(x = gender))
+```
+
+*** =solution
+```{r}
+# create the first layer with `ggplot()` function here
+ggplot(data = user, mapping = aes(x = gender)) + geom_bar()
+```
+
+*** =sct
+```{r}
+success_msg("Yureka! You can see that the visualization was built using a simple `geom_bar` layer but this is not all we can do.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:4b82ef22be
+## Bar Chart (2)
+
+อย่างที่คุณเห็นในแบบฝึกหัดที่แล้ว ถ้าข้อมูลที่คุณใส่ลงไปใน function `ggplot()` ไม่ได้มีการจัดรูปแบบให้เหมาะสม R จะทำการสร้างแผนภูมิโดยให้แกน `y` แทนจำนวนนับของข้อมูลใน dataset ที่มีค่าตามแกน `x`
+
+คุณสามารถเปลี่ยนแปลงค่าเหล่านั้นได้โดยการระบุแกน `y` ให้ชัดเจน คุณอาจระบุให้แกน `y` มีค่าเป็น `count` เพื่อให้แสดงค่า `y` ตามการนับจำนวนเหมือนเดิม หรืออาจระบุให้แกน `y` แทนคอลัมน์ต่างๆใน dataset เพื่อให้ R แสดงค่าออกมาตามนั้นก็ได้ เพียงแต่ข้อมูลที่คุณใส่ลงไปควรจะถูกจัดให้อยู่ในรูปแบบที่เหมาะสม
+
+ดังนั้น คราวนี้เราจะเปลี่ยนข้อมูลเป็น `gender_summary` ซึ่งถูกเตรียมไว้จากแบบฝึกหัดก่อนๆหน้านี้แทน เพื่อให้การสร้างแผนภูมิแท่งสามารถสื่อความหมายได้ดีขึ้น
+
+*** =instructions
+- เปลี่ยน argument `data` ให้มีค่าเป็นตัวแปร `gender_summary` แทนที่จะเป็น `user`
+- นอกจากการกำหนดแกน `x = gender` แล้ว ให้คุณเพิ่ม `y = count` ลงไปด้วยเพื่อระบุให้ชัดเจนว่าคุณต้องการให้ R นับข้อมูลตามแกน `x`
+- ให้คุณระบุ argument `stat = "identity"` ลงไปภายใน function `geom_bar()` มิเช่นนั้น R จะไม่สามารถแสดงภาพแผนภูมิออกมาได้
 
 *** =hint
 
@@ -200,78 +276,22 @@ gender_summary <- user %>%
 *** =sample_code
 ```{r}
 # create the first layer with `ggplot()` function here
-ggplot(data = ..., mapping = aes(x = ...))
+ggplot(data = user, mapping = aes(x = gender, ...)) + geom_bar(...)
 ```
 
 *** =solution
 ```{r}
 # create the first layer with `ggplot()` function here
-ggplot(data = gender_summary, mapping = aes(x = gender))
+ggplot(data = gender_summary, mapping = aes(x = gender, y = count)) + geom_bar(stat = "identity")
 ```
 
 *** =sct
 ```{r}
-success_msg("Good Job! However, you can see from the visualixation that the graph is still empty. This is because you haven't tell R to create the graphic layer yet. Let's go to the next exercise to see how to do it.")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:064426575a
-## <<<New Exercise>>>
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:4b82ef22be
-## <<<New Exercise>>>
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
+success_msg("Good! The graph is now a bit more informative and you can modify the function even more!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:846659ff03
-## <<<New Exercise>>>
+## Bar Chart (3)
 
 
 *** =instructions
@@ -299,7 +319,7 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
-## <<<New Exercise>>>
+## Bar Chart (4)
 
 
 *** =instructions
@@ -327,7 +347,7 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
-## <<<New Exercise>>>
+## Bar Chart (5)
 
 
 *** =instructions
@@ -355,7 +375,7 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
-## <<<New Exercise>>>
+## Bar Chart (6)
 
 
 *** =instructions
@@ -383,7 +403,7 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
-## <<<New Exercise>>>
+## Bar Chart (7)
 
 
 *** =instructions
