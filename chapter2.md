@@ -86,10 +86,10 @@ success_msg("You might see that `table` is another good way to help you count fo
 --- type:NormalExercise lang:r xp:100 skills:1 key:a1a6a34df8
 ## เตรียมข้อมูลก่อนการวิเคราะห์ต่อไป
 
-เราสามารภนำ fucntion ที่ได้กล่าวถึงไปในแบบฝึกหัดก่อนๆมาใช้ร่วมกับ package `Dplyr` ในการจัดเตรียมรูปแบบข้อมูลให้เหมาะสมกับการวิเคราะห์ต่อไปได้
+เราสามารภนำ fucntion ที่ได้กล่าวถึงไปในแบบฝึกหัดก่อนๆมาใช้ร่วมกับ package `dplyr` ในการจัดเตรียมรูปแบบข้อมูลให้เหมาะสมกับการวิเคราะห์ต่อไปได้
 
 *** =instructions
-ให้คุณลองใช้ fucntion `factor` ร่วมกับความรู้เกี่ยวกับ function ต่างๆรวมถึง pipes (`%>%`) ใน package `Dplyr` เพื่อจัดรูปแบบข้อมูลให้เหมาะสมแล้วเก็บค่าไว้ในตัวแปร `gender_summary` โดยการนำคำสั่งเหล่านี้ไปเติมในช่องว่างให้สมบูรณ์
+ให้คุณลองใช้ fucntion `factor` ร่วมกับความรู้เกี่ยวกับ function ต่างๆรวมถึง pipes (`%>%`) ใน package `dplyr` เพื่อจัดรูปแบบข้อมูลให้เหมาะสมแล้วเก็บค่าไว้ในตัวแปร `gender_summary` โดยการนำคำสั่งเหล่านี้ไปเติมในช่องว่างให้สมบูรณ์
 
 - ใช้คำสั่ง `mutate(gender = factor(gender, levels=c(1, 2, 0), labels=c('male', 'female', 'unknown')))` เพื่อทำการแปลงค่าคอลัมน์ `gender` ในตัวแปร `user` ให้เป็น factor
 - ใช้คำสั่ง `group_by(gender)` เพื่อทำการจัดกลุ่มข้อมูลตามค่าเพศ
@@ -100,7 +100,7 @@ success_msg("You might see that `table` is another good way to help you count fo
 
 *** =pre_exercise_code
 ```{r}
-library("Dplyr")
+library("dplyr")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
@@ -140,7 +140,7 @@ success_msg("Good! You will see that we have arranged the data form so that we c
 
 การทำ data visualization หรือการแสดงข้อมูลในรูปแบบภาพ อาจจะช่วยให้เราเห็นภาพรวมของข้อมูลเพิ่มขึ้นไม่มากก็น้อย ซึ่งการทำ data visualization เบื้องต้นก็สามารถทำได้หลากหลายรูป ขึ้นอยู่กับรูปแบบของข้อมูล
 
-นอกจาก package `Dplyr` ที่ช่วยในการจัดการข้อมูลแล้ว เราก็ยังมี package `ggplot2` ซึ่งช่วยในการทำ data visualization หลากหลายรูปแบบ ไม่ว่าจะเป็น `Bar Chart`, `Histogram`, `Boxplot`, `Scatter Plot` และอื่นๆอีกมากมาย
+นอกจาก package `dplyr` ที่ช่วยในการจัดการข้อมูลแล้ว เราก็ยังมี package `ggplot2` ซึ่งช่วยในการทำ data visualization หลากหลายรูปแบบ ไม่ว่าจะเป็น `Bar Chart`, `Histogram`, `Boxplot`, `Scatter Plot` และอื่นๆอีกมากมาย
 
 *** =instructions
 ให้คุณพิมพ์คำสั่ง `library("ggplot2")` ลงไปใน editor แล้วกด `submit` เพื่อทำการนำเข้า function ต่างๆจาก package `ggplot2`
@@ -184,7 +184,7 @@ success_msg("Great! Now, you are ready to start learning more about ggplot2!")
 
 *** =pre_exercise_code
 ```{r}
-library("Dplyr")
+library("dplyr")
 library("ggplot2")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
@@ -222,7 +222,6 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 
 *** =pre_exercise_code
 ```{r}
-library("Dplyr")
 library("ggplot2")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
@@ -262,7 +261,7 @@ success_msg("Yureka! You can see that the visualization was built using a simple
 
 *** =pre_exercise_code
 ```{r}
-library("Dplyr")
+library("dplyr")
 library("ggplot2")
 user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
