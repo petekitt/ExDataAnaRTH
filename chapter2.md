@@ -228,13 +228,13 @@ user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cours
 
 *** =sample_code
 ```{r}
-# create the first layer with `ggplot()` function here
+# overlay another layer `geom_bar()` to the back of `ggplot()` function
 ggplot(data = user, mapping = aes(x = gender))
 ```
 
 *** =solution
 ```{r}
-# create the first layer with `ggplot()` function here
+# overlay another layer `geom_bar()` to the back of `ggplot()` function
 ggplot(data = user, mapping = aes(x = gender)) + geom_bar()
 ```
 
@@ -248,14 +248,14 @@ success_msg("Yureka! You can see that the visualization was built using a simple
 
 อย่างที่คุณเห็นในแบบฝึกหัดที่แล้ว ถ้าข้อมูลที่คุณใส่ลงไปใน function `ggplot()` ไม่ได้มีการจัดรูปแบบให้เหมาะสม R จะทำการสร้างแผนภูมิโดยให้แกน `y` แทนจำนวนนับของข้อมูลใน dataset ที่มีค่าตามแกน `x`
 
-คุณสามารถเปลี่ยนแปลงค่าเหล่านั้นได้โดยการระบุแกน `y` ให้ชัดเจน คุณอาจระบุให้แกน `y` มีค่าเป็น `count` เพื่อให้แสดงค่า `y` ตามการนับจำนวนเหมือนเดิม หรืออาจระบุให้แกน `y` แทนคอลัมน์ต่างๆใน dataset เพื่อให้ R แสดงค่าออกมาตามนั้นก็ได้ เพียงแต่ข้อมูลที่คุณใส่ลงไปควรจะถูกจัดให้อยู่ในรูปแบบที่เหมาะสม
+คุณสามารถเปลี่ยนแปลงค่าเหล่านั้นได้โดยการระบุให้แกน `y` มีค่าเป็นคอลัมน์ต่างๆใน dataset เพื่อให้ R แสดงค่าออกมาตามนั้นได้ เพียงแต่ข้อมูลที่คุณใส่ลงไปควรจะถูกจัดให้อยู่ในรูปแบบที่เหมาะสม
 
 ดังนั้น คราวนี้เราจะเปลี่ยนข้อมูลเป็น `gender_summary` ซึ่งถูกเตรียมไว้จากแบบฝึกหัดก่อนๆหน้านี้แทน เพื่อให้การสร้างแผนภูมิแท่งสามารถสื่อความหมายได้ดีขึ้น
 
 *** =instructions
 - เปลี่ยน argument `data` ให้มีค่าเป็นตัวแปร `gender_summary` แทนที่จะเป็น `user`
-- นอกจากการกำหนดแกน `x = gender` แล้ว ให้คุณเพิ่ม `y = count` ลงไปด้วยเพื่อระบุให้ชัดเจนว่าคุณต้องการให้ R นับข้อมูลตามแกน `x`
-- ให้คุณระบุ argument `stat = "identity"` ลงไปภายใน function `geom_bar()` มิเช่นนั้น R จะไม่สามารถแสดงภาพแผนภูมิออกมาได้
+- นอกจากการกำหนดแกน `x = gender` แล้ว ให้คุณเพิ่ม `y = count` ลงไปด้วยเพื่อให้ R แสดงค่าแกน `y` ตามข้อมูลในคอลัมน์ `count`
+- ให้คุณระบุ argument `stat = "identity"` ลงไปภายใน function `geom_bar()` ด้วย เพื่อเป็นการบอก R ให้แสดงค่าแกน `x` และแกน `y` ตามที่กำหนด
 
 *** =hint
 
@@ -274,13 +274,13 @@ gender_summary <- user %>%
 
 *** =sample_code
 ```{r}
-# create the first layer with `ggplot()` function here
-ggplot(data = user, mapping = aes(x = gender, ...)) + geom_bar(...)
+# modify some details to make a bar chart better
+ggplot(data = user, mapping = aes(x = gender, ...)) + ...
 ```
 
 *** =solution
 ```{r}
-# create the first layer with `ggplot()` function here
+# modify some details to make a bar chart better
 ggplot(data = gender_summary, mapping = aes(x = gender, y = count)) + geom_bar(stat = "identity")
 ```
 
@@ -292,57 +292,85 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 --- type:NormalExercise lang:r xp:100 skills:1 key:846659ff03
 ## Bar Chart (4)
 
+แผนภูมิแท่งสีขาวดำอาจช่วยให้ data visualization เท่าไรนัก งั้นเราจะมาแก้ไขจุดนี้กัน
+
+นอกจากคุณจะสามารถกำหนดแกน `x` และ `y` ผ่าน function `aes()` ใน argument `mapping` ได้แล้ว คุณยังสามารถเปลี่ยนสีของ Bar Chart ให้แตกต่างกันตามแต่ละกลุ่มด้วยได้โดยการเพิ่ม argument `fill` ลงไปใน function `aes()`
 
 *** =instructions
+- ให้คุณเปลี่ยนการแสดงผลแกน `y` จากการใช้คอลัมน์ `count` เป็น `pct` แทน เพื่อแสดงจำนวนสัดส่วนของผู้ใช้งานเว็บไซต์แต่ละเพศ
+- เพิ่ม argument `fill = gender` ลงไปใน function `aes()` เพื่อบอกให้ R เปลี่ยนสี Bar Chart ตามค่าในคอลัมน์ `gender`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
+gender_summary <- user %>%
+  mutate(gender = factor(gender, levels=c(1, 2, 0), labels=c('male', 'female', 'unknown'))) %>%
+  group_by(gender) %>%
+  summarise(count = n()) %>%
+  mutate(pct = count / sum(count) * 100)
 ```
 
 *** =sample_code
 ```{r}
-
+# now, put `fill` argument to adjust the color of the bars to the values of `x` axis
+ggplot(data = gender_summary, mapping = aes(x = gender, y = count, ...)) + geom_bar(stat = "identity")
 ```
 
 *** =solution
 ```{r}
-
+# now, put `fill` argument to adjust the color of the bars to the values of `x` axis
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct, fill = gender)) + geom_bar(stat = "identity")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("You're doing good! And what if we just want to change the bar color to something other than black and resize the bars? Let's see the next exercise!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
 ## Bar Chart (5)
 
 
+
 *** =instructions
+- ลบ argument `fill = gender` ออกจาก function `aes()` เพื่อยกเลิกการกำหนดสีตามกลุ่มเพศ
+- เพิ่ม argument `fill = "#48b6a3"` และ `width = 0.5` ลงไปใน function `geom_bar()` แทนเพื่อเปลี่ยนสีและขนาด Bar Chart
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 
+gender_summary <- user %>%
+  mutate(gender = factor(gender, levels=c(1, 2, 0), labels=c('male', 'female', 'unknown'))) %>%
+  group_by(gender) %>%
+  summarise(count = n()) %>%
+  mutate(pct = count / sum(count) * 100)
 ```
 
 *** =sample_code
 ```{r}
-
+# switch `fill` to `geom_bar()` function instead and also put more arguments there
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct, fill = gender)) + geom_bar(stat = "identity", ..., ...)
 ```
 
 *** =solution
 ```{r}
-
+# switch `fill` to `geom_bar()` function instead and also put more arguments there
+ggplot(data = gender_summary, mapping = aes(x = gender, y = pct)) + geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job! But looks like something's still missing... Would it be better if we also name the chart and give its axis a meaningful name?")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
