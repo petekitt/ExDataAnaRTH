@@ -245,7 +245,7 @@ success_msg("Yureka! You can see that the visualization was built using a simple
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:4b82ef22be
-## Bar Chart (2)
+## Bar Chart (3)
 
 อย่างที่คุณเห็นในแบบฝึกหัดที่แล้ว ถ้าข้อมูลที่คุณใส่ลงไปใน function `ggplot()` ไม่ได้มีการจัดรูปแบบให้เหมาะสม R จะทำการสร้างแผนภูมิโดยให้แกน `y` แทนจำนวนนับของข้อมูลใน dataset ที่มีค่าตามแกน `x`
 
@@ -291,34 +291,6 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:846659ff03
-## Bar Chart (3)
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
 ## Bar Chart (4)
 
 
@@ -346,7 +318,7 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
+--- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
 ## Bar Chart (5)
 
 
@@ -374,7 +346,7 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
+--- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
 ## Bar Chart (6)
 
 
@@ -402,8 +374,36 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
+--- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
 ## Bar Chart (7)
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
+## Bar Chart (8)
 
 
 *** =instructions
