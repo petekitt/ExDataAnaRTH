@@ -1115,8 +1115,8 @@ success_msg("Wonderful! Now you've finished chapter 1!")
 ต่อจากแบบฝึกหัดที่แล้ว ให้คุณเขียน code โดยใช้ pipes ต่อ โดยปฏิบัติตามคำสั่งต่อไปนี้:
 
 - จัดกลุ่มข้อมูลตาม `category_id` โดยใช้ function `group_by()`
-- ทำการสรุปข้อมูลโดยให้มีข้อมูล จำนวนร้านอาหารทั้งหมดที่อยู่ใน category นั้นๆ, จำนวน rating ที่มีใน category นั้นๆ, คะแนน rating เฉลี่ยของแต่ละ category และส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ category
-- ตั้งชื่อคอลัมน์ต่างๆด้านบนว่า n_restaurants, n_ratings, avg_rating และ sd_rating ตามลำดับ
+- ทำการสรุปข้อมูลโดยให้มีข้อมูล จำนวนร้านอาหารทั้งหมดที่อยู่ใน `category` นั้นๆ, จำนวน `rating` ที่มีใน `category` นั้นๆ, คะแนน `rating` เฉลี่ยของแต่ละ `category` และส่วนเบี่ยงเบนมาตรฐานของคะแนนในแต่ละ `category`
+- ตั้งชื่อคอลัมน์ต่างๆด้านบนว่า `n_restaurants`, `n_ratings`, `avg_rating` และ `sd_rating` ตามลำดับ
 
 *** =hint
 
