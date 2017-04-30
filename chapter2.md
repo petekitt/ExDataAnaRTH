@@ -613,7 +613,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
     geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
     labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
