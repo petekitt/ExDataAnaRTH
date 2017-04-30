@@ -470,9 +470,14 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
 ## ร้านอาหารที่มีจำนวนสาขาเยอะที่สุด! (2)
 
+ตามปกติแล้ว การจัดเรียงข้อมูลและตัดข้อมูลเฉพาะ 10 อันดับแรกมักจะต้องใช้ function แยกกันเพื่อทำเป็นขั้นๆ เช่น เริ่มเรียงข้อมูลด้วย `arrange()` และตัดข้อมูลด้วย `head()` แต่ package `dplyr` มีอีกหนึ่งตัวช่วยที่ช่วยให้เราสามารถเรียงข้อมูลและตัดข้อมูลได้ในคำสั่งเดียว คำสั่งนั้นก็คือ `top_n()`
 
+คำสั่ง `top_n(x, y)` จะทำการจัดเรียงข้อมูลตามคอลัมน์ `y` และตัดข้อมูลออกมา `x` แถว ซึ่งตามปกติแล้ว function นี้จะเรียงจากมากไปหาน้อย แต่หากคุณต้องให้เรียงจากน้อยไปหามากก็สามารถทำได้ด้วยการใส่เครื่องหมาย `-` ไว้ข้างหน้า `x`
 
 *** =instructions
+
+- ใช้ function `top_n()` โดยทำการเรียงลำดับตามจำนวนร้านอาหารที่อยู่ภายใต้ `chain_id` นั้นๆ และตัดข้อมูลออกมาแสดงแค่ `10` อันดับแรก
+- นำข้อมูลนี้ไป `inner_join()` กับ data frame `chain` ด้วยคอลัมน์ `chain_id` และ `id` เพื่อดึงรายละเอียดของ `chain_id` นั้นๆออกมา
 
 *** =hint
 
@@ -503,7 +508,7 @@ restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id"))
+  inner_join(chain, by = c("chain_id" = "id"))
 ```
 
 *** =sct
@@ -543,7 +548,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ... +
     ... +
     ...
@@ -557,7 +562,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
     geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
     labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
@@ -594,7 +599,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ggplot(aes(x = factor(name, levels = name), y = count)) +
     geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
     labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
@@ -645,7 +650,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
     geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
     labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches") +
@@ -660,7 +665,7 @@ top_chains <- restaurant %>%
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
   top_n(10, count) %>%
-  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
   ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
     geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
     labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches") +
@@ -789,98 +794,259 @@ success_msg("Good!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c65707c3c
 ## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (3)
 
+ต่อจากแบบฝึกหัดที่แล้ว คราวนี้เราจะนำผลลัพธ์ที่สร้างไว้มาเชื่อมกับ data frame `chain` และทำการดึงข้อมูลชื่อแบรนด์ร้านอาหารออกมาเพื่อทำให้ข้อมูลของเราสมบูรณ์มากขึ้น
 
 *** =instructions
+
+- ใช้ function `inner_join()` เพื่อเชื่อมคอลัมน์ `chain_id` ของผลลัพธ์จากแบบฝึกหัดที่แล้วกับคอลัมน์ `id` ของตัวแปร `chain` อย่าลืมว่าคุณต้องใส่ double quotes (`"`) ด้วย!
+- ใช้ function `select()` เพื่อดึงคอลัมน์ `chain_id`, `n_restaurants`, `n_checkins` และ `name`
+- ใช้ function `mutate()` เพื่อเปลี่ยนแปลงค่า `NA` ในคอลัมน์ `n_checkins` ให้เป็น `0` (เนื่องจากการใช้ `left_join()` ร้านอาหารที่ไม่เคยได้รับการเช็คอินเลยจะมีค่าในคอลัมน์ `n_checkins` เป็น `NA`) คุณสามารถใส่คำสั่ง `n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)` ลงไปใน function `mutate()` ได้เลย
+- ใช้ function `arrange()` เพื่อเรียงลำดับข้อมูลที่เราจัดไว้ โดยเรียงลำดับตามคอลัมน์ `n_checkins` โดยเรียงจากมากไปหาน้อย (คุณสามารถใช้เครื่องหมาย `-` หรือ function `desc()` ก็ได้)
+- สั่งให้ R แสดงค่าข้อมูล 10 แถวแรกจาก `chain_checkin_summary`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 ```
 
 *** =sample_code
 ```{r}
+# complete the code using `inner_join()`, `select()` and `arrange()`
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  ... %>%
+  ... %>%
+  ... %>%
+  ...
+  
+# display the first 10 rows from `chain_checkin_summary` here
 
 ```
 
 *** =solution
 ```{r}
-
+# complete the code using `inner_join()`, `select()` and `arrange()`
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
+  
+# display the first 10 rows from `chain_checkin_summary` here
+head(chain_checkin_summary, n = 10)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2ba2347975
-## a
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (4)
 
+หลังจากที่เราได้ข้อมูลที่ต้องการแล้ว เราจะมาเริ่มทำการวิเคราะห์กัน!
+
+ปกติแล้ว ในการวิเคราะห์ข้อมูลเชิงปริมาณ เรามักจะสนใจการกระจายตัวของข้อมูล ซึ่งสิ่งที่จะบอกถึงการกระจายตัวของข้อมูลเบื้องต้นได้ก็คือค่าที่เรียกว่า `5-number summary` ซึ่งประกอบไปด้วย `Min`, `1st Quantile`, `Median`, `3rd Quantile` และ `Max`
+
+ค่าเหล่านี้จะครอบคลุมจุดต่างๆที่อยู่ในข้อมูลเชิงปริมาณแต่ละชุด
 
 *** =instructions
+ใน workspace มีตัวแปร `chain_checkin_summary` จากแบบฝึกหัดที่แล้วอยู่ ให้คุณลองทำความเข้าใจกับ code ที่อยู่ใน editor จากนั้นกด `submit` เพื่อดูว่า function `fivenum()` และ `quantile()` สามารถช่วยเราในการวิเคราะห์ข้อมูลเชิงปริมาณได้อย่างไร
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# hit `submit` when you're ready!
+fivenum(chain_checkin_summary$n_restaurants)
 
+quantile(chain_checkin_summary$n_checkins)
 ```
 
 *** =solution
 ```{r}
+# hit `submit` when you're ready!
+fivenum(chain_checkin_summary$n_restaurants)
 
+quantile(chain_checkin_summary$n_checkins)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job! Now, you get a very rough overall picture of how your continuous data are")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fd3e291690
-## b
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (5)
 
+มีหลายวิธีที่ทำให้เราสามารถคำนวณตัวเลข `5-number summary` ได้ และแต่ละตัวก็มี function เป็นของตัวเองในกรณีที่คุณอยากจะคำนวณค่าเหล่านั้นมาใช้ function เหล่านี้ ได้แก่
+
+- `min(x)` สำหรับคำนวณค่าที่น้อยที่สุดในข้อมูล `x`
+- `median(x)` สำหรับคำนวณค่าที่อยู่กึ่งกลางของข้อมูล `x`
+- `max(x)` สำหรับคำนวณค่าที่มากที่สุดในข้อมูล `x`
+- `quantile(x, y)` สำหรับคำนวณค่าข้อมูล ณ percentile ที่ `y` ของข้อมูล `x` ในกรณีที่ไม่มีการระบุตำแหน่ง percentile ที่ต้องการ `quantile(x)` จะทำการแสดงค่า `5-number summary` ของ `x` ดังที่ได้เห็นไปในแบบฝึกหัดที่แล้ว
 
 *** =instructions
+ให้คุณทำตามคำสั่งที่ปรากฏใน editor โดยพิมพ์ code ให้ถูกต้องเพื่อคำนวณค่าต่างๆจากตัวแปร `chain_checkin_summary`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# calculate minimum value from `n_checkins` column
+
+
+# calculate 25th percentile value from `n_checkins` column
+
+
+# calculate median value from `n_checkins` column
+
+
+# calculate 75th percentile value from `n_checkins` column
+
+
+# calculate maximum value from `n_checkins` column
 
 ```
 
 *** =solution
 ```{r}
+# calculate minimum value from `n_checkins` column
+min(chain_checkin_summary$n_checkins)
 
+# calculate 25th percentile value from `n_checkins` column
+quantile(chain_checkin_summary$n_checkins, 0.25)
+
+# calculate median value from `n_checkins` column
+median(chain_checkin_summary$n_checkins)
+
+# calculate 75th percentile value from `n_checkins` column
+quantile(chain_checkin_summary$n_checkins, 0.75)
+
+# calculate maximum value from `n_checkins` column
+max(chain_checkin_summary$n_checkins)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2d8ac6ddaf
-## c
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (5)
 
+ในการคำนวณ `5-number summary` อาจมีวิธีง่ายกว่าการใช้ function `fivenum()` หรือ `quantile()` แถมยังสามารถใช้สรุปข้อมูลทุกคอลัมน์ใน data frame ได้ในคำสั่งเดียวทั้งตัวแปรเชิงคุณภาพและปริมาณ
+
+คำสั่งนั้นก็คือ `summary()` ที่ทุกคนคุ้นเคย
 
 *** =instructions
+ใช้ function `summary()` กับ `chain_checkin_summary` เพื่อแสดงสรุปลักษณะข้อมูลทุกคอลัมน์
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
@@ -890,12 +1056,12 @@ success_msg("Good!")
 
 *** =solution
 ```{r}
-
+summary(chain_checkin_summary)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Cool! Look at the summary result. Do you notice something in our data distribution?")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d22160bf3e
