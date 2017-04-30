@@ -820,7 +820,7 @@ success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2ba2347975
-## <<<New Exercise>>>
+## a
 
 
 *** =instructions
@@ -848,7 +848,7 @@ success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fd3e291690
-## <<<New Exercise>>>
+## b
 
 
 *** =instructions
@@ -876,7 +876,7 @@ success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2d8ac6ddaf
-## <<<New Exercise>>>
+## c
 
 
 *** =instructions
@@ -904,7 +904,7 @@ success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d22160bf3e
-## <<<New Exercise>>>
+## d
 
 
 *** =instructions
