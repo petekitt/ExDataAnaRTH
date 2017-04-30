@@ -335,6 +335,7 @@ success_msg("You're doing good! And what if we just want to change the bar color
 --- type:NormalExercise lang:r xp:100 skills:1 key:ad4e0721cc
 ## Bar Chart (5)
 
+** contents regarding `fill` with a single color and `width` to control the bar width
 
 *** =instructions
 - ลบ argument `fill = gender` ออกจาก function `aes()` เพื่อยกเลิกการกำหนดสีตามกลุ่มเพศ
@@ -377,6 +378,7 @@ success_msg("Good Job! But looks like something's still missing... Would it be b
 --- type:NormalExercise lang:r xp:100 skills:1 key:fe1746b0ca
 ## Bar Chart (6)
 
+** contents regarding naming the graph & axis using `labs` with arguments `title`, `x`, and `y`
 
 *** =instructions
 เพิ่มอีก `layer` หนึ่งด้วย function `labs()` ตั้งชื่อให้กับแผนภูมิ แกน `x` และแกน `y` ว่า `"Wongnai's Users: Gender Distribution"`, `"Gender"` และ `"Proportion (%)"` ตามลำดับ อย่าลืมใส่ double quotes เพื่อบอก R ว่าข้อมูลเหล่านี้เป็นข้อมูลตัวอักษรด้วย
@@ -431,28 +433,38 @@ success_msg("Very good!")
 
 - ใช้ function `filter()` คัดกรองข้อมูลจาก data frame `restaurant` โดยให้คอลัมน์ `chain_id != 0` เพื่อตัดร้านอาหารที่เป็นร้านเฉพาะ ไม่มีสาขาย่อยออกไป
 - ใช้ function `group_by()` เพื่อจัดกลุ่มข้อมูลตามคอลัมน์ `chain_id`
-- ใช้ function `summarise()` เพื่อสรุปข้อมูลหลังจากที่ได้ทำการจัดกลุ่มแล้ว โดยการนับจำนวนร้านอาหารหรือ `count = n()` ตาม `chain_id`
+- ใช้ function `summarise()` เพื่อสรุปข้อมูลหลังจากที่ได้ทำการจัดกลุ่มแล้ว โดยการนับจำนวนร้านอาหารหรือ `count = n()` ตามกลุ่ม `chain_id`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# `filter()`, `group_by()` and then `summarise()` the `restaurant` data frame
+restaurant %>% 
+  ... %>% 
+  ... %>% 
+  ...
 ```
 
 *** =solution
 ```{r}
-
+# `filter()`, `group_by()` and `summarise()` the `restaurant` data frame
+restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n())
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
@@ -463,28 +475,44 @@ success_msg("Very good!")
 คำสั่ง `top_n(x, y)` จะทำการจัดเรียงข้อมูลตามคอลัมน์ `y` และตัดข้อมูลออกมา `x` แถว ซึ่งตามปกติแล้ว function นี้จะเรียงจากมากไปหาน้อย แต่หากคุณต้องให้เรียงจากน้อยไปหามากก็สามารถทำได้ด้วยการใส่เครื่องหมาย `-` ไว้ข้างหน้า `x`
 
 *** =instructions
+
 - ใช้ function `top_n()` โดยทำการเรียงลำดับตามจำนวนร้านอาหารที่อยู่ภายใต้ `chain_id` นั้นๆ และตัดข้อมูลออกมาแสดงแค่ `10` อันดับแรก
-- นำข้อมูลนี้ไป `inner_join()` กับ data frame `chain` เพื่อดึงรายละเอียดของ chain นั้นๆออกมา
+- นำข้อมูลนี้ไป `inner_join()` กับ data frame `chain` ด้วยคอลัมน์ `chain_id` และ `id` เพื่อดึงรายละเอียดของ `chain_id` นั้นๆออกมา
 - เก็บค่าผลลัพธ์ของทั้งหมดนี้ไว้ในตัวแปร `top_chains`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code and assign to variable `top_chains`
+... <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  ... %>%
+  ...
 ```
 
 *** =solution
 ```{r}
-
+# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code and assign to variable `top_chains`
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id"))
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good!")
 ```
