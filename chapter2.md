@@ -420,13 +420,13 @@ success_msg("Very good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7362d84d34
-## More on Bar Chart (1)
+## ร้านอาหารที่มีจำนวนสาขาเยอะที่สุด! (1)
 
 คราวนี้เราจะลองเปลี่ยนมาสร้าง Bar Chart จากข้อมูลร้านอาหารกันบ้าง แต่ก่อนที่จะสร้าง Bar Chart ได้ คุณจะต้องจัดการกับข้อมูลก่อน!
 
 เราจะใช้ package `dplyr` เพื่อทำการหาร้านอาหารที่มีจำนวนสาขามากที่สุด 10 อันดับแรกกัน!
 
-สำหรับข้อมูลร้านอาหารที่เรามีใน data frame `restaurant` นั้น ข้อมูล 1 แถวจะเป็นตัวแทนของร้านอาหาร 1 สาขา การที่จะบอกว่าร้านอาหารใดอยู่ภายใต้สังกัดเดียวกันเราจึงต้องอาศัย `chain_id` เข้ามาช่วย เช่น ร้าน `Starbucks` ก็จะมี `chain_id` เป็น 1 เป็นต้น
+สำหรับข้อมูลร้านอาหารที่เรามีใน data frame `restaurant` นั้น ข้อมูล 1 แถวจะเป็นตัวแทนของร้านอาหาร 1 ร้าน การที่จะบอกว่าร้านอาหารใดอยู่ภายใต้แบรนด์เดียวกันเราจึงต้องอาศัย `chain_id` เข้ามาช่วย เช่น ร้านที่อยู่ภายใต้แบรนด์ `Starbucks` ก็จะมี `chain_id` เป็น 1 เหมือนกันทุกร้าน เป็นต้น
 
 *** =instructions
 ให้คุณทำการสรุปจำนวนสาขาของร้านอาหารแต่ละร้านโดยใช้ pipes (`%>%`) และปฏิบัติตามขั้นตอนต่อไปนี้:
@@ -468,7 +468,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1e67f78696
-## More on Bar Chart (2)
+## ร้านอาหารที่มีจำนวนสาขาเยอะที่สุด! (2)
 
 ตามปกติแล้ว การจัดเรียงข้อมูลและตัดข้อมูลเฉพาะ 10 อันดับแรกมักจะต้องใช้ function แยกกันเพื่อทำเป็นขั้นๆ เช่น เริ่มเรียงข้อมูลด้วย `arrange()` และตัดข้อมูลด้วย `head()` แต่ package `dplyr` มีอีกหนึ่งตัวช่วยที่ช่วยให้เราสามารถเรียงข้อมูลและตัดข้อมูลได้ในคำสั่งเดียว คำสั่งนั้นก็คือ `top_n()`
 
@@ -478,7 +478,6 @@ success_msg("Great!")
 
 - ใช้ function `top_n()` โดยทำการเรียงลำดับตามจำนวนร้านอาหารที่อยู่ภายใต้ `chain_id` นั้นๆ และตัดข้อมูลออกมาแสดงแค่ `10` อันดับแรก
 - นำข้อมูลนี้ไป `inner_join()` กับ data frame `chain` ด้วยคอลัมน์ `chain_id` และ `id` เพื่อดึงรายละเอียดของ `chain_id` นั้นๆออกมา
-- เก็บค่าผลลัพธ์ของทั้งหมดนี้ไว้ในตัวแปร `top_chains`
 
 *** =hint
 
@@ -487,13 +486,13 @@ success_msg("Great!")
 library("dplyr")
 library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
-chain_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/category.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code and assign to variable `top_chains`
-... <- restaurant %>% 
+# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -503,8 +502,8 @@ chain_category <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/produc
 
 *** =solution
 ```{r}
-# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code and assign to variable `top_chains`
-top_chains <- restaurant %>% 
+# use `top_n()` and `inner_join()` function with the `chain` data frame to finish the code
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -518,147 +517,282 @@ success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5e87713a93
-## <<<New Exercise>>>
+## More on Bar Chart (1)
 
+หลังจากที่ได้ทำการวิเคราะห์ข้อมูลโดยใช้ package `dplyr` ไปแล้ว เราจะมาเริ่มทำ data visualization กัน!
+
+ถ้าคุณยังจำได้ จากบทที่แล้ว นอกจากเราจะสามารถใช้ pipes (`%>%`) ในการจัดการข้อมูลเป็นลำดับขั้นในคำสั่งเดียวแล้ว เรายังสามารถนำ pipes (`%>%`) มาใช้กับการทำ data visualization ได้ด้วยเช่นกัน
 
 *** =instructions
+ต่อจากแบบฝึกหัดที่แล้ว ให้คุณใช้ pipes (`%>%`) ร่วมกับ package `ggplot2` ในการสร้าง Bar Chart
+
+- สร้าง `layer` แรกด้วยคำสั่ง `ggplot(aes(x = factor(name, levels = name), y = count))` เพื่อบอกให้ R ใช้คอลัมน์ `name` แบบ factor เป็นแกน `x` 
+- สร้าง `layer` ที่สองด้วยคำสั่ง `geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5)` เพื่อเปลี่ยนสีแท่งข้อมูลเป็นสีฟ้าและให้ความกว้างของแท่งข้อมูลเท่ากับ `0.5`
+- สร้าง `layer` ที่สามด้วยคำสั่ง `labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")` เพื่อกำหนดชื่อให้แผนภูมิและแกนต่างๆ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# create `layers` using `ggplot()`, `geom_bar()`, and `labs()` to create a bar chart!
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ... +
+    ... +
+    ...
 ```
 
 *** =solution
 ```{r}
-
+# create `layers` using `ggplot()`, `geom_bar()`, and `labs()` to create a bar chart!
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2693650430
-## <<<New Exercise>>>
+## More on Bar Chart (2)
 
+คุณอาจสามารถทำให้แผนภูมิเป็นระเบียบขึ้นได้โดยการเรียงลำดับข้อมูล
 
 *** =instructions
+เปลี่ยน argument `levels = name` ใน function `aes()` เป็น `levels = name[order(count)]` เพื่อเรียงลำดับข้อมูลในแกน `x` ตามค่าในคอลัมน์ `count`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# sort the factor by change the argument `levels = name` to `levels = name[order(count)]`
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ggplot(aes(x = factor(name, levels = name), y = count)) +
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
 ```
 
 *** =solution
 ```{r}
-
+# sort the factor by change the argument `levels = name` to `levels = name[order(count)]`
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c425fce1b4
-## <<<New Exercise>>>
+## More on Bar Chart (3)
 
+นอกจากการเรียงลำดับข้อมูลแล้ว คุณยังสามารถทำการสลับแกน `x` และ `y` ได้โดยการเพิ่ม `layer` `coord_flip()` ซึ่งการสลับแกนข้อมูลอาจจะเป็นประโยชน์ในการวิเคราะห์ข้อมูลบางครั้ง
 
 *** =instructions
+เพิ่ม `layer` `coord_flip()` ลงไปด้านหลัง function `labs()` และกด `submit` เพื่อดูผล
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# add `coord_flip()` to the end of `labs()` function
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches") +
+    ...
 ```
 
 *** =solution
 ```{r}
-
+# add `coord_flip()` to the end of `labs()` function
+top_chains <- restaurant %>% 
+  filter(chain_id != 0) %>% 
+  group_by(chain_id) %>% 
+  summarise(count = n()) %>%
+  top_n(10, count) %>%
+  %>% inner_join(chain, by = c("chain_id" = "id")) %>%
+  ggplot(aes(x = factor(name, levels = name[order(count)]), y = count)) +
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    labs(x = "", y = "Count", title = "Top Chain Restaurants by Number of Branches") +
+    coord_flip()
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Cool!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:45a27018ad
-## <<<New Exercise>>>
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (1)
 
+ในแบบฝึกหัดก่อนๆหน้านี้ เราทำการวิเคราะห์เพียงแต่ตัวแปรเชิงคุณภาพ (`qualitative variable`) หรือตัวแปรแบบแบ่งกลุ่ม (`categorical variable`) มาโดยตลอด สิ่งที่เราได้ทำมเพียงแค่การนับว่าแต่ละกลุ่มมีข้อมูลเท่าไรเท่านั้น
+
+ตั้งแต่แบบฝึกหัดนี้เราจะเปลี่ยนมาวิเคราะห์ตัวแปรเชิงปริมาณ (`quantitative variable`) หรือตัวแปรแบบต่อเนื่อง (`continuous variable`) กันบ้าง ผ่าน data frame `restaurant`, `restaurant_checkin_user` และ `chain`
 
 *** =instructions
+
+- ใช้ function `filter()` เพื่อกรองเฉพาะร้านอาหารที่เป็นร้านสาขา (`chain_id != 0`) และเป็นร้านอาหารจริงๆ (`domain_id == 1`)
+- ใช้ function `select()` เลือกคอลัมน์ `id` และ `chain_id` เพื่อตัดคอลัมน์ที่ไม่จำเป็นออกไป
+- เก็บค่าผลลัพธ์ไว้ในตัวแปร `chain_checkin_summary`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 ```
 
 *** =sample_code
 ```{r}
-
+# complete the code using `filter()` and `select()`
+... <- restaurant %>%
+  filter(
+    ..., 
+    ...
+  ) %>%
+  select(..., ...)
 ```
 
 *** =solution
 ```{r}
-
+# complete the code using `filter()` and `select()`
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7ef0e8802b
-## <<<New Exercise>>>
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (2)
 
+เราจะทำการคำนวณจำนวนร้านอาหารในแต่ละแบรนด์ (แบ่งกลุ่มตาม `chain_id`) รวมถึงจำนวน `check_in` ที่เกิดขึ้นกัน
+
+เพื่อไม่ให้ข้อมูลร้านอาหารที่ไม่เคยมีการ `check_in` หายไป เราจะต้องใช้ function `left_join()` เพื่อเชื่อมข้อมูลจาก `restaurant` ในแบบฝึกหัดที่แล้วไปยัง `restaurant_checkin_user`
 
 *** =instructions
+
+- ใช้ function `left_join()` เพื่อเชื่อม คอลัมน์ `id` ของ `restaurant` เข้ากับ `restaurant_id` ของ `restaurant_checkin_user` อย่าลืมว่าคุณต้องใส่ double quotes (`"`) ให้ชื่อคอลัมน์ด้วย
+- ใช้ function `group_by()` เพื่อจัดกลุ่มร้านอาหารตาม `chain_id`
+- ใช้ function `summarise()` เพื่อนับจำนวนร้านอาหารแบบไม่ซ้ำร้าน (`n_distinct(id)`) และนับจำนวนเช็คอิน (`sum(check_in)`) ซึ่งถ้ามีการเช็คอิน คอลัมน์ `check_in` จะมีค่าเป็น 1 แต่ถ้าไม่มีจะมีค่าเป็น 0 ตั้งชื่อให้คอลัมน์ใหม่ว่า `n_restaurants` และ `n_checkins` ตามลำดับ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checking_user.tsv")
 ```
 
 *** =sample_code
 ```{r}
-
+# complete the code using `left_join()`, `group_by()` and `summarise()`
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(..., by = c(... = ...)) %>%
+  group_by(...) %>% 
+  summarise(
+    n_restaurants = ...,
+    n_checkins = ...
+  )
 ```
 
 *** =solution
 ```{r}
-
+# complete the code using `left_join()`, `group_by()` and `summarise()`
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  )
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1c65707c3c
-## <<<New Exercise>>>
+## การวิเคราะห์ข้อมูลตัวแปรเชิงปริมาณ (3)
 
 
 *** =instructions
