@@ -1336,35 +1336,83 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:74f7a005c8
-## e
+## ความผันผวนและส่วนเบี่ยงเบนมาตรฐาน (1)
 
+ในการวิเคราะห์ข้อมูล อีกปัจจัยหนึ่งที่นักสถิติต้องให้ความสำคัญก็คือการกระจายตัวของข้อมูล ซึ่งเราสามารถวัดขนาดการกระจายตัวของข้อมูลได้โดยการคำนวณค่าความผันผวน (`Variance`) และส่วนเบี่ยงเบนมาตรฐาน (`Standard Deviation` หรือ `SD`)
+
+ค่าทั้งสองจะช่วยให้เราสามารถประมาณค่าการกระจายตัวของข้อมูลโดยใช้ค่าเฉลี่ยเป็นจุดกึ่งกลางได้
+
+แท้จริงแล้ว ส่วนเบี่ยงเบนมาตรฐานก็คือรากที่ 2 ของค่าความผันผวน ซึ่งการพิจารณาส่วนเบี่ยงเบนมาตรฐานจะช่วยให้เราตีความการกระจายตัวของข้อมูลได้ดีกว่าเนื่องจากมันมีหน่วยเดียวกันกับข้อมูลที่เราพิจารณา
 
 *** =instructions
+
+- ให้คุณคำนวณค่าความผันผวน (`Variance`) ของ `n_checkins` โดยใช้ function `var()`
+- ให้คุณคำนวณค่าส่วนดบี่ยงเบนมาตรฐาน (`Standard Deviation`) ของ `n_checkins` โดยใช้ function `sd()`
+- ให้คุณคำนวณส่วนเบี่ยงเบนมาตรฐานอีกครั้ง แต่คราวนี้ให้ใช้ function `sqrt()` กับ `var()` ของคอลัมน์ `n_checkins` และดูว่ามีค่าเท่ากับในข้อก่อนหน้าหรือไม่
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# (Sampled) Variance
+# Mean squared deviation -- how far the observations are spread out from their mean
+
+
+# (Sampled) Standard Deviation
+# Because it has the same unit as the original data, it's usually more interpretable.
+
+
+# Now, calculate the Standard Deviation again using `sqrt()` on `var()` of `n_checkins`
 
 ```
 
 *** =solution
 ```{r}
+# (Sampled) Variance
+# Mean squared deviation -- how far the observations are spread out from their mean
+var(chain_checkin_summary$n_checkins)
 
+# (Sampled) Standard Deviation
+# Because it has the same unit as the original data, it's usually more interpretable.
+sd(chain_checkin_summary$n_checkins)
+
+# Now, calculate the Standard Deviation again using `sqrt()` on `var()` of `n_checkins`
+sqrt(var(chain_checkin_summary$n_checkins))
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d62296e311
-## f
+## ความผันผวนและส่วนเบี่ยงเบนมาตรฐาน (2)
 
 
 *** =instructions
@@ -1392,7 +1440,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:76af3280db
-## g
+## สัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐาน
 
 
 *** =instructions
@@ -1420,7 +1468,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d04a53efc
-## h
+## Interquantile Range
 
 
 *** =instructions
