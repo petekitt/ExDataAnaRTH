@@ -1065,7 +1065,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d22160bf3e
-## d
+## a
 
 
 *** =instructions
@@ -1093,7 +1093,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:acccc43ea5
-## <<<New Exercise>>>
+## b
 
 
 *** =instructions
@@ -1121,7 +1121,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5ac7d8a096
-## <<<New Exercise>>>
+## c
 
 
 *** =instructions
@@ -1149,7 +1149,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:48798787ff
-## <<<New Exercise>>>
+## d
 
 
 *** =instructions
@@ -1177,7 +1177,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:74f7a005c8
-## <<<New Exercise>>>
+## e
 
 
 *** =instructions
@@ -1205,7 +1205,7 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d62296e311
-## <<<New Exercise>>>
+## f
 
 
 *** =instructions
