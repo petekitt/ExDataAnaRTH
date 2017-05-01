@@ -8,7 +8,7 @@ description : Insert the chapter description here
 ทวนความจำเรื่องการใช้ factor เพื่อเปลี่ยนแปลงรูปแบบข้อมูลให้เหมาะสมกับการวิเคราะห์ข้อมูลประเภท categorical มากขึ้น
 
 *** =instructions
-ในตอนนี้เรามี data frame `user` ซึ่งเก็บข้อมูลของผู้ใช้งานเว็บไซต์อยู่ใน workspace ให้คุณกด Submit เพื่อลองดูผลของการใช้ function `factor` กับคอลัมน์ `gender` จาก data frame `user`
+ในตอนนี้เรามี data frame `user` ซึ่งเก็บข้อมูลของผู้ใช้งานเว็บไซต์อยู่ใน workspace ให้คุณกด `submit` เพื่อลองดูผลของการใช้ function `factor` กับคอลัมน์ `gender` จาก data frame `user`
 
 *** =hint
 
@@ -1138,7 +1138,7 @@ success_msg("Now, you will see that values of medians are quite different from t
 
 ปกติแล้ว `outlier` จะเป็นค่าที่น้อยมากหรือสูงมากจนผิดปกติ นั่นทำให้มันมักจะอยู่บริเวณปลายสุดของข้อมูลทั้งสองข้าง การใช้ `Truncated Mean` จึงเป็นตัวเลือกหนึ่งที่ช่วยให้เราสามารถแก้ปัญหาในการหาค่าเฉลี่ยเพื่อเป็นตัวแทนข้อมูลที่เหมาะสมมากขึ้นได้
 
-คำสั่ง `mean(x, trim = 0.1)` จะทำการตัดข้อมูลออกข้างละ 5% ทั้งที่ต่ำที่สุดและสูงที่สุดออกจากข้อมูลก่อนนำมาคำนวณค่าเฉลี่ย
+คำสั่ง `mean(x, trim = 0.1)` จะทำการตัดข้อมูลออกข้างละ `5%` ทั้งที่ต่ำที่สุดและสูงที่สุดออกจากข้อมูลก่อนนำมาคำนวณค่าเฉลี่ย
 
 *** =instructions
 ให้คุณทำการหาค่า `mean` และ `truncated mean` โดยการตัดข้อมูลออกข้างละ `0.5%` และ `2.5%` ตามลำดับ อย่าลืมว่าคุณต้องใช้เพิ่ม argument `trim` เพื่อทำการคำนวณ `truncated mean`
@@ -1414,89 +1414,185 @@ success_msg("Good Job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:d62296e311
 ## ความผันผวนและส่วนเบี่ยงเบนมาตรฐาน (2)
 
+ปกติแล้ว ถ้าข้อมูลมีการแจกแจงแบบปกติ (`Normal Distribution`) หรือก็คือมีการกระจายตัวความหนาแน่นของข้อมูลรอบๆค่าเฉลี่ยเป็นทรงระฆังคว่ำ เราจะเห็นได้ว่าข้อมูลกว่า `95%` จะกระจุกตัวกันอยู่ภายในบริเวณไม่เกิน 2 `Standard Deviation` นับจากค่าเฉลี่ย
 
 *** =instructions
+เราได้ทำการสร้าง code สำหรับคำนวณค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐาน (`Standard Deviation`) ของ `n_checkins` ไว้ให้คุณแล้วใน editor ให้คุณทำการคำนวณว่ามีข้อมูลคิดเป็นสัดส่วนเท่าไรที่อยู่ภายในช่วง 2 `Standard Deviation` จากค่าเฉลี่ยของ `n_checkins`
+เนื่องจากค่า `True` และ `False` จะมีค่าเป็น `1` และ `0` ตามลำดับ คุณจึงสามารถใช้ function `mean()` ร่วมกับการตรวจสอบเงื่อนไขแบบ `Boolean` เพื่อหาอัตราส่วนของข้อมูลในแบบฝึกหัดนี้ได้
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# calculations of `mean()` and `sd()` of `n_checkins`
+mean_checkins <- mean(chain_checkin_summary$n_checkins)
+sd_checkins <- sd(chain_checkin_summary$n_checkins)
 
+# Now, it's your turn to calculate the proportion of `n_checkins` data that lies within 2 `sd_checkins` from `mean_checkins`
+mean(chain_checkin_summary$n_checkins < ... + 2 * ... &
+  chain_checkin_summary$n_checkins > ... - 2 * ...)
 ```
 
 *** =solution
 ```{r}
+# calculations of `mean()` and `sd()` of `n_checkins`
+mean_checkins <- mean(chain_checkin_summary$n_checkins)
+sd_checkins <- sd(chain_checkin_summary$n_checkins)
 
+# Now, it's your turn to calculate the proportion of `n_checkins` data that lies within 2 `sd_checkins` from `mean_checkins`
+mean(chain_checkin_summary$n_checkins < mean_checkins + 2 * sd_checkins &
+  chain_checkin_summary$n_checkins > mean_checkins - 2 * sd_checkins)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:76af3280db
 ## สัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐาน
 
+สัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐาน (`Coefficient of Variation` หรือ `CV`) เป็นค่าทางสถิติอีกตัวหนึ่งซึ่งเป็นตัวแทนของค่าการเบี่ยงเบนของข้อมูลต่อ 1 หน่วยค่าเฉลี่ย ซึ่งคุณสามารถคำนวณสัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐานได้ด้วยการนำส่วนเบี่ยงเบนมาตรฐาน (`Standard Deviation`) มาหารด้วยค่าเฉลี่ย
+
+ข้อจำกัดของสัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐานคือ ข้อมูลที่จะนำมาพิจารณาต้องมีค่ามากกว่าหรือเท่ากับ `0`
 
 *** =instructions
+ให้คุณคำนวณค่าสัมประสิทธิ์ส่วนเบี่ยงเบนมาตรฐานของ `n_checkins`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# `mean()` and `sd()` of `n_checkins` are here
+mean_checkins <- mean(chain_checkin_summary$n_checkins)
+sd_checkins <- sd(chain_checkin_summary$n_checkins)
+
+# calculate `CV` here
 
 ```
 
 *** =solution
 ```{r}
+# `mean()` and `sd()` of `n_checkins` are here
+mean_checkins <- mean(chain_checkin_summary$n_checkins)
+sd_checkins <- sd(chain_checkin_summary$n_checkins)
 
+# calculate `CV` here
+sd_checkins / mean_checkins
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Cool!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d04a53efc
 ## Interquantile Range
 
+`Interquantile Range` เป็นอีกวิธีหนึ่งในการวัดการกระจายตัวของข้อมูล แทนที่จะใช้ส่วนเบี่ยงเบนมาตรฐานที่พิจารณาความผันผวนจากทุกจุดข้อมูล `Interquantile Range` จะทำการพิจารณาแค่ระยะห่างจากข้อมูล ณ percentile ที่ 25 ไปยังข้อมูล ณ percentile ที่ 75 แทน ดังนั้นจึงมีอีกชื่อเรียกหนึ่งว่า `midspread` หรือ `middle 50%`
 
 *** =instructions
+ให้คุณใช้ function `IQR()` กับคอลัมน์ `n_checkins` ของตัวแปร `chain_checkin_summary` เพื่อหา `Interquantile Range` ของจำนวนเช็คอินของร้านอาหารแต่ละแบรนด์
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# use `IQR()` with `chain_checkin_summary$n_checkins` here!
 
 ```
 
 *** =solution
 ```{r}
-
+# use `IQR()` with `chain_checkin_summary$n_checkins` here!
+IQR(chain_checkin_summary$n_checkins)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e3b4411559
-## i
+## Histogram (1)
 
 
 *** =instructions
@@ -1524,7 +1620,7 @@ success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b6941c3fee
-## j
+## Histogram (2)
 
 
 *** =instructions
@@ -1552,7 +1648,7 @@ success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c31a78926d
-## k
+## Histogram (3)
 
 
 *** =instructions
