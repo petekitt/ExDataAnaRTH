@@ -1065,115 +1065,274 @@ success_msg("Cool! Look at the summary result. Do you notice something in our da
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d22160bf3e
-## a
+## ทำความรู้จักกับ Outlier
 
+จากแบบฝึกหัดที่แล้ว คุณจะเห็นได้ว่าข้อมูลใน `chain_checkin_summary` มีความเบ้ซ้ายค่อนข้างสูง นั่นคือข้อมูลแบรนด์ร้านอาหารส่วนใหญ่มีจำนวนร้านอาหารและจำนวนการเช็คอินค่อนข้างกระจุกตัวอยู่ที่ต่ำกว่า 5 ร้านต่อแบรนด์และต่ำกว่า 12 เช็คอินต่อแบรนด์ตามลำดับ ซึ่งเมื่อเกิดปัญหาแบบนี้ขึ้น การใช้ `median()` หรือค่ามัธยฐานเป็นตัวแทนของข้อมูลจะค่อนข้างให้ผลดีกว่าการใช้ `mean()` หรือค่าเฉลี่ย เพราะค่า `mean()` นั้นจะได้รับผลกระทบจาก `outlier` ในข้อมูลค่อนข้างมากหากข้อมูลมีจำนวนไม่มากพอ
+
+`outlier` คือค่าผิดปกติที่มีค่าแตกต่างจากข้อมูลที่เหลือใน dataset มากอย่างเห็นได้ชัด กรณีตัวอย่างเช่น หากเรามีข้อมูลความสูงของมนุษย์ แล้วพบว่าในข้อมูลมีมนุษย์ที่มีความสูง 2.5 เมตรหรือน้อยกว่า 1 เมตร ไม่ต้องบอกเราก็สามารถรู้ได้ทันทีว่าข้อมูลนี้เป็นข้อมูลที่ผิดปกติ
+
+เพื่อให้เห็นภาพมากขึ้น เราจะมาลองดูผลใน editor กัน
 
 *** =instructions
+กด submit เพื่อดูความแตกต่างของการใช้ `median()` และ `mean()`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# click `submit` to see the result and inspect difference in `median()` and `mean()` value
+paste("Median of n_restaurants is", median(chain_checkin_summary$n_restaurants))
+paste("Mean of n_restaurants is", mean(chain_checkin_summary$n_restaurants))
 
+paste("Median of n_checkins is", median(chain_checkin_summary$n_checkins))
+paste("Mean of n_checkins is", mean(chain_checkin_summary$n_checkins))
 ```
 
 *** =solution
 ```{r}
+# click `submit` to see the result and inspect difference in `median()` and `mean()` value
+paste("Median of n_restaurants is", median(chain_checkin_summary$n_restaurants))
+paste("Mean of n_restaurants is", mean(chain_checkin_summary$n_restaurants))
 
+paste("Median of n_checkins is", median(chain_checkin_summary$n_checkins))
+paste("Mean of n_checkins is", mean(chain_checkin_summary$n_checkins))
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Now, you will see that values of medians are quite different from those of means. So, how can we solve the problem of having outliers in our dataset?")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:acccc43ea5
-## b
+## Truncated Mean
 
+วิธีหนึ่งที่สามารถใช้ได้ในการแก้ไขปัญหา outlier ในข้อมูลคือการใช้ `Truncated Mean`
+
+`Truncated Mean` คือการหาค่าเฉลี่ยโดยการตัดปลายหางของข้อมูลบางส่วนทิ้งไป ซึ่งเราสามรถกำหนดระยะของข้อมูลที่เราต้องการตัดทิ้งได้ด้วยค่า percentile
+
+ปกติแล้ว `outlier` จะเป็นค่าที่น้อยมากหรือสูงมากจนผิดปกติ นั่นทำให้มันมักจะอยู่บริเวณปลายสุดของข้อมูลทั้งสองข้าง การใช้ `Truncated Mean` จึงเป็นตัวเลือกหนึ่งที่ช่วยให้เราสามารถแก้ปัญหาในการหาค่าเฉลี่ยเพื่อเป็นตัวแทนข้อมูลที่เหมาะสมมากขึ้นได้
+
+คำสั่ง `mean(x, trim = 0.1)` จะทำการตัดข้อมูลออกข้างละ 5% ทั้งที่ต่ำที่สุดและสูงที่สุดออกจากข้อมูลก่อนนำมาคำนวณค่าเฉลี่ย
 
 *** =instructions
+ให้คุณทำการหาค่า `mean` และ `truncated mean` โดยการตัดข้อมูลออกข้างละ `0.5%` และ `2.5%` ตามลำดับ อย่าลืมว่าคุณต้องใช้เพิ่ม argument `trim` เพื่อทำการคำนวณ `truncated mean`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+# Finding each means on `n_restaurants` column
+mean(chain_checkin_summary$n_restaurants)
+mean(chain_checkin_summary$n_restaurants, ...)
+mean(chain_checkin_summary$n_restaurants, ...)
 
+# Finding each means on `n_checkins` column
+mean(chain_checkin_summary$n_checkins)
+mean(chain_checkin_summary$n_checkins, ...)
+mean(chain_checkin_summary$n_checkins, ...)
 ```
 
 *** =solution
 ```{r}
+# Finding each means on `n_restaurants` column
+mean(chain_checkin_summary$n_restaurants)
+mean(chain_checkin_summary$n_restaurants, trim = 0.01)
+mean(chain_checkin_summary$n_restaurants, trim = 0.05)
 
+# Finding each means on `n_checkins` column
+mean(chain_checkin_summary$n_checkins)
+mean(chain_checkin_summary$n_checkins, trim = 0.01)
+mean(chain_checkin_summary$n_checkins, trim = 0.05)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5ac7d8a096
-## c
+## Winsorized Mean (1)
 
+นอกจากการใช้ `Truncated Mean` แล้ว `Winsorized Mean` หรือ `Censored Mean` ก็เป็นอีกวิธีหนึ่งในการจัดการกับ `outlier` ที่ดีเช่นกัน
+
+ข้อดีของการใช้ `Winsorized Mean` คือ เราจะไม่มีการตัดข้อมูลทิ้ง แต่จะทำการแทนที่ `outlier` ด้วยค่า ณ จุด percentile สุดท้ายที่เราจะยอมรับว่าค่านี้ไม่ใช่ `outlier` แทน เช่น ถ้าเราคิดว่าค่าขอบเขตของข้อมูลที่เหมาะสมควรมีค่าไม่น้อยกว่า percentile ที่ 1 และมีค่าไม่เกิน percentile ที่ 99 เราจะแทนที่ `outlier` ด้วยค่า ณ percentile เหล่านี้ ขึ้นอยู่กับว่า `outlier` ที่เราเจอเป็นฝั่งที่มีค่าน้อยผิดปกติหรือมากผิดปกติ ซึ่งวิธีนี้อาจช่วยลดผลกระทบของ `outlier` ที่มีต่อ `mean` ได้ แต่อาจไม่ได้ช่วยกำจัดผลทิ้งไปทั้งหมด
+
+น่าเสียดายที่ R ไม่มี function สำเร็จรูปสำหรับการหา `Winsorized Mean` ดังนั้นเราจึงต้องทำการจัดการกับ `outlier` ในข้อมูลด้วยตัวเองเสียก่อน แล้วค่อยทำการหาค่า `mean()` ตามปกติ
 
 *** =instructions
+ให้คุณคำนวณค่า percentile ที่ 1 และ 99 ของคอลัมน์ `n_restaurants` จาก `chain_checkin_summary` แล้วเก็บผลลัพธ์ไว้ในตัวแปร `pct01` และ `pct99` ตามลำดับ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# calculate 1st and 99th percentile of `n_restaurants` with `quantile()` function and store result in `pct01`
+pct01 <- ...
+pct99 <- ...
 ```
 
 *** =solution
 ```{r}
-
+# calculate 1st and 99th percentile of `n_restaurants` with `quantile()` function and store result in `pct01`
+pct01 <- quantile(chain_checkin_summary$n_restaurants, 0.01)
+pct99 <- quantile(chain_checkin_summary$n_restaurants, 0.99)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:48798787ff
-## d
+## Winsorized Mean (2)
 
+ลำดับต่อมา คุณจะต้องทำการเปลี่ยนแปลงรูปแบบข้อมูลใน `chain_checkin_summary` ก่อนแล้วจึงทำการหา `mean()` ตามปกติ
+
+ได้เวลาดึงความรู้ package `dplyr` กลับมาใช้แล้ว!
 
 *** =instructions
+
+- ใช้ function `mutate()` เพื่อทำการเปลี่ยนแปลงข้อมูลในคอลัมน์ `n_restaurants` ในกรณีที่ข้อมูลมีค่าน้อยกว่า `pct01` ให้มีค่าเท่ากับ `pct01` แต่ถ้ามีค่ามากกว่า `pct99` ให้มีค่าเท่ากับ `pct99` ตั้งชื่อคอลัมน์ใหม่ว่า `winsorized_value` (คุณสามารถใช้คำสั่ง `ifelse(n_restaurants < pct01, pct01, n_restaurants)` เพื่อจัดการกับ `outlier` ที่มีค่าน้อยกว่า `pct01` ได้ ให้ทำแบบเดียวกันกับ `outlier` ที่มีค่ามากกว่า `pct99` ด้วย
+- คุณสามารถสร้างคอลัมน์ใหม่ซ้ำกันหลายครั้งได้ภายใน function `mutate()` เพื่อเปลี่ยนแปลงค่าในคอลัมน์จนกว่าจะได้ค่าที่คุณต้องการ
+- ใช้ function `summarise()` เพื่อทำการสรุปข้อมูล คำนวณค่าเฉลี่ย `winsorized_mean` ด้วยคำสั่ง `mean(winsorized_value)`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
+pct01 <- quantile(chain_checkin_summary$n_restaurants, 0.01)
+pct99 <- quantile(chain_checkin_summary$n_restaurants, 0.99)
 
+# calculate the `winsorized mean` using `mutate()` and `summarise()` on `chain_checkin_summary`
+chain_checkin_summary %>%
+  mutate(
+    winsorized_value = ...,
+    winsorized_value = ...
+  ) %>%
+  summarise(winsorized_mean = ...)
 ```
 
 *** =solution
 ```{r}
+pct01 <- quantile(chain_checkin_summary$n_restaurants, 0.01)
+pct99 <- quantile(chain_checkin_summary$n_restaurants, 0.99)
 
+# calculate the `winsorized mean` using `mutate()` and `summarise()` on `chain_checkin_summary`
+chain_checkin_summary %>%
+  mutate(
+    winsorized_value = ifelse(n_restaurants < pct01, pct01, n_restaurants),
+    winsorized_value = ifelse(n_restaurants > pct99, pct99, n_restaurants)
+  ) %>%
+  summarise(winsorized_mean = mean(winsorized_value))
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:74f7a005c8
