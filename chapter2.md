@@ -1594,57 +1594,120 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:e3b4411559
 ## Histogram (1)
 
+ในแบบฝึกหัดนี้เราก็ยังคงอยู่กับ `chain_checkin_summary` แต่เราจะกลับมาโฟกัสที่การทำ data visualization กันอีกครั้ง!
+
+คราวนี้เราจะสร้างสิ่งที่เรียกว่า `Histogram` ซึ่งเอาไว้ใช้ดูการกระจายตัวของข้อมูลเชิงปริมาณได้ แกน `x` บน `Histogram` จะทำหน้าที่แทนช่วงของค่าต่างๆที่เป็นไปได้จากข้อมูลของเรา ส่วนแกน `y` จะทำหน้าที่แทนความถี่ (หรือจำนวนครั้ง) ที่ข้อมูลในแต่ละช่วงแกน `x` นั้นปรากฎขึ้น เมื่อนำมาประกอบกัน เราก็จะได้กราฟที่แสดงการแจกแจงความถี่ของข้อมูลแต่ละช่วง
 
 *** =instructions
+
+- ให้คุณสร้าง `layer` แรกด้วย function `ggplot()` และใช้ `x = n_checkins` เป็น argument ของ function `aes()` เพื่อบอก R ว่าเราจะใช้คอลัมน์ `n_checkins` เป็นข้อมูลในการสร้างกราฟต่อไป
+- จากนั้นสร้าง `layer` ต่อมาด้วย function `geom_histogram()` เพื่อระบุว่ากราฟที่เราต้องการคือ `Histogram`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# create your first `Histogram` using `ggplot()` and `geom_histogram()` here
+chain_checkin_summary %>%
+  ggplot(aes(...)) + ...
 ```
 
 *** =solution
 ```{r}
-
+# create your first `Histogram` using `ggplot()` and `geom_histogram()` here
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + geom_histogram()
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b6941c3fee
 ## Histogram (2)
 
+กราฟ `Histogram` อาจมีหน้าตาแตกต่างกันได้ขึ้นอยู่กับความกว้างของช่วงต่อแท่งข้อมูลที่เรากำหนด ซึ่งคุณสามารถกำหนดความกว้างของการแบ่งช่วงได้โดยการกำหนดค่า argument `binwidth` ลงไปใน function `geom_histogram()`
+
+นอกจากนี้ เรายังสามารถเปลี่ยนสีของกราฟได้เหมือนกับกราฟรูปแบบอื่นๆ argument `color` และ `fill` จะเป็นตัวกำหนดสีของขอบแท่งข้อมูลและตัวแท่งข้อมูลตามลำดับ
 
 *** =instructions
+
+- เพิ่ม argument `binwidth = 2` ลงไปเพื่อให้ข้อมูลแต่ละช่วงมีความกว้างเท่ากับ `2`
+- เพิ่ม argument `color = "white"` เพื่อให้ขอบแท่งข้อมูลเปลี่ยนเป็นสีขาว
+- เพิ่ม argument `fill = "#48b6a3"` เพื่อให้ตัวแท่งข้อมูลเปลี่ยนเป็นสีฟ้า
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# let's tidy up things by decrease the histogram binwidth and change some colours!
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + geom_histogram(..., ..., ...)
 ```
 
 *** =solution
 ```{r}
-
+# let's tidy up things by decrease the histogram binwidth and change some colours!
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + geom_histogram(binwidth = 2, color = "white", fill = "#48b6a3")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Bravo!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c31a78926d
