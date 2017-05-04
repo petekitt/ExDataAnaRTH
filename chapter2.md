@@ -1713,33 +1713,76 @@ success_msg("Bravo!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:c31a78926d
 ## Histogram (3)
 
+เราสามารถเพิ่มเติม `layer` เข้าไปอีกเพื่อแสดงรายละเอียดอื่นๆได้ด้วยเช่นกัน ตัวอย่างเช่น
+
+- function `geom_vline()` จะทำการเพิ่มเส้นแนวตั้งลงไปในกราฟ ซึ่งอาจเป็นประโยชน์ในกรณีที่คุณต้องการแสดงเส้นข้อมูลต่างๆเพิ่มเติม เช่น เส้นค่าเฉลี่ยหรือเส้นข้อมูล ณ percentile ต่างๆ
+- function `geom_text()` ช่วยในการเพิ่มตัวอักษรลงไปบนกราฟ ทำให้คุณสามารถเขียนอธิบายข้อมูลเพิ่มเติมได้ถ้าต้องการ
 
 *** =instructions
+ให้คุณเพิ่ม `layer` ใหม่อีก 2 `layer` โดยใช้คำสั่งที่เตรียมไว้ให้ดังนี้
+
+- `geom_vline(aes(xintercept = mean(n_checkins)), color = "#1E4865", linetype = "longdash")` เพื่อเพิ่มเส้นประสีน้ำเงินในแนวตั้ง แสดงจุดค่าเฉลี่ยของ `n_checkins`
+- `geom_text(data = data.frame(), aes(x = mean_checkin + 2, y = 150, label = paste("Mean =", round(mean_checkin, digits = 2))), hjust = 0, size = 5)` เพื่อเพิ่มข้อความสำหรับอธิบายเส้นแนวตั้งที่เราเพิ่มเข้าไปอีกที โดย argument `x` และ `y` ใน function `aes()` จะทำหน้าที่แทนคู่อันดับ บอกตำแหน่งที่ข้อความจะปรากฎขึ้น
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# let's add some more information to the graph using `geom_vline()` and `geom_text()` functions
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + 
+    geom_histogram(binwidth = 2, color = "white", fill = "#48b6a3") +
+    ... +
+    ...
 ```
 
 *** =solution
 ```{r}
-
+# let's add some more information to the graph using `geom_vline()` and `geom_text()` functions
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + 
+    geom_histogram(binwidth = 2, color = "white", fill = "#48b6a3") +
+    geom_vline(aes(xintercept = mean(n_checkins)), color = "#1E4865", linetype = "longdash") +
+    geom_text(data = data.frame(), 
+      aes(x = mean_checkin + 2, y = 150, label = paste("Mean =", round(mean_checkin, digits = 2))), 
+      hjust = 0, 
+      size = 5
+    )
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6e2835a1db
-## l
+## Histogram (4)
 
 
 *** =instructions
