@@ -1784,62 +1784,149 @@ success_msg("Good Job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:6e2835a1db
 ## Histogram (4)
 
+หากคุณต้องการปรับขนาดของแกน `x` ให้แสดงค่าเฉพาะในขอบเขตที่คุณต้องการ รวมถึงการแสดงค่าแกน `x` ก็สามารถทำได้โดยการซ้อน `layer` `scale_x_continuous()`
+
+คำสั่ง `scale_x_continuous(breaks = seq(0, 100, 10))` จะทำการเปลี่ยนให้กราฟแสดงค่าแกน `x` ตั้งแต่ `0` ถึง `100` โดยแสดงค่า `x` ทีละ `10`
+
+เพื่อให้เห็นภาพมากขึ้น เรามาลองเพิ่ม `layer` `scale_x_continuous()` ให้ `Histogram` ในแบบฝึกหัดที่แล้วกัน
 
 *** =instructions
+
+- ตั้งชื่อให้กราฟ, แกน `x` และแกน `y` ว่า "Checkin Distribution (by chain)", "Number of Checkins" และ "Count" ตามลำดับ
+- เพิ่ม `layer` `scale_x_continuous()` เพื่อกำหนดให้ R แสดงค่าแกน `x` ตั้งแต่ `0` ถึง `160` โดยแบ่งแสดงค่า `x` ทีละ `20`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# add `labs()` and `scale_x_continuous()` layers to the graph
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + 
+    geom_histogram(binwidth = 2, color = "white", fill = "#48b6a3") +
+    geom_vline(aes(xintercept = mean(n_checkins)), color = "#1E4865", linetype = "longdash") +
+    geom_text(data = data.frame(), 
+      aes(x = mean_checkin + 2, y = 150, label = paste("Mean =", round(mean_checkin, digits = 2))), 
+      hjust = 0, 
+      size = 5
+    ) +
+    labs(title = ..., x = ..., y = ...) +
+    ...
 ```
 
 *** =solution
 ```{r}
-
+# add `labs()` and `scale_x_continuous()` layers to the graph
+chain_checkin_summary %>%
+  ggplot(aes(x = n_checkins)) + 
+    geom_histogram(binwidth = 2, color = "white", fill = "#48b6a3") +
+    geom_vline(aes(xintercept = mean(n_checkins)), color = "#1E4865", linetype = "longdash") +
+    geom_text(data = data.frame(), 
+      aes(x = mean_checkin + 2, y = 150, label = paste("Mean =", round(mean_checkin, digits = 2))), 
+      hjust = 0, 
+      size = 5
+    ) +
+    labs(title = "Checkin Distribution (by chain)", x = "Number of Checkins", y = "Count") +
+    scale_x_continuous(breaks = seq(0, 160, 20))
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:eb39da766e
-## m
+## Box Plot (1)
 
+data visualization อีกรูปแบบหนึ่งที่ช่วยให้เราสามารถดูการกระจายตัวของข้อมูลได้ก็คือ `Box Plot`
+
+`Box Plot` จะแสดงค่า `5-number summary` เอาไว้ในกราฟ รวมถึงจะแสดง `outlier` ออกมาอย่างชัดเจนด้วย
+
+ในการสร้าง `Box Plot` คุณจะต้องใช้ function `geom_boxplot()` เพื่อสร้าง `layer` `Box Plot` ต่อจาก `layer` `ggplot()`
 
 *** =instructions
+
+- สร้าง `layer` `ggplot()` โดยใช้ `aes(x = "Check-ins", y = n_checkins)` เป็น argument เพื่อให้ R ใช้คอลัมน์ `n_checkins` เป็นข้อมูลในการสร้าง `Box Plot`
+- สร้าง `Box Plot` โดยซ้อน `geom_boxplot()` เข้าไปอีกหนึ่ง `layer`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
 ```{r}
-
+# create `Box Plot` using `ggplot()` and `geom_boxplot()` functions
+chain_checkin_summary %>%
+  ... +
+  ...
 ```
 
 *** =solution
 ```{r}
-
+# create `Box Plot` using `ggplot()` and `geom_boxplot()` functions
+chain_checkin_summary %>%
+  ggplot(aes(x = "Check-ins", y = n_checkins)) +
+  geom_boxplot()
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Good Job!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5e3e09920e
-## n
+## Box Plot (2)
 
+ที่จริงแล้วเราสามารถสร้าง `Box Plot` เพื่อแบ่งข้อมูลตามกลุ่มได้ด้วย โดยการกำหนดให้ argument `x` ใน function `aes()` มีค่าเท่ากับคอลัมน์ที่ใช้แบ่งกลุ่มข้อมูล
 
 *** =instructions
 
@@ -1847,7 +1934,28 @@ success_msg("Good Job!")
 
 *** =pre_exercise_code
 ```{r}
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/chain.tsv", encoding = "UTF-8")
+restaurant_checkin_user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant_checkin_user.tsv")
 
+chain_checkin_summary <- restaurant %>%
+  filter(
+    chain_id != 0, 
+    domain_id == 1
+  ) %>%
+  select(id, chain_id) %>%
+  left_join(restaurant_checkin_user, by = c("id" = "restaurant_id")) %>%
+  group_by(chain_id) %>% 
+  summarise(
+    n_restaurants = n_distinct(id),
+    n_checkins = sum(checkins)
+  ) %>%
+  inner_join(chain, by = c("chain_id" = "id")) %>%
+  select(chain_id, n_restaurants, n_checkins, name) %>%
+  mutate(n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)) %>%
+  arrange(-n_checkins)
 ```
 
 *** =sample_code
