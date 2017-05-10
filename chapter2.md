@@ -1,6 +1,6 @@
 ---
 title meta  : บทที่ 2
-title       : Exploratory Data Analysis on One Variable - Part1
+title       : Exploratory Data Analysis on One Variable
 description : Insert the chapter description here
 --- type:NormalExercise lang:r xp:100 skills:1 key:f055d83ad0
 ## เรามาลองสำรวจข้อมูลผู้ใช้งานกันอีกหน่อย (1)
