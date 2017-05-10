@@ -1926,9 +1926,12 @@ success_msg("Good Job!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:5e3e09920e
 ## Box Plot (2)
 
-ที่จริงแล้วเราสามารถสร้าง `Box Plot` เพื่อแบ่งข้อมูลตามกลุ่มได้ด้วย โดยการกำหนดให้ argument `x` ใน function `aes()` มีค่าเท่ากับคอลัมน์ที่ใช้แบ่งกลุ่มข้อมูล
+คล้ายกับตอนคุณสร้างแผนภูมิแท่ง คุณสามารถทำการปรับแต่งความกว้างของ `Box Plot` และสลับแกน `x` และ `y` ได้เช่นกัน
 
 *** =instructions
+
+- เพิ่ม argument `width = 0.1` ลงไปใน function `geom_boxplot()`
+- เพิ่ม `layer` `coord_flip()` ต่อท้าย function `geom_boxplot()` เพื่อสลับแกน `Box Plot`
 
 *** =hint
 
@@ -1960,99 +1963,23 @@ chain_checkin_summary <- restaurant %>%
 
 *** =sample_code
 ```{r}
-
+# add `width = 0.1` into function `geom_boxplot()` and add a new layer `coord_flip()`
+chain_checkin_summary %>%
+  ggplot(aes(x = "Check-ins", y = n_checkins)) +
+  geom_boxplot(...) +
+  ...
 ```
 
 *** =solution
 ```{r}
-
+# add `width = 0.1` into function `geom_boxplot()` and add a new layer `coord_flip()`
+chain_checkin_summary %>%
+  ggplot(aes(x = "Check-ins", y = n_checkins)) +
+  geom_boxplot(width = 0.1) +
+  coord_flip()
 ```
 
 *** =sct
 ```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:c5d93e7ec2
-## o
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:e80555d640
-## p
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:ed470870ea
-## q
-
-
-*** =instructions
-
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-
+success_msg("Good Job!")
 ```
