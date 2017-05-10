@@ -120,7 +120,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   )
 ```
 
@@ -156,7 +156,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = ..., y = ..., fill = ...)) +
   ...
@@ -171,7 +171,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
   geom_bar(stat = "identity", width = 0.4)
@@ -184,6 +184,8 @@ success_msg("Great!")
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:422b3852ec
 ## Bar Chart อีกครั้ง (2)
+
+จากแบบฝึกหีดที่แล้ว คุณจะเห็นว่าแท่งข้อมูลนั้นซ้อนกันอยู่ เราเรียกการแสดงผลแบบนี้ว่า stacked ความสูงของแท่งข้อมูลที่ซ้อนกันสุดท้ายแล้วจะมีค่าเท่ากับจำนวนร้านอาหารทั้งหมดใน `price_range` นั้นๆ
 
 เราสามารถทำให้แผนภูมิแท่งดูได้ง่ายขึ้นโดยการแยกแท่งข้อมูลที่ซ้อนกันอยู่ออกจากกัน ซึ่งในการที่จะทำแบบนั้นได้ เราต้องเปลี่ยนค่า argument `position` ใน function `geom_bar()`
 
@@ -207,7 +209,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
   geom_bar(stat = "identity", width = 0.4)
@@ -222,10 +224,10 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
-  geom_bar(stat = "identity", width = 0.4, position = "dodge")
+    geom_bar(stat = "identity", width = 0.4, position = "dodge")
 ```
 
 *** =sct
@@ -260,12 +262,12 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
-  geom_bar(stat = "identity", width = 0.4, position = "dodge") +
-  ... +
-  ...
+    geom_bar(stat = "identity", width = 0.4, position = "dodge") +
+    ... +
+    ...
 ```
 
 *** =solution
@@ -277,12 +279,12 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
-  geom_bar(stat = "identity", width = 0.4, position = "dodge") +
-  scale_fill_manual(values = c("#db9b39", "#48b6a3")) +
-  coord_flip()
+    geom_bar(stat = "identity", width = 0.4, position = "dodge") +
+    scale_fill_manual(values = c("#db9b39", "#48b6a3")) +
+    coord_flip()
 ```
 
 *** =sct
@@ -319,7 +321,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   ... %>%
   ...
@@ -334,7 +336,7 @@ restaurant %>%
   ungroup() %>%
   mutate(
     price_range = factor(price_range), 
-    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept")
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
   ) %>%
   group_by(price_range) %>%
   mutate(pct = n * 100 / sum(n))
@@ -348,24 +350,57 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9379c919a5
 ## Bar Chart อีกครั้ง (5)
 
+ลองสร้างแผนภูมิแท่งอีกรอบจากข้อมูบอัตราส่วน!
 
 *** =instructions
+
+- เปลี่ยนค่าที่นำมาสร้างแกน `y` ใน `layer` `ggplot()` จากคอลัมน์ `n` เป็น `pct`
+- ลบ `position = "dodge"` ใน `layer` `geom_bar()` ออกเพื่อให้แท่งข้อมูลกลับมาซ้อนกันและแสดงผลของข้อมูลแบบอัตราส่วนได้ดีขึ้น
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# calculate percentage of credit-card-accepted restaurant for each `price_range` using `group_by()` and `mutate()`
+restaurant %>%
+  filter(price_range != 0) %>%
+  count(price_range, credit_card_accepted) %>%
+  ungroup() %>%
+  mutate(
+    price_range = factor(price_range), 
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
+  ) %>%
+  group_by(price_range) %>%
+  mutate(pct = n * 100 / sum(n)) %>%
+  ggplot(aes(x = price_range, y = n, fill = credit_card_accepted)) +
+    geom_bar(stat = "identity", width = 0.4, position = "dodge") +
+    scale_fill_manual(values = c("#db9b39", "#48b6a3")) +
+    coord_flip()
 ```
 
 *** =solution
 ```{r}
-
+# calculate percentage of credit-card-accepted restaurant for each `price_range` using `group_by()` and `mutate()`
+restaurant %>%
+  filter(price_range != 0) %>%
+  count(price_range, credit_card_accepted) %>%
+  ungroup() %>%
+  mutate(
+    price_range = factor(price_range), 
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
+  ) %>%
+  group_by(price_range) %>%
+  mutate(pct = n * 100 / sum(n)) %>%
+  ggplot(aes(x = price_range, y = pct, fill = credit_card_accepted)) +
+    geom_bar(stat = "identity", width = 0.4) +
+    scale_fill_manual(values = c("#db9b39", "#48b6a3")) +
+    coord_flip()
 ```
 
 *** =sct
@@ -374,26 +409,59 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:aa45e44276
-## i
+## Facetting
 
+หากคุณต้องการสร้างชุดแผนภูมิแท่งหลายๆชุดที่แยกออกจากกัน R ก็สามารถทำได้เช่นกัน ในกรณีนี้คุณจะต้องใช้ `layer` `facet_wrap()`
+
+function `facet_wrap()` จะทำการสร้างกราฟทีละหลายๆกราฟโดยแบ่งกลุ่มตาม argument ที่คุณใส่ลงไป เพื่อให้เห็นภาพมากขึ้น ลองไปดูแบบฝึกหัดกันเลย
 
 *** =instructions
+
+- สร้าง `layer` `ggplot()` โดยให้แกน `x` มีค่าเป็นคอลัมน์ `credit_card_accepted` และแกน `y` มีค่าเป็นคอลัมน์ `n`
+- สร้าง `layer` `geom_bar()` โดยให้ `stat = "identity"`, `fill = "#48b6a3"` และ `width = 0.5`
+- สร้าง `layer` `facet_wrap()` โดยใช้คอลัมน์ `price_range` เป็นตัวแบ่ง facet และให้ `scales = "free"`
+- สร้าง `layer` `labs()` โดยกำหนดชื่อ `x = ""`, `y = "Count"` และ `title = "Accepting Credit Cards vs. Price Range"`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# create all the layers as stated in the instructions
+restaurant %>%
+  filter(price_range != 0) %>%
+  count(price_range, credit_card_accepted) %>%
+  ungroup() %>%
+  mutate(
+    price_range = factor(price_range), 
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
+  ) %>%
+  ggplot(aes(x = ..., y = ...)) + 
+    geom_bar(stat = ..., fill = ..., width = ...) +
+    facet_wrap(~ ..., scales = ...) +
+    labs(x = ..., y = ..., title = ...)
 ```
 
 *** =solution
 ```{r}
-
+# create all the layers as stated in the instructions
+restaurant %>%
+  filter(price_range != 0) %>%
+  count(price_range, credit_card_accepted) %>%
+  ungroup() %>%
+  mutate(
+    price_range = factor(price_range), 
+    credit_card_accepted = factor(credit_card_accepted, levels = c(0, 1), labels = c("Not accept", "Accept"))
+  ) %>%
+  ggplot(aes(x = credit_card_accepted, y = n)) + 
+    geom_bar(stat = "identity", fill = "#48b6a3", width = 0.5) +
+    facet_wrap(~ price_range, scales = "free") +
+    labs(x = "", y = "Count", title = "Accepting Credit Cards vs. Price Range")
 ```
 
 *** =sct
