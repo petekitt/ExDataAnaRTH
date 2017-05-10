@@ -470,26 +470,33 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5368a20948
-## j
+## การวิเคราะห์ตัวแปรแบบ Categorical ร่วมกับตัวแปรแบบ Continuous (1)
 
+หากคุณลองสังเกต จะเห็นได้ว่าข้อมูลช่วงราคาอาหารและการรับชำระด้วยบัตรเครดิตที่เราได้วิเคราะห์ไปในแบบฝึกหัดก่อนๆนั้น เป็นข้อมูลประเภทแบ่งกลุ่มหรือ Categorical ทั้งคู่
+
+นับตั้งแต่แบบฝึกหัดนี้ เราจะเริ่มเรียนรู้เกี่ยวกับการวิเคราะห์ข้อมูล Categorical ร่วมกับข้อมูลเชิงปริมาณหรือ Continuous กันบ้าง
 
 *** =instructions
+ใน Workspace มีข้อมูลผู้ใช้งานเก็บไว้ในตัวแปร `user` ซึ่งเราจะนำมาใช้ในการวิเคราะห์ข้อมูลในแบบฝึกหัดต่อไป ถ้าพร้อมแล้วก็กดปุ่ม `submit` เพื่อดูโครงสร้างคร่าวๆของตัวแปร `user` ได้เลย
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
 ```{r}
-
+# click `submit` when you are ready
+str(user)
 ```
 
 *** =solution
 ```{r}
-
+# click `submit` when you are ready
+str(user)
 ```
 
 *** =sct
@@ -498,7 +505,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:8df04b2892
-## k
+## การวิเคราะห์ตัวแปรแบบ Categorical ร่วมกับตัวแปรแบบ Continuous (2)
 
 
 *** =instructions
