@@ -144,6 +144,7 @@ success_msg("Great! Now that you get a proper form of data, we will move to the 
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -197,6 +198,7 @@ success_msg("Great!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -250,6 +252,7 @@ success_msg("Great!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -309,6 +312,7 @@ success_msg("Great!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -362,6 +366,7 @@ success_msg("Great!")
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -427,6 +432,7 @@ function `facet_wrap()` จะทำการสร้างกราฟที�
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
+library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
@@ -557,7 +563,7 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:acf4a87be0
@@ -585,35 +591,44 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e05e7640f1
 ## Correlation (1)
 
+เราสามารถดูความสัมพันธ์เชิงเส้นระหว่างตัวแปรสองตัวได้โดยใช้ค่าที่เรียกว่า `Correlation`
+
+ค่า `Correlation` จะมีค่าอยู่ระหว่าง -1 ถึง 1 หากมีค่าเป็นบวกแสดงว่าตัวแปรสองตัวมีความสัมพันธ์ไปในทางเดียวกัน แต่หากเป็นลบก็แสดงว่าตัวแปรสองตัวมีความสัมพันธ์ไปในทิศทางตรงกันข้าม
+
+และค่า `Correlation` ยังสามารถใช้บอกความแข็งแรงของความสัมพันธ์เชิงเส้นได้ด้วย หากยิ่งมีค่าใกล้ -1 หรือ 1 แสดงว่าความสัมพันธ์ของตัวแปรคู่นี้มีความแข็งแรงมาก แต่หากใกล้ 0 ก็แสดงว่ามีความสัมพันธ์น้อยมาก หรือไม่มีความสัมพันธ์เชิงเส้นต่อกัน
 
 *** =instructions
+ลองใช้ function `cor()` กับคอลัมน์ `n_likes` และ `n_ratings_correct` เพื่อหาค่าความสัมพันธ์เชิงเส้น (`Correlation`) ระหว่างการกดไลค์และการให้คะแนนร้านอาหาร
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
 ```
 
 *** =sample_code
 ```{r}
+# use `cor()` with `user$n_likes` and `user$n_ratings_correct` here
 
 ```
 
 *** =solution
 ```{r}
-
+# use `cor()` with `user$n_likes` and `user$n_ratings_correct` here
+cor(user$n_likes, user$n_ratings_correct)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:750b0d0198
@@ -641,7 +656,7 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:cd200ef225
@@ -669,7 +684,7 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:fefd09ebe3
@@ -697,7 +712,7 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:1bed58614d
@@ -725,7 +740,7 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:74057da207
@@ -753,5 +768,5 @@ success_msg("Great!")
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
