@@ -604,7 +604,9 @@ success_msg("Great!")
 และค่า `Correlation` ยังสามารถใช้บอกความแข็งแรงของความสัมพันธ์เชิงเส้นได้ด้วย หากยิ่งมีค่าใกล้ -1 หรือ 1 แสดงว่าความสัมพันธ์ของตัวแปรคู่นี้มีความแข็งแรงมาก แต่หากใกล้ 0 ก็แสดงว่ามีความสัมพันธ์น้อยมาก หรือไม่มีความสัมพันธ์เชิงเส้นต่อกัน
 
 *** =instructions
-ลองใช้ function `cor()` กับคอลัมน์ `n_likes` และ `n_ratings_correct` เพื่อหาค่าความสัมพันธ์เชิงเส้น (`Correlation`) ระหว่างการกดไลค์และการให้คะแนนร้านอาหาร
+
+- คำนวณจำนวน `rating` ทั้งหมดของ `user` แต่ละคนโดยการรวมคอลัมน์ `n_1_ratings` ถึง `n_5_ratings` แล้วเก็บค่าไว้ในคอลัมน์ `n_ratings_correct`
+- ใช้ function `cor()` กับคอลัมน์ `n_likes` และ `n_ratings_correct` เพื่อหาค่าความสัมพันธ์เชิงเส้น (`Correlation`) ระหว่างการกดไลค์และการให้คะแนนร้านอาหาร
 
 *** =hint
 
@@ -617,12 +619,14 @@ user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cours
 *** =sample_code
 ```{r}
 # use `cor()` with `user$n_likes` and `user$n_ratings_correct` here
-
+user$n_ratings_correct <- user$n_1_ratings + ... + ... + ... + ...
+cor(..., ...)
 ```
 
 *** =solution
 ```{r}
 # use `cor()` with `user$n_likes` and `user$n_ratings_correct` here
+user$n_ratings_correct <- user$n_1_ratings + user$n_2_ratings + user$n_3_ratings + user$n_4_ratings + user$n_5_ratings
 cor(user$n_likes, user$n_ratings_correct)
 ```
 
