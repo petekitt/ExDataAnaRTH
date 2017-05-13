@@ -3,7 +3,7 @@ title meta  : บทที่ 3
 title       : Exploratory Data Analysis on Two Variable
 description : ในบทนี้เราจะพาคุณไปเรียนรู้เพิ่มเติมเกี่ยวกับการสำรวจข้อมูล 2 ตัวแปรพร้อมๆกัน ซึ่งจะช่วยให้เราวิเคราะห์ข้อมูลได้ฝนมิติที่กว้างขึ้น ลึกขึ้น และเป็นประโยชน์มากขึ้น!
 --- type:NormalExercise lang:r xp:100 skills:1 key:807fcae9f0
-## ร้านอาหารและบัตรเครดิต (1)
+## ร้านอาหารกับบัตรเครดิต (1)
 
 ในยุคปัจจุบัน เราปฏิเสธไม่ได้ว่าบัตรเครดิตก็เข้ามามีส่วนสำคัญในการใช้ชีวิตของเราด้วยเช่นกัน ซึ่งในการไปรับประทานอาหารหรูราคาแพงบางมื้อ เราก็อาจจะยินดีจ่ายค่าอาหารด้วยบัตรเครดิตมากกว่าเงินสด
 
@@ -37,7 +37,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:56e10e4591
-## ร้านอาหารและบัตรเครดิต (2)
+## ร้านอาหารกับบัตรเครดิต (2)
 
 จากแบบฝึกหัดที่แล้ว จะเห็นได้ว่า function `table()` สามารถนับจำนวนตัวแปรแบบ categorical และจัดกลุ่มตามค่าของข้อมูลได้ด้วย แต่รูปแบบการสรุกข้อมูลจากการใช้ function `table()` อาจจะยังไม่เหมาะสมต่อการนำไปทำ data visualization
 
@@ -80,7 +80,7 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f6bf4c2f30
-## ร้านอาหารและบัตรเครดิต (3)
+## ร้านอาหารกับบัตรเครดิต (3)
 
 จากที่เห็นในผลลัพธ์ คอลัมน์ `price_range` จะมีค่าตั้งแต่ 1 ถึง 5 โดยที่ 1 หมายถึงร้านอาหารที่มีราคาถูกที่สุด ในขณะที่ 5 หมายถึงร้านอาหารที่มีราคาแพงที่สุด
 
@@ -638,8 +638,14 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:750b0d0198
 ## Correlation (2)
 
+คราวนี้เราจะมาลองดู data set ที่ถูกเตรียมไว้ให้โดยโปรแกรม R กันบ้าง (built-in data set) data set ดังกล่าวก็คือ `anescombe`
+
+`anscombe` เป็นชื่อย่อของ `Anscombe's Quartet` ซึ่งเป็นชื่อเรียก data set 4 กลุ่ม ที่มีตัวเลขทั่วไปทางสถิติ (descriptive statistics) ใกล้เคียงกันมากแต่จะมีความแตกต่างที่เห็นได้ชัดเจนเมื่อคุณนำ data set เหล่านี้มาสร้างกราฟ
 
 *** =instructions
+
+- ให้คุณพิมพ์ `anscombe` ลงไปเพื่อตรวจสอบดูว่า data set มีหน้าตาเป็นอย่างไร
+- ใช้ function `cor()` กับคอลัมน์ `x1` และ `y1` ไปจนถึง `x4` และ `y4` ของ data set `anscombe` เพื่อตรวจสอบค่า correlation ของคู่อันดับ `x` และ `y` ต่างๆ
 
 *** =hint
 
@@ -650,12 +656,26 @@ success_msg("Great!")
 
 *** =sample_code
 ```{r}
+# print out the data set here to see how it looks like
+...
 
+# display correlation between x's and y's
+cor(anscombe$x1, anscombe$y1)
+cor(..., ...)
+cor(..., ...)
+cor(anscombe$x4, anscombe$y4)
 ```
 
 *** =solution
 ```{r}
+# print out the data set here to see how it looks like
+anscombe
 
+# display correlation between x's and y's
+cor(anscombe$x1, anscombe$y1)
+cor(anscombe$x2, anscombe$y2)
+cor(anscombe$x3, anscombe$y3)
+cor(anscombe$x4, anscombe$y4)
 ```
 
 *** =sct
@@ -666,24 +686,35 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:cd200ef225
 ## Scatter Plot (1)
 
+จากแบบฝึกหีดที่แล้ว จะเห็นได้ว่า data set ทั้ง 4 นั้นมีค่า correlation ที่ใกล้เคียงกันมาก ซึ่งเราอาจถูกหลอกว่าข้อมูลมีลักษณะเหมือนกันได้จากการพิจารณาแค่ค่าทางสถิติบางตัว นี่จึงเป็นการแสดงให้เห็นถึงความสำคัญของการทำ data visualiztion เพื่อให้คุณเข้าใจลักษณะของข้อมูลมากขึ้น
+
+ในแบบฝึกหัดนี้ เราจะมาสร้างสิ่งที่เรียกว่า `Scatter Plot` กัน `Scatter Plot` คือการสร้างกราฟคู่อันดับระหว่างแกน `x` และ `y` เพื่อมองหาความสัมพันธ์ของทั้งสองแกน โดยคู่อันดับแต่ละคู่จะถูกแสดงผลออกมาในรูปจุด ซึ่งเราสามารถใช้ function `ggplot()` ร่วมกับ `geom_point()` ได้ในการสร้าง `Scatter Plot` ใน R
 
 *** =instructions
+
+- สร้าง `layer` `gpplot()` จากตัวแปร `anscombe` โดยให้คอลัมน์ `x1` และ `y1` เป็นแกน `x` และแกน `y` ตามลำดับ
+- สร้าง `layer` `geom_point()` โดยใส่ argument `colour = "#48b6a3"` และ `size = 3` เพื่อกำหนดสีและขนาดให้กับจุดข้อมูล
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
 ```
 
 *** =sample_code
 ```{r}
-
+# create your first `Scatter Plot` using `ggplot()` and `geom_point()` here!
+anscombe %>%
+  ggplot(aes(x = ..., y = ...)) + ...
 ```
 
 *** =solution
 ```{r}
-
+# create your first `Scatter Plot` using `ggplot()` and `geom_point()` here!
+anscombe %>%
+  ggplot(aes(x = x1, y = y1)) + geom_point(colour = "#48b6a3", size = 3)
 ```
 
 *** =sct
@@ -694,24 +725,36 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:fefd09ebe3
 ## Scatter Plot (2)
 
+เพื่อแสดงให้เห็นว่า `x` และ `y` แต่ละคู่ตั้งแต่ 1 ถึง 4 มีความสัมพันธ์แตกต่างกันจริงๆ เราจะทำการสร้าง `Scatter Plot` พร้อมๆกัน 4 กราฟ
+
+แต่ก่อนที่จะทำการสร้างกราฟได้ เราจะต้องจัดข้อมูลให้อยู่ในรูปแบบที่เหมาะสมเสียก่อน โดยการนำข้อมูลมาต่อกันให้เหลือสองคอลัมน์ ได้แก่ `x` และ `y` จากนั้นเพิ่มคอลัมน์ที่ 3 เพื่อระบุว่าคู่อันดับ `x` และ `y` แต่ละคู่อยู่ในกลุ่ม data set ที่เท่าไร
 
 *** =instructions
+
+- ใช้ function `select()` เพื่อเลือกคอลัมน์ `x1` และ `y1` จาก `anscombe` ตั้งชื่อคอลัมน์ว่า `x` และ `y` ตามลำดับ
+- ใช้ function `mutate()` เพื่อเพิ่มคอลัมน์ใหม่ชื่อ `group` และกำหนดให้คอลัมน์นี้มีค่าเท่ากับ `1` ทั้งคอลัมน์
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
 ```
 
 *** =sample_code
 ```{r}
-
+# use `select()` and `mutate()` to start arranging an appropriate format for the data 
+anscombe %>%
+  select(x = ..., y = ...) %>%
+  mutate(group = ...)
 ```
 
 *** =solution
 ```{r}
-
+# use `select()` and `mutate()` to start arranging an appropriate format for the data 
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1)
 ```
 
 *** =sct
@@ -723,23 +766,36 @@ success_msg("Great!")
 ## Scatter Plot (3)
 
 
+
 *** =instructions
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
 ```
 
 *** =sample_code
 ```{r}
-
+# connect the data from all the remaining group row-wised 
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2)) %>%
+  bind_rows(data.frame(x = ..., y = ..., group = ...)) %>%
+  bind_rows(data.frame(x = ..., y = ..., group = ...))
 ```
 
 *** =solution
 ```{r}
-
+# connect the data from all the remaining group row-wised 
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2)) %>%
+  bind_rows(data.frame(x = anscombe$x3, y = anscombe$y3, group = 3)) %>%
+  bind_rows(data.frame(x = anscombe$x4, y = anscombe$y4, group = 4))
 ```
 
 *** =sct
