@@ -765,9 +765,10 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:1bed58614d
 ## Scatter Plot (3)
 
-
+คุณสามารถนำ data frame 2 อันหรือมากกว่ามาต่อกันได้โดยการใช้ function `bind_rows()` โดยที่มีเงื่อนไขว่า data frame ที่นำมาต่อกันจะต้องมีชื่อคอลัมน์ตรงกันและข้อมูลในคอลัมน์นั้นๆต้องเป็นประเภทเดียวกัน
 
 *** =instructions
+ใช้ function `bind_rows()` ร่วมกับ `data.frame()` เพื่อจัดรูปแบบข้อมูลของคู่อันดับ `x2` และ `y2` ไปจนถึง `x4` และ `y4` ให้เหมาะสม
 
 *** =hint
 
@@ -782,9 +783,10 @@ library("dplyr")
 anscombe %>%
   select(x = x1, y = y1) %>%
   mutate(group = 1) %>%
-  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2)) %>%
-  bind_rows(data.frame(x = ..., y = ..., group = ...)) %>%
-  bind_rows(data.frame(x = ..., y = ..., group = ...))
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = ..., y = ..., group = ...),
+    data.frame(x = ..., y = ..., group = ...)
+  )
 ```
 
 *** =solution
@@ -793,9 +795,10 @@ anscombe %>%
 anscombe %>%
   select(x = x1, y = y1) %>%
   mutate(group = 1) %>%
-  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2)) %>%
-  bind_rows(data.frame(x = anscombe$x3, y = anscombe$y3, group = 3)) %>%
-  bind_rows(data.frame(x = anscombe$x4, y = anscombe$y4, group = 4))
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  )
 ```
 
 *** =sct
@@ -806,24 +809,47 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:74057da207
 ## Scatter Plot (4)
 
+ในตอนนี้เราได้ข้อมูลในรูปแบบที่เราต้องการแล้ว ดังนั้นเราจะมาเริ่มสร้าง `Scatter Plot` กัน!
 
 *** =instructions
+
+- ให้คุณสร้าง `layer` `ggplot()` โดยให้แกน `x` และแกน `y` มีค่าเท่ากับคอลัมน์ `x` และคอลัมน์ `y`
+- สร้าง `layer` `geom_point()` โดยกำหนด argument `colour = "#48b6a3"` และ `size = 3`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
 ```
 
 *** =sample_code
 ```{r}
-
+# create `Scatter Plot` on your rearranged data 
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = ..., y = ...)) +
+    geom_point(..., ...)
 ```
 
 *** =solution
 ```{r}
-
+# create `Scatter Plot` on your rearranged data 
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = x, y = y)) +
+    geom_point(colour = "#48b6a3", size = 3)
 ```
 
 *** =sct
@@ -834,55 +860,109 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:c0233375c2
 ## Scatter Plot (5)
 
+อย่างไรก็ตาม คุณจะเห็นได้ว่า `Scatter Plot` ในแบบฝึกหัดที่แล้วยังไม่ได้มีการแบ่งกลุ่มตามคอลัมน์ `group` ซึ่งนั่นไม่ใช่สิ่งที่เราต้องการ
+
+ถ้าคุณยังจำได้ ในการแยกกราฟออกจากกัน เราต้องใช้ function `facet_wrap()`
 
 *** =instructions
+เพิ่ม `layer` `facet_wrap()` และใส่ `~ group` เป็น argument เพื่อบอกให้ R แบ่งกราฟออกตามคอลัมน์ `group`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
 ```
 
 *** =sample_code
 ```{r}
-
+# add `facet_wrap()` `layer` to separate, by group, the current `Scatter Plot` into multiple graphs
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = x, y = y)) +
+    geom_point(colour = "#48b6a3", size = 3) +
+    ...
 ```
 
 *** =solution
 ```{r}
-
+# add `facet_wrap()` `layer` to separate, by group, the current `Scatter Plot` into multiple graphs
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = x, y = y)) +
+    geom_point(colour = "#48b6a3", size = 3) +
+    facet_wrap(~ group)
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ec4b4efd91
 ## Scatter Plot (6)
 
+เห็นไหมว่า data set แต่ละกลุ่มมีรูปร่างหน้าตาแตกต่างกันโดยสิ้นเชิง แม้จะมีค่าทางสถิติเบื้องต้นที่ใกล้เคียงกันมากก็ตาม
+
+นอกจากกราฟสร้างกราฟธรรมดา เรายังสามารถสร้าง `layer` ที่ทำหน้าที่แสดงเส้นแนวโน้มเพื่อให้เราตีความข้อมูลได้ง่ายขึ้นได้อีกด้วย function ที่เราต้องใช้เพื่อสร้างเส้นแนวโน้มก็คือ `geom_smooth()` โดยเราสามารถเลือกวิธีการสร้างเส้นแนวโน้มได้ด้วยการระบุค่า argument `method`
+
+นอกจากนี้เราก็สามารถระบุขนาดของเส้นและรูปแบบของเส้นได้ด้วย argument `size` และ `linetype` เช่นกัน
 
 *** =instructions
+เพิ่ม `layer` `geom_smooth()` พร้อม argument `method = "lm"`, `se = FALSE`, `size = 0.5`, `linetype = "dashed"` เพื่อเพิ่มเส้นแนวโน้มแบบเส้นประลงบนกราฟ `Scatter Plot` ทุกกราฟ
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
 ```
 
 *** =sample_code
 ```{r}
-
+# add `geom_smooth()` to add trendlines to the `Scatter Plots`
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = x, y = y)) +
+    geom_point(colour = "#48b6a3", size = 3) +
+    facet_wrap(~ group) +
+    ...(method = ..., se = ..., size = ..., linetype = ...)
 ```
 
 *** =solution
 ```{r}
-
+# add `geom_smooth()` to add trendlines to the `Scatter Plots`
+anscombe %>%
+  select(x = x1, y = y1) %>%
+  mutate(group = 1) %>%
+  bind_rows(data.frame(x = anscombe$x2, y = anscombe$y2, group = 2),
+    data.frame(x = anscombe$x3, y = anscombe$y3, group = 3),
+    data.frame(x = anscombe$x4, y = anscombe$y4, group = 4)
+  ) %>%
+  ggplot(aes(x = x, y = y)) +
+    geom_point(colour = "#48b6a3", size = 3) +
+    facet_wrap(~ group) +
+    geom_smooth(method = "lm", se = FALSE, size = 0.5, linetype = "dashed")
 ```
 
 *** =sct
 ```{r}
-
+success_msg("Great!")
 ```
