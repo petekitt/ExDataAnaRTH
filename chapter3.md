@@ -830,3 +830,59 @@ success_msg("Great!")
 ```{r}
 success_msg("Great!")
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c0233375c2
+## Scatter Plot (5)
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ec4b4efd91
+## Scatter Plot (6)
+
+
+*** =instructions
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+
+```
+
+*** =solution
+```{r}
+
+```
+
+*** =sct
+```{r}
+
+```
