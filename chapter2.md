@@ -337,7 +337,7 @@ success_msg("You're doing good! And what if we just want to change the bar color
 
 *** =instructions
 - ลบ argument `fill = gender` ออกจาก function `aes()` เพื่อยกเลิกการกำหนดสีตามกลุ่มเพศ
-- เพิ่ม argument `fill = "#48b6a3"` และ `width = 0.5` ลงไปใน function `geom_bar()` แทนเพื่อเปลี่ยนสีและขนาด Bar Chart
+- เพิ่ม argument `fill = "#48b6a3"` และ `width = 0.5` ลงไปใน function `geom_bar()` แทนเพื่อเปลี่ยนสีและขนาด `Bar Chart`
 
 *** =hint
 
