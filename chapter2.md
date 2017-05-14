@@ -295,7 +295,7 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 นอกจากคุณจะสามารถกำหนดแกน `x` และ `y` ผ่าน function `aes()` ใน argument `mapping` ได้แล้ว คุณยังสามารถเปลี่ยนสีของ `Bar Chart` ให้แตกต่างกันตามแต่ละกลุ่มข้อมูลได้โดยการเพิ่ม argument `fill` ลงไปใน function `aes()`
 
 *** =instructions
-- ให้คุณเปลี่ยนการแสดงผลแกน `y` จากการใช้คอลัมน์ `count` เป็น `pct` แทน เพื่อแสดงจำนวนสัดส่วนของผู้ใช้งานเว็บไซต์แต่ละเพศ
+- ให้คุณเปลี่ยนค่าแกน `y` จากการใช้คอลัมน์ `count` เป็น `pct` แทน เพื่อแสดงจำนวนสัดส่วนของผู้ใช้งานเว็บไซต์แต่ละเพศ
 - เพิ่ม argument `fill = gender` ลงไปใน function `aes()` เพื่อบอกให้ R เปลี่ยนสี Bar Chart ตามค่าในคอลัมน์ `gender`
 
 *** =hint
