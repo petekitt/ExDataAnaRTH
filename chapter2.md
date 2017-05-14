@@ -734,7 +734,7 @@ success_msg("Great!")
 *** =instructions
 - ใช้ function `left_join()` เพื่อเชื่อม คอลัมน์ `id` ของ `restaurant` เข้ากับ `restaurant_id` ของ `restaurant_checkin_user` อย่าลืมว่าคุณต้องใส่ double quotes (`"`) ให้ชื่อคอลัมน์ด้วย
 - ใช้ function `group_by()` เพื่อจัดกลุ่มร้านอาหารตาม `chain_id`
-- ใช้ function `summarise()` เพื่อนับจำนวนร้านอาหารแบบไม่ซ้ำร้าน (`n_distinct(id)`) และนับจำนวนเช็คอิน (`sum(check_in)`) ซึ่งถ้ามีการเช็คอิน คอลัมน์ `check_in` จะมีค่าเป็น 1 แต่ถ้าไม่มีจะมีค่าเป็น 0 ตั้งชื่อให้คอลัมน์ใหม่ว่า `n_restaurants` และ `n_checkins` ตามลำดับ
+- ใช้ function `summarise()` เพื่อนับจำนวนร้านอาหารแบบไม่ซ้ำร้าน (`n_distinct(id)`) และนับจำนวนเช็คอิน (`sum(check_in)`) ซึ่งถ้ามีการเช็คอิน คอลัมน์ `check_in` จะมีค่าเป็น `1` แต่ถ้าไม่มีจะมีค่าเป็น `0` ตั้งชื่อให้คอลัมน์ใหม่ว่า `n_restaurants` และ `n_checkins` ตามลำดับ
 
 *** =hint
 
