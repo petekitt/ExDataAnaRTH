@@ -540,7 +540,7 @@ chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 *** =sample_code
 ```{r}
 # create `layers` using `ggplot()`, `geom_bar()`, and `labs()` to create a bar chart!
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -554,7 +554,7 @@ top_chains <- restaurant %>%
 *** =solution
 ```{r}
 # create `layers` using `ggplot()`, `geom_bar()`, and `labs()` to create a bar chart!
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -591,7 +591,7 @@ chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 *** =sample_code
 ```{r}
 # sort the factor by change the argument `levels = name` to `levels = name[order(count)]`
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -605,7 +605,7 @@ top_chains <- restaurant %>%
 *** =solution
 ```{r}
 # sort the factor by change the argument `levels = name` to `levels = name[order(count)]`
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -642,7 +642,7 @@ chain <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/cour
 *** =sample_code
 ```{r}
 # add `coord_flip()` to the end of `labs()` function
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
@@ -657,7 +657,7 @@ top_chains <- restaurant %>%
 *** =solution
 ```{r}
 # add `coord_flip()` to the end of `labs()` function
-top_chains <- restaurant %>% 
+restaurant %>% 
   filter(chain_id != 0) %>% 
   group_by(chain_id) %>% 
   summarise(count = n()) %>%
