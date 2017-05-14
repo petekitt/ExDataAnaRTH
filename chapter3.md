@@ -495,6 +495,7 @@ success_msg("Great!")
 library("dplyr")
 library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
@@ -538,6 +539,7 @@ success_msg("Great!")
 library("dplyr")
 library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
@@ -586,6 +588,7 @@ success_msg("Great!")
 library("dplyr")
 library("ggplot2")
 restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
+rating <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/rating.tsv")
 ```
 
 *** =sample_code
