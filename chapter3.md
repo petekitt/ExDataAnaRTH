@@ -666,14 +666,14 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:750b0d0198
 ## Correlation (2)
 
-คราวนี้เราจะมาลองดู data set ที่ถูกเตรียมไว้ให้โดยโปรแกรม R กันบ้าง (built-in data set) data set ดังกล่าวก็คือ `anescombe`
+คราวนี้เราจะมาลองดู dataset ที่ถูกเตรียมไว้ให้โดยโปรแกรม R กันบ้าง (built-in dataset) dataset ดังกล่าวก็คือ `anescombe`
 
-`anscombe` เป็นชื่อย่อของ `Anscombe's Quartet` ซึ่งเป็นชื่อเรียก data set 4 กลุ่ม ที่มีตัวเลขทั่วไปทางสถิติ (descriptive statistics) ใกล้เคียงกันมากแต่จะมีความแตกต่างที่เห็นได้ชัดเจนเมื่อคุณนำ data set เหล่านี้มาสร้างกราฟ
+`anscombe` เป็นชื่อย่อของ `Anscombe's Quartet` ซึ่งเป็นชื่อเรียก dataset 4 กลุ่ม ที่มีตัวเลขทั่วไปทางสถิติ (descriptive statistics) ใกล้เคียงกันมากแต่จะมีความแตกต่างที่เห็นได้ชัดเจนเมื่อคุณนำ dataset เหล่านี้มาสร้างกราฟ
 
 *** =instructions
 
-- ให้คุณพิมพ์ `anscombe` ลงไปเพื่อตรวจสอบดูว่า data set มีหน้าตาเป็นอย่างไร
-- ใช้ function `cor()` กับคอลัมน์ `x1` และ `y1` ไปจนถึง `x4` และ `y4` ของ data set `anscombe` เพื่อตรวจสอบค่า correlation ของคู่อันดับ `x` และ `y` ต่างๆ
+- ให้คุณพิมพ์ `anscombe` ลงไปเพื่อตรวจสอบดูว่า dataset มีหน้าตาเป็นอย่างไร
+- ใช้ function `cor()` กับคอลัมน์ `x1` และ `y1` ไปจนถึง `x4` และ `y4` ของ data set `anscombe` เพื่อตรวจสอบค่า `correlation` ของคู่อันดับ `x` และ `y` ต่างๆ
 
 *** =hint
 
