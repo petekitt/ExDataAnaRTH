@@ -253,7 +253,7 @@ success_msg("Yureka! You can see that the visualization was built using a simple
 *** =instructions
 - เปลี่ยน argument `data` ให้มีค่าเป็นตัวแปร `gender_summary` แทนที่จะเป็น `user`
 - นอกจากการกำหนดแกน `x = gender` แล้ว ให้คุณเพิ่ม `y = count` ลงไปด้วยเพื่อให้ R แสดงค่าแกน `y` ตามข้อมูลในคอลัมน์ `count`
-- ให้คุณระบุ argument `stat = "identity"` ลงไปภายใน function `geom_bar()` ด้วย เพื่อเป็นการบอก R ให้แสดงค่าแกน `x` และแกน `y` ตามที่กำหนด
+- เพิ่ม `layer` `geom_bar()` ไว้ด้านหลัง `ggplot()` โดยให้คุณระบุ argument `stat = "identity"` ลงไปภายใน function `geom_bar()` ด้วย เพื่อเป็นการบอก R ให้แสดงค่าแกน `y` ตามค่าที่กำหนดไว้
 
 *** =hint
 
