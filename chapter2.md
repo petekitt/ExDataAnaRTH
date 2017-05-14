@@ -140,7 +140,7 @@ success_msg("Good! You will see that we have arranged the data form so that we c
 
 การทำ data visualization หรือการแสดงข้อมูลในรูปแบบภาพ อาจจะช่วยให้เราเห็นภาพรวมของข้อมูลเพิ่มขึ้นไม่มากก็น้อย ซึ่งการทำ data visualization เบื้องต้นก็สามารถทำได้หลากหลายรูป ขึ้นอยู่กับรูปแบบของข้อมูล
 
-นอกจาก package `dplyr` ที่ช่วยในการจัดการข้อมูลแล้ว เราก็ยังมี package `ggplot2` ซึ่งช่วยในการทำ data visualization หลากหลายรูปแบบ ไม่ว่าจะเป็น `Bar Chart`, `Histogram`, `Boxplot`, `Scatter Plot` และอื่นๆอีกมากมาย
+แม้ว่า R จะมี function สำเร็จรูปบางส่วนที่ช่วยให้เราทำ data visualization ได้ แต่เราก็ยังมี package `ggplot2` ซึ่งช่วยให้การทำ data visualization หลากหลายรูปแบบเป็นเรื่องง่ายขึ้น ไม่ว่าจะเป็น `Bar Chart`, `Histogram`, `Boxplot`, `Scatter Plot` และอื่นๆอีกมากมาย
 
 *** =instructions
 ให้คุณพิมพ์คำสั่ง `library("ggplot2")` ลงไปใน editor แล้วกด `submit` เพื่อทำการนำเข้า function ต่างๆจาก package `ggplot2`
@@ -212,8 +212,6 @@ success_msg("Good Job! However, you can see from the visualixation that the grap
 เมื่อคุณได้สร้าง `layer` แรกเป็นที่เรียบร้อยแล้ว คุณต้องใช้ function `geom_bar()` เพื่อบอกให้ R สร้าง `layer` ต่อไปสำหรับแสดงภาพแผนภูมิแบบแท่ง โดยคุณสามารถทำการซ้อนทับ `layer` ดังกล่าวลงไปบน `layer` `ggplot` ได้เลยโดยใช้เครื่องหมาย `+` ยกตัวอย่างเช่น:
 
 คำสั่ง `ggplot(data = dataset, mapping = aes(x = x_coordinate)) + geom_bar()` จะบอกให้ R ทำการสร้าง `layer` แรกจาก function `ggplot()` ตามด้วยการซ้อน `layer` ที่สร้างจาก function `geom_bar()` เพื่อแสดงภาพแผนภูมิแท่งลงไป
-
-ปกติแล้วถ้า
 
 *** =instructions
 พิมพ์ `+ geom_bar()` ต่อท้ายคำสั่ง `ggplot()` เดิมใน editor เพื่อทำการสร้างแผนภูมิแท่ง
