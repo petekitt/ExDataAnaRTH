@@ -354,7 +354,7 @@ success_msg("Great!")
 --- type:NormalExercise lang:r xp:100 skills:1 key:9379c919a5
 ## Bar Chart อีกครั้ง (5)
 
-ลองสร้างแผนภูมิแท่งอีกรอบจากข้อมูบอัตราส่วน!
+ลองสร้างแผนภูมิแท่งอีกรอบจากข้อมูลอัตราส่วน!
 
 *** =instructions
 
