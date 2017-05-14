@@ -296,7 +296,7 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 
 *** =instructions
 - ให้คุณเปลี่ยนค่าแกน `y` จากการใช้คอลัมน์ `count` เป็น `pct` แทน เพื่อแสดงจำนวนสัดส่วนของผู้ใช้งานเว็บไซต์แต่ละเพศ
-- เพิ่ม argument `fill = gender` ลงไปใน function `aes()` เพื่อบอกให้ R เปลี่ยนสี Bar Chart ตามค่าในคอลัมน์ `gender`
+- เพิ่ม argument `fill = gender` ลงไปใน function `aes()` เพื่อบอกให้ R เปลี่ยนสี `Bar Chart` ตามค่าในคอลัมน `gender`
 
 *** =hint
 
