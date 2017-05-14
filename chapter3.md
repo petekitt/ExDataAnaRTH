@@ -480,29 +480,41 @@ success_msg("Great!")
 
 หากคุณลองสังเกต จะเห็นได้ว่าข้อมูลช่วงราคาอาหารและการรับชำระด้วยบัตรเครดิตที่เราได้วิเคราะห์ไปในแบบฝึกหัดก่อนๆนั้น เป็นข้อมูลประเภทแบ่งกลุ่มหรือ Categorical ทั้งคู่
 
-นับตั้งแต่แบบฝึกหัดนี้ เราจะเริ่มเรียนรู้เกี่ยวกับการวิเคราะห์ข้อมูล Categorical ร่วมกับข้อมูลเชิงปริมาณหรือ Continuous กันบ้าง
+นับตั้งแต่แบบฝึกหัดนี้ เราจะเริ่มเรียนรู้เกี่ยวกับการวิเคราะห์ข้อมูล Categorical ร่วมกับข้อมูลเชิงปริมาณหรือ Continuous กันบ้าง โดยที่เราจะกลับมาดูที่ข้อมูลคะแนนร้านอาหารกันบ้าง
 
 *** =instructions
-ใน Workspace มีข้อมูลผู้ใช้งานเก็บไว้ในตัวแปร `user` ซึ่งเราจะนำมาใช้ในการวิเคราะห์ข้อมูลในแบบฝึกหัดต่อไป ถ้าพร้อมแล้วก็กดปุ่ม `submit` เพื่อดูโครงสร้างคร่าวๆของตัวแปร `user` ได้เลย
+
+- คำนวณคะแนนเฉลี่ยของร้านอาหารแต่ละร้านโดยใช้คอลัมน์ `rating` จาก data frame `rating` แบ่งกลุ่มตามคอลัมน์ `reviewed_item_id`
+- ใช้ function `inner_join()` เพื่อเชื่อมผลลัพธ์จากด้านบนเข้ากับ data frame `restaurant` โดยให้คอลัมน์ `reviewed_item_id` เท่ากับ `id` และอย่าลืมว่าคุณต้องใช้ double quotes (`"`) ในการระบุชื่อคอลัมน์ในการเชื่อม data frame
+- ใช้ function `filter()` เพื่อคัดกรองเฉพาะข้อมูลร้านอาหารที่มี `chain_id` เท่ากับ `1` หรือ `454` หรือ `457` เท่านั้น (นั่นคือร้าน `Starbucks`, `After You`, และ `Bonchon`)
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
 library("dplyr")
-user <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/user.tsv")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-# click `submit` when you are ready
-str(user)
+# start rearrange data from `rating` and `restaurant` here!
+rating %>%
+  group_by(...) %>%
+  summarise(avg_rating = ...) %>%
+  inner_join(restaurant, by = c(... = ...)) %>%
+  filter(chain_id == ... | chain_id == ... | chain_id == ...)
 ```
 
 *** =solution
 ```{r}
-# click `submit` when you are ready
-str(user)
+# start rearrange data from `rating` and `restaurant` here!
+rating %>%
+  group_by(reviewed_item_id) %>%
+  summarise(avg_rating = mean(rating)) %>%
+  inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+  filter(chain_id == 1 | chain_id == 454 | chain_id == 457)
 ```
 
 *** =sct
@@ -516,49 +528,40 @@ success_msg("Great!")
 
 *** =instructions
 
-*** =hint
-
-*** =pre_exercise_code
-```{r}
-
-```
-
-*** =sample_code
-```{r}
-
-```
-
-*** =solution
-```{r}
-
-```
-
-*** =sct
-```{r}
-success_msg("Great!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:d0a3fcbddf
-## การวิเคราะห์ตัวแปรแบบ Categorical ร่วมกับตัวแปรแบบ Continuous (3)
-
-
-*** =instructions
+- ใช้ function `select()` เพื่อเลือกเฉพาะคอลัมน์ `chain_id` และ `avg_rating` จากผลลัพธ์ในแบบฝึกหัดที่แล้ว
+- ใช้ function `mutate()` เพื่อสร้างคอลัมน์ใหม่ชื่อ `chain_name` โดยกำหนดให้มีค่าเท่ากับ `factor(chain_id, levels = c(1, 454, 457), labels = c("Starbucks", "After You", "Bonchon"))`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# use `select()` and `mutate()` to finalize the data before plotting the graph
+rating %>%
+  group_by(reviewed_item_id) %>%
+  summarise(avg_rating = mean(rating)) %>%
+  inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+  filter(chain_id == 1 | chain_id == 454 | chain_id == 457) %>%
+  select(..., ...) %>%
+  mutate(chain_name = ...)
 ```
 
 *** =solution
 ```{r}
-
+# use `select()` and `mutate()` to finalize the data before plotting the graph
+rating %>%
+  group_by(reviewed_item_id) %>%
+  summarise(avg_rating = mean(rating)) %>%
+  inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+  filter(chain_id == 1 | chain_id == 454 | chain_id == 457) %>%
+  select(chain_id, avg_rating) %>%
+  mutate(chain_name = factor(chain_id, levels = c(1, 454, 457), labels = c("Starbucks", "After You", "Bonchon")))
 ```
 
 *** =sct
@@ -567,26 +570,48 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:acf4a87be0
-## การวิเคราะห์ตัวแปรแบบ Categorical ร่วมกับตัวแปรแบบ Continuous (4)
+## การวิเคราะห์ตัวแปรแบบ Categorical ร่วมกับตัวแปรแบบ Continuous (3)
 
+เราสามารถสร้าง `Box Plot` หลายๆอันพร้อมกันได้ โดยแบ่งแท่ง `Box Plot` ตามกลุ่มข้อมูลซึ่งเราได้แบ่งไว้แล้วในแบบฝึกหัดก่อนๆ
 
 *** =instructions
+
+- สร้าง `layer` `ggplot()` โดยให้แกน `x` และ `y` มีค่าเป็นคอลัมน์ `chain_name` และ `avg_rating` ตามลำดับ
+- สร้าง `layer` `geom_boxplot()` โดยใส่ argument `width = 0.2` เพื่อกำหนดขนาดแท่งข้อมูล `Box Plot`
 
 *** =hint
 
 *** =pre_exercise_code
 ```{r}
-
+library("dplyr")
+library("ggplot2")
+restaurant <- read.delim("http://s3.amazonaws.com/assets.datacamp.com/production/course_3635/datasets/restaurant.tsv", encoding = "UTF-8")
 ```
 
 *** =sample_code
 ```{r}
-
+# create `ggplot()` and `geom_boxplot()` layers to create boxplots!
+rating %>%
+  group_by(reviewed_item_id) %>%
+  summarise(avg_rating = mean(rating)) %>%
+  inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+  filter(chain_id == 1 | chain_id == 454 | chain_id == 457) %>%
+  select(chain_id, avg_rating) %>%
+  mutate(chain_name = factor(chain_id, levels = c(1, 454, 457), labels = c("Starbucks", "After You", "Bonchon"))) %>%
+  ggplot(aes(x = ..., y = ...)) + ...
 ```
 
 *** =solution
 ```{r}
-
+# create `ggplot()` and `geom_boxplot()` layers to create boxplots!
+rating %>%
+  group_by(reviewed_item_id) %>%
+  summarise(avg_rating = mean(rating)) %>%
+  inner_join(restaurant, by = c("reviewed_item_id" = "id")) %>%
+  filter(chain_id == 1 | chain_id == 454 | chain_id == 457) %>%
+  select(chain_id, avg_rating) %>%
+  mutate(chain_name = factor(chain_id, levels = c(1, 454, 457), labels = c("Starbucks", "After You", "Bonchon"))) %>%
+  ggplot(aes(x = chain_name, y = avg_rating)) + geom_boxplot(width = 0.2)
 ```
 
 *** =sct
