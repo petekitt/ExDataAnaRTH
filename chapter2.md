@@ -1786,7 +1786,7 @@ success_msg("Good Job!")
 
 *** =instructions
 
-- ตั้งชื่อให้กราฟ, แกน `x` และแกน `y` ว่า "Checkin Distribution (by chain)", "Number of Checkins" และ "Count" ตามลำดับ
+- ตั้งชื่อให้กราฟ, แกน `x` และแกน `y` ว่า `"Checkin Distribution (by chain)"`, `"Number of Checkins"` และ `"Count"` ตามลำดับ
 - เพิ่ม `layer` `scale_x_continuous()` เพื่อกำหนดให้ R แสดงค่าแกน `x` ตั้งแต่ `0` ถึง `160` โดยแบ่งแสดงค่า `x` ทีละ `20`
 
 *** =hint
