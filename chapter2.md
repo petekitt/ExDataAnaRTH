@@ -290,7 +290,7 @@ success_msg("Good! The graph is now a bit more informative and you can modify th
 --- type:NormalExercise lang:r xp:100 skills:1 key:846659ff03
 ## Bar Chart (4)
 
-แผนภูมิแท่งสีขาวดำอาจช่วยให้ data visualization เท่าไรนัก งั้นเราจะมาแก้ไขจุดนี้กัน
+แผนภูมิแท่งสีขาวดำอาจทำให้การทำ data visualization ดูไม่สวยงามเท่าไรนัก ดังนั้นเราจะมาเปลี่ยนค่าสีของแผนภูมิกัน
 
 นอกจากคุณจะสามารถกำหนดแกน `x` และ `y` ผ่าน function `aes()` ใน argument `mapping` ได้แล้ว คุณยังสามารถเปลี่ยนสีของ Bar Chart ให้แตกต่างกันตามแต่ละกลุ่มด้วยได้โดยการเพิ่ม argument `fill` ลงไปใน function `aes()`
 
