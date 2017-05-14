@@ -1135,7 +1135,7 @@ success_msg("Now, you will see that values of medians are quite different from t
 คำสั่ง `mean(x, trim = 0.1)` จะทำการตัดข้อมูลออกข้างละ `5%` ทั้งที่ต่ำที่สุดและสูงที่สุดออกจากข้อมูลก่อนนำมาคำนวณค่าเฉลี่ย
 
 *** =instructions
-ให้คุณทำการหาค่า `mean` และ `truncated mean` โดยการตัดข้อมูลออกข้างละ `0.5%` และ `2.5%` ตามลำดับ อย่าลืมว่าคุณต้องใช้เพิ่ม argument `trim` เพื่อทำการคำนวณ `truncated mean`
+ให้คุณทำการหาค่า `mean` และ `truncated mean` โดยการตัดข้อมูลออกข้างละ `0.5%` และ `2.5%` ตามลำดับ อย่าลืมว่าคุณต้องเพิ่ม argument `trim` ลงไปใน function `mean()` เพื่อทำการคำนวณ `truncated mean`
 
 *** =hint
 
