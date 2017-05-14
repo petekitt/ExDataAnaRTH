@@ -473,7 +473,6 @@ success_msg("Great!")
 คำสั่ง `top_n(x, y)` จะทำการจัดเรียงข้อมูลตามคอลัมน์ `y` และตัดข้อมูลออกมา `x` แถว ซึ่งตามปกติแล้ว function นี้จะเรียงจากมากไปหาน้อย แต่หากคุณต้องให้เรียงจากน้อยไปหามากก็สามารถทำได้ด้วยการใส่เครื่องหมาย `-` ไว้ข้างหน้า `x`
 
 *** =instructions
-
 - ใช้ function `top_n()` โดยทำการเรียงลำดับตามจำนวนร้านอาหารที่อยู่ภายใต้ `chain_id` นั้นๆ และตัดข้อมูลออกมาแสดงแค่ `10` อันดับแรก
 - นำข้อมูลนี้ไป `inner_join()` กับ data frame `chain` ด้วยคอลัมน์ `chain_id` และ `id` เพื่อดึงรายละเอียดของ `chain_id` นั้นๆออกมา
 
@@ -683,7 +682,6 @@ success_msg("Cool!")
 ตั้งแต่แบบฝึกหัดนี้เราจะเปลี่ยนมาวิเคราะห์ตัวแปรเชิงปริมาณ (`quantitative variable`) หรือตัวแปรแบบต่อเนื่อง (`continuous variable`) กันบ้าง ผ่าน data frame `restaurant`, `restaurant_checkin_user` และ `chain`
 
 *** =instructions
-
 - ใช้ function `filter()` เพื่อกรองเฉพาะร้านอาหารที่เป็นร้านสาขา (`chain_id != 0`) และเป็นร้านอาหารจริงๆ (`domain_id == 1`)
 - ใช้ function `select()` เลือกคอลัมน์ `id` และ `chain_id` เพื่อตัดคอลัมน์ที่ไม่จำเป็นออกไป
 - เก็บค่าผลลัพธ์ไว้ในตัวแปร `chain_checkin_summary`
@@ -734,7 +732,6 @@ success_msg("Great!")
 เพื่อไม่ให้ข้อมูลร้านอาหารที่ไม่เคยมีการ `check_in` หายไป เราจะต้องใช้ function `left_join()` เพื่อเชื่อมข้อมูลจาก `restaurant` ในแบบฝึกหัดที่แล้วไปยัง `restaurant_checkin_user`
 
 *** =instructions
-
 - ใช้ function `left_join()` เพื่อเชื่อม คอลัมน์ `id` ของ `restaurant` เข้ากับ `restaurant_id` ของ `restaurant_checkin_user` อย่าลืมว่าคุณต้องใส่ double quotes (`"`) ให้ชื่อคอลัมน์ด้วย
 - ใช้ function `group_by()` เพื่อจัดกลุ่มร้านอาหารตาม `chain_id`
 - ใช้ function `summarise()` เพื่อนับจำนวนร้านอาหารแบบไม่ซ้ำร้าน (`n_distinct(id)`) และนับจำนวนเช็คอิน (`sum(check_in)`) ซึ่งถ้ามีการเช็คอิน คอลัมน์ `check_in` จะมีค่าเป็น 1 แต่ถ้าไม่มีจะมีค่าเป็น 0 ตั้งชื่อให้คอลัมน์ใหม่ว่า `n_restaurants` และ `n_checkins` ตามลำดับ
@@ -795,7 +792,6 @@ success_msg("Good!")
 ต่อจากแบบฝึกหัดที่แล้ว คราวนี้เราจะนำผลลัพธ์ที่สร้างไว้มาเชื่อมกับ data frame `chain` และทำการดึงข้อมูลชื่อแบรนด์ร้านอาหารออกมาเพื่อทำให้ข้อมูลของเราสมบูรณ์มากขึ้น
 
 *** =instructions
-
 - ใช้ function `inner_join()` เพื่อเชื่อมคอลัมน์ `chain_id` ของผลลัพธ์จากแบบฝึกหัดที่แล้วกับคอลัมน์ `id` ของตัวแปร `chain` อย่าลืมว่าคุณต้องใส่ double quotes (`"`) ด้วย!
 - ใช้ function `select()` เพื่อดึงคอลัมน์ `chain_id`, `n_restaurants`, `n_checkins` และ `name`
 - ใช้ function `mutate()` เพื่อเปลี่ยนแปลงค่า `NA` ในคอลัมน์ `n_checkins` ให้เป็น `0` (เนื่องจากการใช้ `left_join()` ร้านอาหารที่ไม่เคยได้รับการเช็คอินเลยจะมีค่าในคอลัมน์ `n_checkins` เป็น `NA`) คุณสามารถใส่คำสั่ง `n_checkins = ifelse(is.na(n_checkins), 0, n_checkins)` ลงไปใน function `mutate()` ได้เลย
